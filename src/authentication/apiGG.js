@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as AppAuth from 'expo-app-auth';
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
+import FACEBOOK_APP_ID from '../config/FB'
 
 let config = {
     issuer: 'https://accounts.google.com',
@@ -10,11 +11,12 @@ let config = {
 };
 
 let StorageKey = '@MyApp:CustomGoogleOAuthKey';
+// Facebook.initializeAsync(FACEBOOK_APP_ID);
 
 const GGAPI = {
     async signInAsync() {
         const { type, accessToken, user } = await Google.logInAsync(config);
-    
+        
         if (type === 'success') {
     
             let currentUser = user?  user : {
@@ -64,8 +66,11 @@ const GGAPI = {
         await cacheAuthAsync(authState);
         return authState;
     },
-    async signOutAsync({ accessToken }) {
-        Facebook.logOutAsync()
+    async signOutAsync(props) {
+        const { accessToken } = props|| {}
+        
+        // Facebook.logOutAsync()
+
         if(accessToken) {
             try {
                 await AppAuth.revokeAsync(config, {

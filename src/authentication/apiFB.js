@@ -18,6 +18,16 @@ const LoginAPI = {
             });
 
             if (type === 'success') {
+                // const credential = firebase.auth.FacebookAuthProvider.credential(token);
+
+                // // Sign in with credential from the Facebook user.
+                // firebase
+                // .auth()
+                // .signInWithCredential(credential)
+                // .catch(error => {
+                //     // Handle Errors here.
+                // });
+                
                 // Get the user's name using Facebook's Graph API
                 const response = await fetch(`https://graph.facebook.com/me?fields=birthday,email,hometown,picture,link,education,name&access_token=${token}`);
                 const res =  await response.json();
@@ -36,7 +46,7 @@ const LoginAPI = {
         return null;
     },
     async getUserAsync() {
-        const { name } = await requestAsync('me');
+        const { name } = await this.requestAsync('me');
         console.log(`Hello ${name} 👋`);
     },
 
