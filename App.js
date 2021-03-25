@@ -1,21 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-export default function App() {
+import React from 'react'
+import {View, Text } from 'react-native'
+import LoginFB from './src/authentication/FbLogin'
+import RegisterScreen from './src/authentication/SignUp'
+import RootApp from './src/navigation/RootStack'
+const App = ()=>{
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{flex: 1, justifyContent: 'center',flexDirection: 'column',}}>
+      {/* <LoginFB /> */}
+      {/* <RegisterScreen/> */}
+      <RootApp />
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
