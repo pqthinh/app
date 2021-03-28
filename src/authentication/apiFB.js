@@ -33,8 +33,8 @@ const LoginAPI = {
                 const res =  await response.json();
                 res.token = token
                 Alert.alert('Logged in with facebook!');
-                let user = await this.getUserAsync()
-                console.log(user, "user facebook")
+                // let user = await this.getUserAsync()
+                // console.log(user, "user facebook", res)
                 // ${JSON.stringify(res)}
                 return res;
             } else {
@@ -46,8 +46,10 @@ const LoginAPI = {
         return null;
     },
     async getUserAsync() {
-        const { name } = await this.requestAsync('me');
-        console.log(`Hello ${name} 👋`);
+        const res = await this.requestAsync('me');
+        // console.log(res)
+        return res
+        // console.log(`Hello ${name} 👋`);
     },
 
     // Learn more https://developers.facebook.com/docs/graph-api/using-graph-api/
