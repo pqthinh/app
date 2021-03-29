@@ -1,8 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as AppAuth from 'expo-app-auth';
 import * as Google from 'expo-google-app-auth';
-import * as Facebook from 'expo-facebook';
-import FACEBOOK_APP_ID from '../config/FB'
 
 let config = {
     issuer: 'https://accounts.google.com',
@@ -10,7 +8,7 @@ let config = {
     clientId: '603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com',
 };
 
-let StorageKey = '@MyApp:CustomGoogleOAuthKey';
+let StorageKey = '@MyApp:Auth';
 // Facebook.initializeAsync(FACEBOOK_APP_ID);
 
 const GGAPI = {
@@ -21,7 +19,7 @@ const GGAPI = {
     
             let currentUser = user?  user : {
                 "email": "thinhpq@its-global.vn",
-                "familyName": "Thịnh",
+                "familyName": "Thịnh test",
                 "givenName": "Phạm  Quang ",
                 "id": "101515449108053546199",
                 "name": "Phạm Quang Thịnh",
@@ -44,7 +42,6 @@ const GGAPI = {
     async getCachedAuthAsync() {
         let value = await AsyncStorage.getItem(StorageKey);
         let authState = JSON.parse(value);
-        console.log('getCachedAuthAsync', authState);
         if (authState) {
             if (checkIfTokenExpired(authState)) {
                 return refreshAuthAsync(authState);
@@ -69,8 +66,6 @@ const GGAPI = {
     async signOutAsync(props) {
         const { accessToken } = props|| {}
         
-        // Facebook.logOutAsync()
-
         if(accessToken) {
             try {
                 await AppAuth.revokeAsync(config, {

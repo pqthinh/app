@@ -3,18 +3,32 @@ import { Alert } from 'react-native'
 import * as authAction from '../redux/action'
 import auth from './api'
 
+export function* fetchLogin(payload) {
+    console.log(payload, "saga")
+    const response = yield call(auth.login, payload);
+    yield delay(2000);
+
+    console.log(response, "response login")
+    
+    if(response.data) {
+        yield put(authAction.onLoginResponse(response));
+    }
+    else {
+        yield put(authAction.loginFailed(response));
+        const messages = response.errors;
+        setTimeout(() => {
+            Alert.alert("Login error", messages);
+        }, 200);
+    }
+}
 
 export function* fetchLoginFB(payload) {
-    // yield put(authAction.enableLoader());
     const response = yield call(auth.loginFacebook, payload);
     yield delay(2000);
-    console.log(response, "respon")
     if (response.data) {
         yield put(authAction.onLoginResponse(response));
-        // yield put(authAction.disableLoader({}));
     } else {
         yield put(authAction.loginFailed(response));
-        // yield put(authAction.disableLoader({}));
         const messages = response.errors;
         setTimeout(() => {
             Alert.alert("Facebook login error", messages);
@@ -23,15 +37,12 @@ export function* fetchLoginFB(payload) {
 }
   
 export function* fetchLoginGG(payload) {
-    // yield put(authAction.enableLoader());
     const response = yield call(auth.loginGoogle, payload);
     yield delay(2000);
     if (response.data) {
         yield put(authAction.onLoginResponse(response));
-        // yield put(authAction.disableLoader({}));
     } else {
         yield put(authAction.loginFailed(response));
-        // yield put(authAction.disableLoader({}));
         const messages = response.errors;
         setTimeout(() => {
             Alert.alert("Google login error", messages);
@@ -39,3 +50,8 @@ export function* fetchLoginGG(payload) {
     }
 }
   
+export function* logout(payload) {
+    const response = yield call(auth.logout, payload);
+    yield delay(2000);
+    yield put(authAction.logout());
+}

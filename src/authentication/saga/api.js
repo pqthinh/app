@@ -1,10 +1,27 @@
 import {TIMEOUT, API_ENDPOINT} from '../../config/url'
 import axios from "axios"
+import { logout } from '../redux/action';
 
 const auth = {
+    async login(request) {
+        const { email, password } = request;
+        console.log(request, "payload login")
+        let res={}
+        res.data = {
+                "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
+                "email": "abc",
+                "familyName": "Thịnh pq sdwqhdbqw login dm no",
+                "givenName": "Phạm Quang",
+                "id": "116212769007021476799",
+                "name": "Phạm Quang Thịnh login thuong",
+                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
+            }
+        return res;
+    },
+
     async loginFacebook(request) {
-        console.log(payload, "payload")
         const { payload } = request;
+        console.log(payload, "payload")
         // const deviceToken = await AsyncStorage.getItem("fcmToken");
     
         // const res = await axios({
@@ -32,7 +49,7 @@ const auth = {
         res.data = {
                 "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
                 "email": "phamquangquang2008@gmail.com",
-                "familyName": "Thịnh",
+                "familyName": "Thịnh pq",
                 "givenName": "Phạm Quang",
                 "id": "116212769007021476799",
                 "name": "Phạm Quang Thịnh",
@@ -79,7 +96,7 @@ const auth = {
         res.data = {
             "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
             "email": "phamquangquang2008@gmail.com",
-            "familyName": "Thịnh",
+            "familyName": "Thịnh fakegg login",
             "givenName": "Phạm Quang",
             "id": "116212769007021476799",
             "name": "Phạm Quang Thịnh",
@@ -87,6 +104,13 @@ const auth = {
         }
         return res;
     },
+    async logout() {
+        let res = {}
+        res.data = {
+            message: "success"
+        }
+        return res
+    }
 }
 
 const getUserInfo = (accessToken, deviceToken) => {

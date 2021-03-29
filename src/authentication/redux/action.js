@@ -2,10 +2,9 @@ import * as types from './actionType'
 
 export function requestLogin({email, password}) {
     return {
-        type: types.LOGINFB_REQUEST,
+        type: types.LOGIN_REQUEST,
         email,
-        password,
-        payload
+        password
     }
 }
 
@@ -36,12 +35,12 @@ export function logout() {
 }
 
 
-export function requestRegister(payload) {
-    return {
-      type: types.REGISTER_REQUEST,
-      payload,
-    };
-}
+// export function requestRegister(payload) {
+//     return {
+//       type: types.REGISTER_REQUEST,
+//       payload,
+//     };
+// }
 
 export function requestLoginFB(payload) {
     return {
