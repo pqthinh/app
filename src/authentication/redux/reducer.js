@@ -1,30 +1,29 @@
 import produce from "immer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { persistReducer } from "redux-persist";
+import {persistReducer} from "redux-persist";
 
 import * as types from "./actionType";
 
 const persistConfig = {
-  key: "auth",
-  storage: AsyncStorage,
-  whitelist: ["accessToken", "user"],
+    key: "auth",
+    storage: AsyncStorage,
+    whitelist: ["accessToken", "user"]
 };
 
 const initialState = {
-  requesting: false,
-  loading: false,
-  loadingImageUser: false,
-  changeLoading: false,
-  userLoading: false,
-  messages: [],
-  errors: [],
-  user: {},
-  accessToken: "",
-  isLoggedIn: false,
+    requesting: false,
+    loading: false,
+    loadingImageUser: false,
+    changeLoading: false,
+    userLoading: false,
+    messages: [],
+    errors: [],
+    user: {},
+    accessToken: "",
+    isLoggedIn: false
 };
 
-const reducer = (state = initialState, action) =>
-  produce(state, (newState) => {
+const reducer = (state = initialState, action) => produce(state, (newState) => {
     switch (action.type) {
         case types.LOGIN_REQUEST:
             newState.loading = true;
@@ -34,7 +33,7 @@ const reducer = (state = initialState, action) =>
             break;
         case types.LOGINGG_REQUEST:
             newState.loading = true;
-        break;
+            break;
         case types.LOGIN_SUCCESS:
             console.log(action, "action after login")
             newState.user = action.response.data;
@@ -47,10 +46,10 @@ const reducer = (state = initialState, action) =>
             newState.isLoggedIn = false;
             newState.user = {};
             break;
-        // case types.REGISTER_REQUEST:
-        //     newState.loading = true;
-        //     break;
-        case types.LOGOUT_REQUEST: 
+            // case types.REGISTER_REQUEST:
+            //     newState.loading = true;
+            //     break;
+        case types.LOGOUT_REQUEST:
             newState.loading = true;
             break;
         case types.LOGOUT_SUCCESS:

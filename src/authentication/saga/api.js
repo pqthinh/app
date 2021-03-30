@@ -1,29 +1,28 @@
 import {TIMEOUT, API_ENDPOINT} from '../../config/url'
 import axios from "axios"
-import { logout } from '../redux/action';
 
 const auth = {
     async login(request) {
-        const { email, password } = request;
+        const {email, password} = request;
         console.log(request, "payload login")
-        let res={}
+        let res = {}
         res.data = {
-                "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-                "email": "abc",
-                "familyName": "Thịnh pq sdwqhdbqw login dm no",
-                "givenName": "Phạm Quang",
-                "id": "116212769007021476799",
-                "name": "Phạm Quang Thịnh login thuong",
-                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
-            }
+            "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
+            "email": "abc",
+            "familyName": "Thịnh pq sdwqhdbqw login dm no",
+            "givenName": "Phạm Quang",
+            "id": "116212769007021476799",
+            "name": "Phạm Quang Thịnh login thuong",
+            "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c"
+        }
         return res;
     },
 
     async loginFacebook(request) {
-        const { payload } = request;
+        const {payload} = request;
         console.log(payload, "payload")
         // const deviceToken = await AsyncStorage.getItem("fcmToken");
-    
+
         // const res = await axios({
         //     method: "post",
         //     url: API_ENDPOINT + "facebook/auth",
@@ -38,30 +37,30 @@ const auth = {
         // })
         // .then((res) => {
         //     // const user = getUserInfo(res.data.token, deviceToken);
-            
+
         //     return {};
         // })
         // .catch((error) => {
         //     console.log(error)
         //     return error.response.data;
         // });
-        let res={}
+        let res = {}
         res.data = {
-                "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-                "email": "phamquangquang2008@gmail.com",
-                "familyName": "Thịnh pq",
-                "givenName": "Phạm Quang",
-                "id": "116212769007021476799",
-                "name": "Phạm Quang Thịnh",
-                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
-            }
+            "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
+            "email": "phamquangquang2008@gmail.com",
+            "familyName": "Thịnh pq",
+            "givenName": "Phạm Quang",
+            "id": "116212769007021476799",
+            "name": "Phạm Quang Thịnh",
+            "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c"
+        }
         return res;
     },
 
     async loginGoogle(request) {
-        const { payload } = request;
+        const {payload} = request;
         // const deviceToken = await AsyncStorage.getItem("fcmToken");
-    
+
         // const res = await axios({
         //     method: "post",
         //     url: API_ENDPOINT + "facebook/auth",
@@ -90,9 +89,9 @@ const auth = {
         //     .catch((error) => {
         //         return error.response.data;
         //     });
-    
+
         // return res;
-        let res={}
+        let res = {}
         res.data = {
             "accessToken": "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
             "email": "phamquangquang2008@gmail.com",
@@ -100,7 +99,7 @@ const auth = {
             "givenName": "Phạm Quang",
             "id": "116212769007021476799",
             "name": "Phạm Quang Thịnh",
-            "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
+            "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c"
         }
         return res;
     },
@@ -118,14 +117,14 @@ const getUserInfo = (accessToken, deviceToken) => {
         method: "get",
         url: API_ENDPOINT + "users/info",
         headers: {
-            token: accessToken,
+            token: accessToken
         },
-        timeout: TIMEOUT,
+        timeout: TIMEOUT
     }).catch((e) => {
         return e.response.data;
     });
-  
+
     return user;
 };
-  
+
 export default auth;

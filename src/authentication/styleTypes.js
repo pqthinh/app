@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch',  
-        backgroundColor: "pink"
+        // backgroundColor: "pink"
     },
     imageLogo: {
         width: 120,
@@ -30,8 +30,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        color: 'white',
-        color: "pink",
+        color: "#000",
         textAlign: 'center',
         width: 400,
         fontSize: 23
