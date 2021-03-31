@@ -9,13 +9,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'stretch',  
         // backgroundColor: "pink"
+        backgroundColor: "#f0f0f0"
     },
     imageLogo: {
-        width: 120,
-        height: 120,
+        width: 150,
+        height: 150,
+        resizeMode: "cover",
+        // backgroundColor: "pink",
+        
     },
     Logo: {
-        marginVertical: 40,
+        marginVertical: 10,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     up: {
         flex: 3,
@@ -24,7 +31,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     down: {
-        flex: 7,//70% of column
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center'
@@ -32,14 +38,15 @@ const styles = StyleSheet.create({
     title: {
         color: "#000",
         textAlign: 'center',
-        width: 400,
-        fontSize: 23
+        // width: 400,
+        fontSize: 23,
+        marginVertical: 20
     },
     textInputContainer: {
         paddingHorizontal: 10,
         borderRadius: 6,
         marginBottom: 20,
-        backgroundColor: 'rgba(255,255,255,0.2)'//a = alpha = opacity
+        backgroundColor: 'rgba(255,255,255,0.9)'//a = alpha = opacity
     },
     textInput: {
         width: 280,

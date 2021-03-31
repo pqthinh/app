@@ -7,7 +7,8 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     Image,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    ScrollView
 } from 'react-native'
 import {connect} from "react-redux";
 import {requestLogin, requestLoginFB, requestLoginGG} from "../redux/action";
@@ -114,30 +115,18 @@ const LoginScreen = (props) => {
             style={
                 styles.container
         }>
+        <ScrollView>
             <TouchableWithoutFeedback onPress={
                 Keyboard.dismiss
             }>
-                <View style={
-                    styles.container
-                }>
-                    <View style={
-                        styles.up
-                    }>
-                        <View style={
-                            styles.Logo
-                        }>
-                            <Image source={
-                                    {uri: "https://scontent.fhan2-6.fna.fbcdn.net/v/t1.15752-9/162699239_708338426504147_5623015091643881846_n.png?_nc_cat=103&ccb=1-3&_nc_sid=ae9488&_nc_ohc=e7Sttbf0VBkAX--xhOr&_nc_oc=AQksMKGt0dKon1QXfFSWIoN6N4H2ksmoyOtLKwpsWpRuyUwlujO5pydP8WhGBvDtqkc&_nc_ht=scontent.fhan2-6.fna&oh=b31bb7639a7b920129fa44f7ea73d758&oe=6082F742"}
-                                }
-                                style={
-                                    styles.imageLogo
-                                }/>
+                <View style={styles.container}>
+                    <View style={styles.up}>
+                        <View style={styles.Logo}>
+                            <Image source={{uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38"}}
+                                style={styles.imageLogo}/>
+                            <Text style={styles.title}>Wellcome to Fchotot</Text>
                         </View>
-                        <Text style={
-                            styles.title
-                        }>
-                            Wellcome to Fchotot
-                        </Text>
+                        
                     </View>
                     <View style={
                         styles.down
@@ -193,7 +182,7 @@ const LoginScreen = (props) => {
                                 () => navigation.navigate("Register")
                         }>
                             <Text style={
-                                styles.loginButtonTitle
+                                styles.loginButtonTitle, {color: "#000"}
                             }>Go to RegisterScreen</Text>
                         </TouchableOpacity>
 
@@ -233,6 +222,7 @@ const LoginScreen = (props) => {
                     </View>
                 </View>
             </TouchableWithoutFeedback>
+            </ScrollView>
         </KeyboardAvoidingView>
     )
 }

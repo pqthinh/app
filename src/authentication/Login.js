@@ -90,11 +90,11 @@ const LoginFBScreen = ({ navigation }) => {
         <View style={styles.container}>
           <View style={styles.up}>
             <View style={styles.Logo}>
-                <Image source={{uri: "https://scontent.fhan2-6.fna.fbcdn.net/v/t1.15752-9/162699239_708338426504147_5623015091643881846_n.png?_nc_cat=103&ccb=1-3&_nc_sid=ae9488&_nc_ohc=e7Sttbf0VBkAX--xhOr&_nc_oc=AQksMKGt0dKon1QXfFSWIoN6N4H2ksmoyOtLKwpsWpRuyUwlujO5pydP8WhGBvDtqkc&_nc_ht=scontent.fhan2-6.fna&oh=b31bb7639a7b920129fa44f7ea73d758&oe=6082F742"}} style={styles.imageLogo}/>
+              <Image source={{uri: "https://scontent.fhan2-6.fna.fbcdn.net/v/t1.15752-9/162699239_708338426504147_5623015091643881846_n.png?_nc_cat=103&ccb=1-3&_nc_sid=ae9488&_nc_ohc=e7Sttbf0VBkAX--xhOr&_nc_oc=AQksMKGt0dKon1QXfFSWIoN6N4H2ksmoyOtLKwpsWpRuyUwlujO5pydP8WhGBvDtqkc&_nc_ht=scontent.fhan2-6.fna&oh=b31bb7639a7b920129fa44f7ea73d758&oe=6082F742"}} style={styles.imageLogo}/>
+              <Text style={styles.title}>
+                  Wellcome to Fchotot
+              </Text>
             </View>
-            <Text style={styles.title}>
-                Wellcome to Fchotot
-            </Text>
           </View>
           <View style={styles.down}>
             <View style={styles.textInputContainer}>
