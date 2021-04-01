@@ -2,8 +2,8 @@ import * as firebase from 'firebase'
 import * as Facebook from 'expo-facebook'
 import React, {useState, useEffect} from 'react'
 
-import {FACEBOOK_APP_ID } from '../../config/FB'
-import config from '../../config/firebase'
+import {FACEBOOK_APP_ID } from '../../../config/FB'
+import config from '../../../config/firebase'
 
 firebase.initializeApp(config);
 

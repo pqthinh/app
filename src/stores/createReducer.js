@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import authentication from "../authentication/redux/reducer";
+import authentication from "../feature/authentication/redux/reducer";
 
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({

@@ -1,4 +1,4 @@
-import {TIMEOUT, API_ENDPOINT} from '../../config/url'
+import {TIMEOUT, API_ENDPOINT} from '../../../config/url'
 import axios from "axios"
 
 const auth = {

@@ -38,11 +38,10 @@ const RegisterScreen = ({ navigation }) => {
             <View style={styles.container}>
             <View style={styles.up}>
                 <View style={styles.Logo}>
-                    <Image source={{uri: "https://scontent.xx.fbcdn.net/v/t1.15752-9/166316698_2852341458428066_2798285478842766296_n.png?_nc_cat=107&ccb=1-3&_nc_sid=f79d6e&_nc_ohc=wp0AFSwoAGcAX_pP1qp&_nc_oc=AQkz4pcBaY_zAZ42Ub-P4MWS425k9dgT-HdcJEWdmLprj7O6gJx_8G-bFCD7p1w0E0gOQfcosQfpUr004HtccCxK&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=fb3a8bbfd8948fbcb3dc799a46045340&oe=6087C02C"}} style={styles.imageLogo}/>
+                    <Image source={{uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38"}}
+                        style={[styles.imageLogo, { transform: [{ scale: 1.5 }]}]}/>
+                    <Text style={styles.title}>Wellcome to Fchotot</Text>
                 </View>
-                <Text style={styles.title}>
-                    Wellcome to Fchotot
-                </Text>
             </View>
             <View style={styles.down}>
                 <View style={styles.textInputContainer}>
@@ -114,11 +113,10 @@ const RegisterScreen = ({ navigation }) => {
                 </TextInput>
                 </View>
             
-                <TouchableOpacity style={styles.signupButton}
-                >
+                <TouchableOpacity style={styles.signupButton}>
                     <Text style={styles.loginButtonTitle}>LOG IN</Text>
                 </TouchableOpacity>
-
+                <View style={styles.clearBoth}></View>
                 <Divider style={styles.divider}></Divider>
                 
                 <Text style={styles.goToLogin} onPress={()=> navigation.navigate("Login")}>Switch to Login Screen</Text>

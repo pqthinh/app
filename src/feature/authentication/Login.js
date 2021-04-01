@@ -16,11 +16,11 @@ import * as AppAuth from 'expo-app-auth';
 import * as Google from 'expo-google-app-auth';
 
 import LoginAPI  from '../apiFB'
-import GGAPI from '../apiGG'
-import firebaseConfig from '../config/firebase'
-import FACEBOOK_APP_ID from '../config/FB'
-import config from '../config/GGapi'
-import styles from '../styleTypes'
+import GGAPI from './apiGG'
+import firebaseConfig from '../../config/firebase'
+import FACEBOOK_APP_ID from '../../config/FB'
+import config from '../../config/GGapi'
+import styles from './styleTypes'
 
 // chuwa import ham login facebook gg
 

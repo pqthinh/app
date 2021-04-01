@@ -1,7 +1,5 @@
 import React from 'react'
 import {View, Text } from 'react-native'
-import LoginFB from './src/authentication/FbLogin'
-import RegisterScreen from './src/authentication/SignUp'
 import RootApp from './src/navigation/RootStack'
 import { persistor, store } from "./src/stores/configureStore";
 import { Provider } from "react-redux";

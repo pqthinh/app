@@ -3,21 +3,19 @@ import { Text, StatusBar, Button, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-// import SafeAreaView from 'react-native-safe-area-view';
 
-import LoginScreen from '../feature/authentication/LoginScreen/login'
+import HomeScreen from '../feature/home/homeScreen/HomeScreen'
 import RegisterScreen from '../feature/authentication/SignUp'
 import MainApp from '../MainApp'
-import HomeStack from './HomeStack';
 
 const Stack = createStackNavigator();
 
-export default function RootApp() {
+export default function HomeStack() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator headerMode="none">
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="MainApp" component={MainApp} />
         </Stack.Navigator>
