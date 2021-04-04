@@ -9,7 +9,7 @@ export default function CategoryComponent (props) {
     const { navigation } = props
     const [categorys, setCategorys] = useState([])
     useEffect(()=>{
-        let newsList = require('../../../assets/category/category.json')
+        let newsList = require('../assets/category/category.json')
         setCategorys(newsList)
     },[])
 

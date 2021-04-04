@@ -8,11 +8,6 @@ import LoadingProvider from "./src/providers/loadingProvider";
 
 const App = ()=>{
   return (
-    // <View style={{flex: 1, justifyContent: 'center',flexDirection: 'column',}}>
-    //   {/* <LoginFB /> */}
-    //   {/* <RegisterScreen/> */}
-      
-    // </View>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <LoadingProvider>
