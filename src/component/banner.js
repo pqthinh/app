@@ -12,8 +12,8 @@ const defaultImages = [
 ]
 
 const fake = [
-    "https://www.facebook.com/messenger_media/?thread_id=3725076944228390&attachment_id=468639397686230&message_id=mid.%24gAA078BAFkCZ-t79J0F4hnn_WnFH0",
-    "https://static.chotot.com.vn/storage/admin-centre/buyer_collection_y_homepage_banner/buyer_collection_y_homepage_banner_1603934186952.jpg"
+    "https://picsum.photos/700",
+    "https://picsum.photos/700"
 ]
 
 export default function Banner (props) {
@@ -24,18 +24,16 @@ export default function Banner (props) {
             let imgs = defaultImages.map(elm=>{
                 return elm.link;
             })
-            console.log(imgs)
             setBanner(imgs);
         }
         else setBanner(images);
-        console.log(banner, "banner")
-    },[]);
+    },[images]);
 
     return (
-        <View  style={styleBanner||{ height:150, width: '100%'}}>
+        <View  style={styleBanner || { width: '100%', height: 150}}>
             <SliderBox 
                 // ImageComponent={FastImage}
-                images={fake}
+                images={banner|| fake}
                 autoplay
                 circleLoop
                 sliderBoxHeight={200}
