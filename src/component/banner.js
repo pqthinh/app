@@ -13,6 +13,8 @@ const defaultImages = [
 
 const fake = [
     "https://picsum.photos/700",
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
     "https://picsum.photos/700"
 ]
 
@@ -33,7 +35,7 @@ export default function Banner (props) {
         <View  style={styleBanner || { width: '100%', height: 150}}>
             <SliderBox 
                 // ImageComponent={FastImage}
-                images={banner|| fake}
+                images={fake}
                 autoplay
                 circleLoop
                 sliderBoxHeight={200}

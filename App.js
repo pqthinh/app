@@ -5,6 +5,9 @@ import { persistor, store } from "./src/stores/configureStore";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
 import LoadingProvider from "./src/providers/loadingProvider";
+let moment = require('moment');
+require("moment/locale/vi")
+moment.locale('vi-VN');
 
 const App = ()=>{
   return (

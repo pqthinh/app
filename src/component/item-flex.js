@@ -7,16 +7,36 @@ import {
   StyleSheet,
   ImageBackground,
 } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
 
 var currencyFormatter = require("currency-formatter");
 
 const heightImage = 120;
 
+const fakeNews = {
+  anh: [
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+  ],
+  giaban: 1000000,
+  ten: "Test product",
+  diadiem: "Ha noi, Me tri ha",
+  ngaydangtin: new Date(),
+  user: {
+    name: "thinh",
+    place: "Thai Binh",
+  },
+};
+
 export default function ItemFlex({ news }) {
-  // console.log(news)
+  news = news || fakeNews;
   const handleImage = (anh) => {
-    var imgs = anh.trim().split(",");
+    // var imgs = anh.trim().split(",");
+    let imgs = anh;
     if (imgs.length == 0 || anh.length == 0)
       return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
     return imgs[0];
@@ -31,24 +51,17 @@ export default function ItemFlex({ news }) {
         />
         <View style={styles.count}>
           <ImageBackground
-            source={require("../assets/camera-clipart-7.jpg")}
-            style={{ width: 30, height: 30 }}
+            source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5Tlh0NeiDGXb3Ya7mQ8Y07qq6IMYR6ggNw&usqp=CAU" }}
+            style={styles.countImg}
           >
-            <Text
-              style={{
-                marginLeft: 2,
-                color: "#C8F7C5",
-                marginTop: 5,
-                fontSize: 14,
-              }}
-            >
-              {news.anh.trim().split(",").length}
+            <Text style={styles.numImg}>
+              {news.anh.length}
             </Text>
           </ImageBackground>
         </View>
       </View>
 
-      <View style={{ margin: 5 }}>
+      <View style={styles.details}>
         <Text style={styles.titlePost}>
           {news.ten.length > 15
             ? Platform.OS == "web"
@@ -56,13 +69,25 @@ export default function ItemFlex({ news }) {
               : news.ten.slice(0, 15)
             : news.ten}
         </Text>
-        <Text style={{ fontSize: 20, color: "red" }}>
+        <Text style={{ fontSize: 18, color: "red" }}>
           {currencyFormatter.format(news.giaban, { code: "VND" })}
         </Text>
-        <Text style={{ fontSize: 12, marginTop: 20 }}>{news.name}</Text>
-        <Text style={{ fontSize: 12 }}>{news.diadiem}</Text>
-        <Text style={{ fontSize: 12 }}>
-          <TimeAgo time={news.ngaydangtin} />
+        <Text>{""}</Text>
+        <Text style={{ fontSize: 14 }}>
+          <EvilIcons name="user" size={14} color="black" />
+          {"  " + news.user.name}
+        </Text>
+        <Text style={{ fontSize: 14 }}>
+          <MaterialIcons name="place" size={14} color="black" />
+          {"  "}
+          {news.diadiem.length > 18
+            ? news.diadiem.slice(0, 18) + "..."
+            : news.diadiem}
+        </Text>
+        <Text style={{ fontSize: 14 }}>
+          <Fontisto name="date" size={14} color="black" />
+          {"  "}
+          <TimeAgo time={news.ngaycapnhat} />
         </Text>
       </View>
     </View>
@@ -73,21 +98,37 @@ const styles = StyleSheet.create({
   image: {
     width: heightImage,
     height: heightImage,
-    overflow: "hidden",
     padding: 5,
     margin: 5,
   },
   count: {
     position: "absolute",
     right: 5,
-    top: 2,
+    top: 5,
     width: 30,
-    height: 30,
+    height: 30
+  },
+  countImg: {
+    width: 30,
+    height: 25,
+    borderRadius: 5,
+    backgroundColor: "transparent"
+  },
+  numImg: {
+    textAlign: 'center',
+    color: "#fff",
+    marginVertical: 4,
+    backgroundColor: '#000',
+    position: 'absolute',
+    paddingHorizontal: 5,
+    top: 2,
+    right: 0,
+    borderRadius: 5
   },
   titlePost: {
     fontWeight: "400",
     color: "#000",
-    fontSize: 16,
+    fontSize: 18,
   },
   viewNewsPosted: {
     alignContent: "center",
@@ -105,8 +146,15 @@ const styles = StyleSheet.create({
   containerNewsPost: {
     borderWidth: 0.25,
     borderColor: "#e0e0e0",
-    marginRight: 5,
-    marginTop: 5,
+    marginHorizontal: 10,
+    marginVertical: 10,
     flexDirection: "row",
+    display: "flex",
+    justifyContent: "flex-start",
+    alignContent: "center",
+    width: "90%",
   },
+  details: {
+    marginHorizontal: 10
+  }
 });

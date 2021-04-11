@@ -11,8 +11,8 @@ const MainApp = (props)=>{
 
     return(
         <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text>Main App</Text>
-            <Text>{`Hello ${user?.name}`}</Text>
+            <Text></Text>
+            <Text>{`  Hello ${user?.name}`}</Text>
 
             <HomeScreen />
 
