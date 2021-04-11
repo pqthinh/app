@@ -4,6 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import BottomTab from "../tab/BottomTab";
 import RootApp from "../navigation/RootStack";
+import DetailNews from "../feature/news/screen/detailsNews";
 
 function HomeScreen2({ navigation }) {
   return (
@@ -19,6 +20,7 @@ function HomeScreen2({ navigation }) {
 function NotificationsScreen2({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <DetailNews />
       <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );
