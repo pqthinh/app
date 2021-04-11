@@ -9,19 +9,21 @@ import LoginScreen from '../feature/authentication/LoginScreen/login'
 import RegisterScreen from '../feature/authentication/SignUp'
 import MainApp from '../MainApp'
 import HomeStack from './HomeStack';
+import BottomTab from '../tab/BottomTab';
+import HomeDrawer from '../drawer/HomeDrawer';
 
 const Stack = createStackNavigator();
 
 export default function RootApp() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      {/* <NavigationContainer> */}
         <Stack.Navigator headerMode="none">
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="MainApp" component={MainApp} />
+          <Stack.Screen name="MainApp" component={BottomTab} />
         </Stack.Navigator>
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
     </SafeAreaProvider>
   );
 }
