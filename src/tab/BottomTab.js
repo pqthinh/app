@@ -3,15 +3,9 @@ import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import TopTab from "./TopTab";
-const Tab = createBottomTabNavigator();
 
-const HomeScreen = () => {
-  return (
-    <View style={{ color: "red" }}>
-      <Text>Home</Text>
-    </View>
-  );
-};
+const Tab = createBottomTabNavigator();
+import HomeScreen from '../feature/home/homeScreen/HomeScreen'
 
 const SettingsScreen = () => {
   return (

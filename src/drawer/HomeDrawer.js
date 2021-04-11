@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { Button, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import BottomTab from '../tab/BottomTab';
-import RootApp from '../navigation/RootStack';
+import * as React from "react";
+import { Button, View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import BottomTab from "../tab/BottomTab";
+import RootApp from "../navigation/RootStack";
 
 function HomeScreen2({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Button
-        onPress={() => navigation.navigate('Notifications')}
+        onPress={() => navigation.navigate("Notifications")}
         title="Go to notifications"
       />
     </View>
@@ -18,7 +18,7 @@ function HomeScreen2({ navigation }) {
 
 function NotificationsScreen2({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );

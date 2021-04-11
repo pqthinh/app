@@ -10,7 +10,6 @@ import RegisterScreen from '../feature/authentication/SignUp'
 import MainApp from '../MainApp'
 import HomeStack from './HomeStack';
 import BottomTab from '../tab/BottomTab';
-import HomeDrawer from '../drawer/HomeDrawer';
 
 const Stack = createStackNavigator();
 
