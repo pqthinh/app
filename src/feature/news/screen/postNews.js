@@ -30,7 +30,6 @@ export default function PostNewsScreen() {
     });
 
     if (!result.cancelled) {
-      // setImage(result.uri);
       setImage([...image, result]);
       console.log(image, "list image");
     }
@@ -56,11 +55,14 @@ export default function PostNewsScreen() {
           uploadImage(image.uri, name)
             .then(() => {
               Alert.alert("Success, upload image");
-              setImg([...img, `${baseURL + "images/" + name}`]);
-              console.log(img);
+              // setImg([...img, `${baseURL + "images/" + name}`]);
+              // console.log(img);
+              // var gsReference = firebase.storage().refFromURL(`gs://bucket/images/${name}`);
+              // console.log(gsReference);
+              getURL(name)
             })
             .catch((error) => {
-              Alert.alert(error);
+              console.log(error);
             });
         }
       });
@@ -70,6 +72,30 @@ export default function PostNewsScreen() {
     setImage([]);
   };
 
+  const getURL = (name) => {
+    console.log(name, "name imagesewjqnfo")
+    firebase.storage().ref()
+      .child("images/" + name)
+      .getDownloadURL()
+      .then((url) => {
+
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = (event) => {
+          var blob = xhr.response;
+        };
+        xhr.open("GET", url);
+        xhr.send();
+
+        // Or inserted into an <img> element
+        // var img = document.getElementById("myimg");
+        console.log(url, "link img")
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
+  };
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Button title="Pick an image from camera roll" onPress={pickImage} />

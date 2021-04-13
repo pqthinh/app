@@ -6,13 +6,22 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
 import LoadingProvider from "./src/providers/loadingProvider";
 import HomeDrawer from './src/drawer/HomeDrawer';
+
 let moment = require('moment');
 require("moment/locale/vi")
 moment.locale('vi-VN');
-import * as firebase from "firebase";
-import firebaseConfig from './src/config/firebase'
 
-firebase.initializeApp(firebaseConfig);
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); 
+LogBox.ignoreAllLogs();
+
+import * as firebase from "firebase";
+
+import firebaseConfig from './src/config/firebase'
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
+
 
 const App = ()=>{
   return (
