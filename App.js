@@ -9,6 +9,10 @@ import HomeDrawer from './src/drawer/HomeDrawer';
 let moment = require('moment');
 require("moment/locale/vi")
 moment.locale('vi-VN');
+import * as firebase from "firebase";
+import firebaseConfig from './src/config/firebase'
+
+firebase.initializeApp(firebaseConfig);
 
 const App = ()=>{
   return (
