@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import BottomTab from "../tab/BottomTab";
 import RootApp from "../navigation/RootStack";
 import DetailNews from "../feature/news/screen/detailsNews";
+import GGAPI from '../feature/authentication/apiGG'
 
 function HomeScreen2({ navigation }) {
   return (
@@ -13,6 +14,10 @@ function HomeScreen2({ navigation }) {
         onPress={() => navigation.navigate("Notifications")}
         title="Go to notifications"
       />
+      <Button onPress={ async ()=> {
+                await GGAPI.signOutAsync()
+                await navigation.navigate("Login");
+            }} title="Signout"/>
     </View>
   );
 }
@@ -25,6 +30,8 @@ function NotificationsScreen2({ navigation }) {
     </View>
   );
 }
+
+
 
 const Drawer = createDrawerNavigator();
 

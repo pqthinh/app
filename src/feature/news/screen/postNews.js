@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Image, View, Platform, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as firebase from "firebase";
-const baseURL =
-  "https://firebasestorage.googleapis.com/v0/b/reactnative-firebase0.appspot.com/o/";
+
 export default function PostNewsScreen() {
   const [image, setImage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,11 +54,7 @@ export default function PostNewsScreen() {
           uploadImage(image.uri, name)
             .then(() => {
               Alert.alert("Success, upload image");
-              // setImg([...img, `${baseURL + "images/" + name}`]);
-              // console.log(img);
-              // var gsReference = firebase.storage().refFromURL(`gs://bucket/images/${name}`);
-              // console.log(gsReference);
-              getURL(name)
+              getURL(name);
             })
             .catch((error) => {
               console.log(error);
@@ -73,13 +68,13 @@ export default function PostNewsScreen() {
   };
 
   const getURL = (name) => {
-    console.log(name, "name imagesewjqnfo")
-    firebase.storage().ref()
+    console.log(name, "name imagesewjqnfo");
+    firebase
+      .storage()
+      .ref()
       .child("images/" + name)
       .getDownloadURL()
       .then((url) => {
-
-        // This can be downloaded directly:
         var xhr = new XMLHttpRequest();
         xhr.responseType = "blob";
         xhr.onload = (event) => {
@@ -88,12 +83,12 @@ export default function PostNewsScreen() {
         xhr.open("GET", url);
         xhr.send();
 
-        // Or inserted into an <img> element
-        // var img = document.getElementById("myimg");
-        console.log(url, "link img")
+        // log url
+        console.log(url, "link img");
+        setImg([...img, url]);
       })
       .catch((error) => {
-        // Handle any errors
+        console.log(error);
       });
   };
   return (
