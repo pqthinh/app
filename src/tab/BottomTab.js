@@ -7,6 +7,7 @@ import TopTab from "./TopTab";
 const Tab = createBottomTabNavigator();
 import HomeScreen from '../feature/home/homeScreen/HomeScreen'
 import PostNewsScreen from "../feature/news/screen/postNews";
+import HomeStack from "../navigation/HomeStack";
 
 const SettingsScreen = () => {
   return (
@@ -44,7 +45,7 @@ function BottomTab() {
     <Tab.Navigator>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (

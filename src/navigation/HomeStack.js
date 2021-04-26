@@ -7,19 +7,21 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from '../feature/home/homeScreen/HomeScreen'
 import RegisterScreen from '../feature/authentication/SignUp'
 import MainApp from '../MainApp'
+import { ChatComponent } from '../component/GitfChat';
 
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      {/* <NavigationContainer> */}
         <Stack.Navigator headerMode="none">
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="MainApp" component={MainApp} />
+          <Stack.Screen name="Chat" component={ ChatComponent} />
         </Stack.Navigator>
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
     </SafeAreaProvider>
   );
 }

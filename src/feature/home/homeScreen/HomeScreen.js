@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView , Button } from "react-native";
 import Banner from "../../../component/banner";
 import CategoryComponent from "../../../component/category";
 import Item from "../../../component/item";
@@ -31,6 +31,7 @@ const ListProductlexDirection = (props) => {
 };
 
 const HomeScreen = (props) => {
+  const { navigation } = props
   return (
     <ScrollView>
       <Banner />
@@ -38,6 +39,7 @@ const HomeScreen = (props) => {
       <CategoryComponent />
       <ListProduct />
       <ListProductlexDirection />
+      <Button title="Go to chat" onPress={()=> navigation.navigate("Chat")}/>
     </ScrollView>
   );
 };
