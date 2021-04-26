@@ -21,6 +21,10 @@ export const LOGINFB_REQUEST = "LOGINFB_REQUEST";
 // login Google
 export const LOGINGG_REQUEST = "LOGINGG_REQUEST";
 
+// sign upfirebase
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS"
+export const SIGNUP_REQUEST = "SIGNUP_REQUEST"
+
 // remove account
 // export const REMOVE_USER_ACCOUNT = "REMOVE_USER_ACCOUNT"
 // export const REMOVE_USER_ACCOUNT_SUCCESS = "REMOVE_USER_ACCOUNT_SUCCESS"

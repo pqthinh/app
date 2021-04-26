@@ -5,6 +5,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
+import styles from './style'
 
 const currencyFormatter = require("currency-formatter");
 
@@ -77,38 +78,3 @@ export default function Item({ navigation, newspost, danhmuc }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: heightImage,
-    height: heightImage,
-    overflow: "hidden",
-    padding: 5,
-    margin: 5,
-  },
-  titleOfImage: {
-    fontWeight: "400",
-    color: "#000",
-    fontSize: 14,
-  },
-  viewNewsPosted: {
-    alignContent: "center",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  DivTitle: {
-    fontSize: 16,
-    marginLeft: Platform.OS == "web" ? 20 : 10,
-    marginTop: 10,
-    marginBottom: 10,
-    fontWeight: "600",
-  },
-  news: {
-    borderWidth: 0.25,
-    borderColor: "#e0e0e0",
-    marginRight: 5,
-    marginTop: 5,
-    width: heightImage + 10,
-  },
-});

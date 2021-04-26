@@ -1,19 +1,32 @@
 import React from "react";
-import { View, Animated, Alert, Text, StyleSheet } from "react-native";
+import { View, Animated, Alert, Text } from "react-native";
 import StickyItemFlatList from "@gorhom/sticky-item";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import styles from "./style";
+import StoryItem from "./story";
 
 // dummy data
 const data = [...Array(20)]
-  .fill(0)
-  .map((_, index) => ({ id: `item-${index}` }));
+  .map((_, index) => ({
+    id: `item-${index}`,
+    user: {
+      name: "thinh",
+      avatar:
+        "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
+    },
+    news: {
+      img:
+        "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
+      name: "bans buon",
+    },
+  }));
 
 // configs
 const ITEM_WIDTH = 80;
 const ITEM_HEIGHT = 120;
 const STICKY_ITEM_WIDTH = 50;
 const STICKY_ITEM_HEIGHT = 50;
-const STICKY_ITEM_BACKGROUNDS = ["#01579B", "#9CCC65"];
+const STICKY_ITEM_BACKGROUNDS = ["#CFFBBB", "#9CCC65"];
 const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 10;
 
@@ -28,28 +41,40 @@ const StickyItemView = ({
   isRTL,
 }) => {
   const amazingAnimation = {
-    // here you add your custom interactive animation
-    // based on the animated value `x`
     flex: 1,
-    justifyContent: 'center',
-    margin: 0
+    justifyContent: "center",
+    margin: 0,
   };
 
   return (
     <Animated.View style={amazingAnimation}>
       <View style={styles.itemStichkey}>
         <Text>
-          Add<MaterialCommunityIcons name="dolly" color={"#fff"} size={24} />
+          <MaterialCommunityIcons name="dolly" color={"#fff"} size={24} />
         </Text>
-        
       </View>
     </Animated.View>
   );
 };
 
-const Stories = () => {
-  // methods
-  const handleStickyItemPress = () => Alert.alert("Sticky Item Pressed");
+const Stories = (props) => {
+  const { navigation } = props;
+  const handleStickyItemPress = () => {
+    Alert.alert("Tạo tin đăng", "Đi đến trang đăng tin", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "Go",
+        onPress: () => {
+          console.log("Sticky Item Pressed");
+          navigation.navigate("Post");
+        },
+      },
+    ]);
+  };
 
   // render
   const renderItem = ({ item, index }) => (
@@ -60,11 +85,11 @@ const Stories = () => {
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
       }}
-      children={<Text>{index}</Text>}
+      children={<StoryItem item={item} />}
     />
   );
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", marginVertical: 10 }}>
       <StickyItemFlatList
         itemWidth={ITEM_WIDTH}
         itemHeight={ITEM_HEIGHT}
@@ -83,13 +108,3 @@ const Stories = () => {
 };
 
 export default Stories;
-
-const styles = StyleSheet.create({
-  itemStichkey: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: STICKY_ITEM_BACKGROUNDS[1],
-    height: 50,
-    borderRadius: 50
-  },
-});

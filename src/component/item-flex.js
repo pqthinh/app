@@ -11,10 +11,9 @@ import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
+import styles from './style'
 
 var currencyFormatter = require("currency-formatter");
-
-const heightImage = 120;
 
 const fakeNews = {
   anh: [
@@ -51,12 +50,13 @@ export default function ItemFlex({ news }) {
         />
         <View style={styles.count}>
           <ImageBackground
-            source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5Tlh0NeiDGXb3Ya7mQ8Y07qq6IMYR6ggNw&usqp=CAU" }}
+            source={{
+              uri:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5Tlh0NeiDGXb3Ya7mQ8Y07qq6IMYR6ggNw&usqp=CAU",
+            }}
             style={styles.countImg}
           >
-            <Text style={styles.numImg}>
-              {news.anh.length}
-            </Text>
+            <Text style={styles.numImg}>{news.anh.length}</Text>
           </ImageBackground>
         </View>
       </View>
@@ -93,68 +93,3 @@ export default function ItemFlex({ news }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: heightImage,
-    height: heightImage,
-    padding: 5,
-    margin: 5,
-  },
-  count: {
-    position: "absolute",
-    right: 5,
-    top: 5,
-    width: 30,
-    height: 30
-  },
-  countImg: {
-    width: 30,
-    height: 25,
-    borderRadius: 5,
-    backgroundColor: "transparent"
-  },
-  numImg: {
-    textAlign: 'center',
-    color: "#fff",
-    marginVertical: 4,
-    backgroundColor: '#000',
-    position: 'absolute',
-    paddingHorizontal: 5,
-    top: 2,
-    right: 0,
-    borderRadius: 5
-  },
-  titlePost: {
-    fontWeight: "400",
-    color: "#000",
-    fontSize: 18,
-  },
-  viewNewsPosted: {
-    alignContent: "center",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  DivTitle: {
-    fontSize: 16,
-    marginLeft: Platform.OS == "web" ? 20 : 10,
-    marginTop: 10,
-    marginBottom: 10,
-    fontWeight: "600",
-  },
-  containerNewsPost: {
-    borderWidth: 0.25,
-    borderColor: "#e0e0e0",
-    marginHorizontal: 10,
-    marginVertical: 10,
-    flexDirection: "row",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignContent: "center",
-    width: "90%",
-  },
-  details: {
-    marginHorizontal: 10
-  }
-});

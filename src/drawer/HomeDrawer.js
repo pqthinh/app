@@ -6,6 +6,7 @@ import BottomTab from "../tab/BottomTab";
 import RootApp from "../navigation/RootStack";
 import DetailNews from "../feature/news/screen/detailsNews";
 import GGAPI from '../feature/authentication/apiGG'
+import DrawerContent from './DrawerContent'
 
 function HomeScreen2({ navigation }) {
   return (
@@ -35,10 +36,11 @@ function NotificationsScreen2({ navigation }) {
 
 const Drawer = createDrawerNavigator();
 
-export default function HomeDrawer() {
+export default function HomeDrawer(props) {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Home" >
+      {/* <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}> */}
         <Drawer.Screen name="Home" component={RootApp} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen2} />
         <Drawer.Screen name="Thinh" component={HomeScreen2} />

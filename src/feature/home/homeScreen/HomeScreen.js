@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView , Button } from "react-native";
+import { connect } from "react-redux";
 import Banner from "../../../component/banner";
 import CategoryComponent from "../../../component/category";
 import Item from "../../../component/item";
@@ -34,14 +35,22 @@ const HomeScreen = (props) => {
   const { navigation } = props
   return (
     <ScrollView>
+      
       <Banner />
       <Stories />
       <CategoryComponent />
       <ListProduct />
       <ListProductlexDirection />
       <Button title="Go to chat" onPress={()=> navigation.navigate("Chat")}/>
+      <Text>{JSON.stringify(props)}</Text>
     </ScrollView>
   );
 };
 
-export default HomeScreen;
+export default connect(
+  (state) => ({
+    user: state.userReducer.user,
+    isLoggedIn: !state.userReducer.userLoading,
+  }),
+  {}
+)(HomeScreen);

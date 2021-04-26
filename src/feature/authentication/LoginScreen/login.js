@@ -33,22 +33,6 @@ const LoginScreen = (props) => {
   // let [authState, setAuthState] = useState(null);
   const [data, setData] = useState({ email: "", password: "" });
 
-  // useEffect(() => {
-  // (async () => {
-  //       let cachedAuth = await GGAPI.getCachedAuthAsync();
-  //       if (cachedAuth && !authState) {
-  //           setAuthState(cachedAuth);
-  //           navigation.navigate("MainApp", {user: authState})
-  //       }
-  // }) ();
-  // },[]);
-
-  // useEffect(()=>{
-  // if(authState) {
-  //       navigation.navigate("MainApp", {user: authState})
-  // }
-  // },[authState])
-
   useEffect(() => {
     if (user && isLoggedIn) {
       navigation.navigate("MainApp", { user: user });
