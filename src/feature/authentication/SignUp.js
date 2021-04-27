@@ -48,10 +48,6 @@ const RegisterScreen = (props) => {
     (async () => {})();
   }, []);
 
-//   const SignUp = (displayName, email, password, phone) => {
-//     const request = { displayName, email, password, phone };
-//   };
-
   const Divider = (props) => {
     return (
       <View {...props}>

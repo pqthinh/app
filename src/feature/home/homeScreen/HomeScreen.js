@@ -32,7 +32,7 @@ const ListProductlexDirection = (props) => {
 };
 
 const HomeScreen = (props) => {
-  const { navigation } = props
+  const { user, navigation } = props
   return (
     <ScrollView>
       
@@ -42,7 +42,7 @@ const HomeScreen = (props) => {
       <ListProduct />
       <ListProductlexDirection />
       <Button title="Go to chat" onPress={()=> navigation.navigate("Chat")}/>
-      <Text>{JSON.stringify(props)}</Text>
+      <Text>{JSON.stringify(user)}</Text>
     </ScrollView>
   );
 };

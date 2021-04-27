@@ -8,6 +8,20 @@ const auth = {
     console.log(request, "payload signup");
     const { email, password, displayName, phone, place } = request;
     let res = {};
+    async function writeUserData(userId, name, email, phone, place, imageUrl) {
+      firebase
+        .database()
+        .ref("users/" + userId)
+        .set({
+          username: name,
+          email: email,
+          profile_picture:
+            imageUrl ||
+            "https://scontent.fpnh22-1.fna.fbcdn.net/v/t1.30497-1/c59.0.200.200a/p200x200/84241059_189132118950875_4138507100605120512_n.jpg?_nc_cat=1&ccb=1-3&_nc_sid=7206a8&_nc_ohc=DEXPSxIBk7AAX8Go6tL&_nc_ht=scontent.fpnh22-1.fna&tp=27&oh=d8fde1e55bfdee8015bdabfbb5a9fea5&oe=60AC7F84",
+          phoneNumber: phone,
+          place: place,
+        });
+    }
     try {
       // email, phoneNumber, photoURL, displayName, api key, auth domain
       await firebase
@@ -21,12 +35,14 @@ const auth = {
               place: place,
             })
             .then(async () => {
-            //   console.log(credential, "sign up saga credential");
-              let temp = credential.user || {}
-              let accessToken = "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG";
+              //   console.log(credential, "sign up saga credential");
+              let temp = credential.user || {};
+              let accessToken =
+                "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG";
               res.data = temp;
-              res.data.accessToken = accessToken
+              res.data.accessToken = accessToken;
               console.log(res, "res");
+              await writeUserData(temp.uid, displayName, email, phone, place);
               return res;
             });
         });
@@ -39,17 +55,18 @@ const auth = {
   async login(request) {
     const { email, password } = request;
     console.log(request, "payload login");
-
+    let res = {}
     try {
-        const userCredential = await firebase.auth()
+      const userCredential = await firebase
+        .auth()
         .signInWithEmailAndPassword(email, password);
-        console.log(userCredential, "use")
-    }
-    catch(e) {
-        Alert.alert(e)
+      res.data = userCredential
+    } catch (e) {
+      Alert.alert(e);
+      res.data = {}
     }
 
-    
+    return res
 
     // let res = {};
     // res.data = {
@@ -148,7 +165,7 @@ const auth = {
       email: "phamquangquang2008@gmail.com",
       familyName: "Thịnh fakegg login",
       givenName: "Phạm Quang",
-      id: "116212769007021476799",
+      id: "116212769007021476s2qduih",
       name: "Phạm Quang Thịnh",
       photoUrl:
         "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
