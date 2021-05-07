@@ -7,6 +7,7 @@ import RootApp from "../navigation/RootStack";
 import DetailNews from "../feature/news/screen/detailsNews";
 import GGAPI from '../feature/authentication/apiGG'
 import DrawerContent from './DrawerContent'
+import CustomSidebarMenu from './CustomDrawer'
 
 function HomeScreen2({ navigation }) {
   return (
@@ -39,7 +40,8 @@ const Drawer = createDrawerNavigator();
 export default function HomeDrawer(props) {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home" >
+      {/* <Drawer.Navigator initialRouteName="Home" > */}
+      <Drawer.Navigator drawerContent={(props) => <CustomSidebarMenu {...props} />}>
       {/* <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}> */}
         <Drawer.Screen name="Home" component={RootApp} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen2} />
