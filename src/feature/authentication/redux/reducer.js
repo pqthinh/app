@@ -65,7 +65,8 @@ const reducer = (state = initialState, action) =>
             case types.LOGOUT_SUCCESS:
                 newState.user = null;
                 newState.isLoggedIn = false;
-                newState.accessToken = "";
+                newState.accessToken = null;
+                newState={}
                 break;
             // case types.CHANGE_REQUEST_SUCCESS:
             //     newState.user.can_sos = "request_sent";
