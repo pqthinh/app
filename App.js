@@ -28,7 +28,6 @@ const App = ()=>{
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <LoadingProvider>
-          {/* <RootApp /> */}
           <HomeDrawer />
         </LoadingProvider>
       </PersistGate>
