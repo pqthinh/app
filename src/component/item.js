@@ -5,7 +5,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
-import styles from './style'
+import styles from "./style";
 
 const currencyFormatter = require("currency-formatter");
 
@@ -30,10 +30,8 @@ const fakeNews = {
 };
 
 export default function Item({ navigation, newspost, danhmuc }) {
-  // const [newsposted, setNewsposted] = useState(newspost || fakeNews)
   const news = fakeNews;
   const handleImage = (anh) => {
-    // var imgs = anh.trim().split(",")
     let imgs = anh;
     if (imgs.length == 0 || anh.length == 0)
       return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";

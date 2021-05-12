@@ -2,12 +2,11 @@ import React from "react";
 import {
   SafeAreaView,
   View,
-  StyleSheet,
   Image,
   Text,
   Linking,
 } from "react-native";
-import { styles } from "./styles";
+import styles from "./styles";
 
 import {
   DrawerContentScrollView,
