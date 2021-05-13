@@ -8,6 +8,7 @@ const Tab = createBottomTabNavigator();
 import HomeScreen from '../feature/home/homeScreen/HomeScreen'
 import PostNewsScreen from "../feature/news/screen/postNews";
 import HomeStack from "../navigation/HomeStack";
+import CardScreen from "../feature/card/CardCreen";
 
 const SettingsScreen = () => {
   return (
@@ -85,7 +86,7 @@ function BottomTab() {
       />
       <Tab.Screen
         name="Profile"
-        component={SettingsScreen}
+        component={CardScreen}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
