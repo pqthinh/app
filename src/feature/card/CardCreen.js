@@ -1,377 +1,432 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   StatusBar,
   TouchableOpacity,
   Image,
-} from "react-native";
+  TextInput,
+  Alert,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
+import { Icon } from 'react-native-vector-icons';
+import { ListItem, Left, Right, Radio, Content } from 'native-base';
 
-import Constants from "expo-constants";
-import { Feather as Icon, FontAwesome as FAIcon } from "@expo/vector-icons";
-
-const Rating = ({ rating, maxRating }) => {
-  return (
-    <View style={{ flexDirection: "row" }}>
-      {Array(rating)
-        .fill(1)
-        .map((el) => (
-          <FAIcon name="star" size={20} color="#2e2e2e" />
-        ))}
-      {Array(maxRating - rating)
-        .fill(1)
-        .map((el) => (
-          <FAIcon name="star-o" size={20} color="#2e2e2e" />
-        ))}
-    </View>
-  );
-};
-
-export default function CardScreen() {
-  const [isFavourite, setFavourite] = useState(false);
-  const [size] = useState([
-    { id: 1, label: "S" },
-    { id: 1, label: "M" },
-    { id: 1, label: "L" },
-    { id: 1, label: "XL" },
-  ]);
-
-  const [selectedSize, setSelectedSize] = useState("M");
-
-  const [productDescription] = useState(
-    `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut ornare urna. Duis egestas ligula quam, ut tincidunt ipsum blandit at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae justo congue, tempor urna vitae, placerat elit. Nulla nec consectetur dolor, in convallis erat. Fusce hendrerit id sem tristique congue. \n\nVestibulum mauris sapien, vulputate in lacus in, lacinia efficitur magna. Sed id massa ut magna eleifend lacinia et id tellus. Sed dignissim mollis lacus. Etiam laoreet ex eu sem euismod congue. In maximus porttitor imperdiet. Nulla eu dolor vehicula ligula mollis tristique ut in enim. Phasellus quis tempor velit. Vivamus sit amet orci ornare, pulvinar purus et, commodo magna. Nunc eu tortor vitae leo varius vehicula quis volutpat dolor.\n\nDonec interdum rutrum tellus, et rhoncus risus dignissim at. Aliquam sed imperdiet tortor, non aliquam sapien. Cras quis enim a elit fringilla vehicula. Aenean pulvinar ipsum a magna feugiat, a fermentum ante pellentesque. Mauris tincidunt placerat placerat. Quisque tincidunt enim sed metus fermentum maximus. Fusce eu tempus est.`
-  );
-
-  const [seeFullDescription, setSeeFullDescription] = useState(false);
-
-  const [moreProducts] = useState([
+export default function CardScreen({ navigation }) {
+  const [cart, setCart] = useState([
     {
-      productName: "Black Printed Tshirt",
-      productPrice: 19.49,
-      productImage:
-        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
+      id: 'PID000101',
+      name: 'Wired Mouse',
+      company: 'Logitech',
+      img:
+        'https://assets.logitech.com/assets/65019/3/mouton-boat-m90-refresh-gallery-image.png',
+      quantity: 1,
+      price: 299,
+      perPrice: 299,
     },
     {
-      productName: "Black Printed Top (Women)",
-      productPrice: 19.49,
-      productImage:
-        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=90",
-    },
-    {
-      productName: "White Solid Tshirt",
-      productPrice: 34.99,
-      productImage:
-        "https://images.unsplash.com/photo-1574180566232-aaad1b5b8450?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
-    },
-    {
-      productName: "Black Solid Tshirt",
-      productPrice: 34.99,
-      productImage:
-        "https://images.unsplash.com/photo-1512327428889-607eeb19efe8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
-    },
-    {
-      productName: "Red Top (Women)",
-      productPrice: 44.85,
-      productImage:
-        "https://images.unsplash.com/photo-1456885284447-7dd4bb8720bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
+      id: 'PID000106',
+      name: 'Airpods',
+      company: 'Apple',
+      img:
+        'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MV7N2?wid=1144&hei=1144&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1551489688005',
+      quantity: 1,
+      price: 13999,
+      perPrice: 13999,
     },
   ]);
+  const [shippingMethod, setShippingMethod] = useState('Normal');
 
   useEffect(() => {
-    StatusBar.setBarStyle("dark-content");
-    StatusBar.setBackgroundColor("#fff");
+    StatusBar.setBarStyle('light-content', true);
   }, []);
 
-  if (!loaded) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <View style={styles.header}>
-        <Icon name="menu" size={30} />
-        <Text style={styles.headerTitle}>Shop</Text>
-        <Icon name="shopping-bag" size={26} />
+        <TouchableOpacity
+          style={{
+            paddingRight: 10,
+          }}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Icon name='angle-left' type='font-awesome' size={30} color='#fff' />
+        </TouchableOpacity>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
-          <Image
-            style={{ height: 500, resizeMode: "cover" }}
-            source={{
-              uri: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-            }}
-          />
-        </View>
-        <View style={styles.detailsView}>
-          <View style={styles.productTitleView}>
-            <Text style={styles.productTitle}>Men's OutCast T-Shirt</Text>
-            <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
-              <FAIcon name={isFavourite ? "heart" : "heart-o"} size={22} />
-            </TouchableOpacity>
+      <Text style={styles.paymentTitle}>Payment</Text>
+      <View style={styles.cartContainer}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.cartTitleView}>
+            <Icon name='shopping-cart' type='font-awesome-5' />
+            <Text style={styles.cartTitle}>My Cart</Text>
           </View>
-          <View style={styles.productPriceView}>
-            <Text style={styles.discountedPriceText}>$29.99</Text>
-            <Text style={styles.actualPriceText}>$40.00</Text>
-          </View>
-          <View style={{ marginTop: 10 }}>
-            <Rating rating={4} maxRating={5} />
-          </View>
-          <View style={{ marginTop: 20 }}>
-            <Text
-              style={{
-                fontSize: 18,
-                marginBottom: 10,
-              }}
-            >
-              Size:
-            </Text>
-            <View style={{ flexDirection: "row" }}>
-              {size.map((s) => (
-                <TouchableOpacity
-                  key={s.id}
-                  style={
-                    selectedSize === s.label ? styles.tagSelected : styles.tag
-                  }
-                  onPress={() => setSelectedSize(s.label)}
-                >
-                  <Text
-                    style={
-                      selectedSize === s.label
-                        ? styles.tagLabelSelected
-                        : styles.tagLabel
-                    }
-                  >
-                    {s.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", paddingHorizontal: 10 }}>
-          <TouchableOpacity style={styles.buyNowButton}>
-            <Text style={styles.buttonText}>Buy Now</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.addToCartButton}>
-            <Text style={[styles.buttonText, { color: "#111" }]}>
-              Add to Cart
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ marginTop: 10, backgroundColor: "#fff" }}>
-          <TouchableOpacity
-            style={styles.productDescriptionHeader}
-            onPress={() => setSeeFullDescription((prev) => !prev)}
-          >
-            <Text style={{ fontSize: 18 }}>Product Description</Text>
-            <TouchableOpacity
-              onPress={() => setSeeFullDescription((prev) => !prev)}
-            >
-              {seeFullDescription ? (
-                <Icon name="chevron-up" size={26} />
-              ) : (
-                <Icon name="chevron-down" size={26} />
-              )}
-            </TouchableOpacity>
-          </TouchableOpacity>
-          <View style={{ padding: 10 }}>
-            <Text>
-              {seeFullDescription
-                ? `${productDescription}`
-                : `${productDescription.split("\n")[0]}`}
-            </Text>
-          </View>
-        </View>
-        <View style={{ marginTop: 10 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              marginHorizontal: 10,
-            }}
-          >
-            More Products
-          </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={{ flex: 1, flexDirection: "row", paddingTop: 10 }}>
-              {moreProducts.map((item) => (
-                <View style={{ width: 180, marginHorizontal: 10 }}>
-                  <View style={styles.moreProductImageView}>
+
+          {cart.length > 0 ? (
+            <View>
+              {cart
+                .sort((a, b) => a.name > b.name)
+                .map((product) => (
+                  <View style={styles.productView}>
                     <Image
-                      style={{ flex: 1 }}
+                      style={styles.productImage}
                       source={{
-                        uri: item.productImage,
+                        uri: product.img,
                       }}
                     />
-                  </View>
-                  <View style={{ marginTop: 8 }}>
-                    <Text style={styles.moreProductName}>
-                      {item.productName}
-                    </Text>
-                    <View style={styles.moreProductPriceView}>
-                      <Text style={styles.moreProductPrice}>
-                        ${item.productPrice}
+                    <View style={styles.productMiddleView}>
+                      <Text style={styles.productTitle}>{product.name}</Text>
+                      <Text style={styles.productCompanyTitle}>
+                        {product.company}
                       </Text>
-                      <View style={{ flexDirection: "row" }}>
-                        <Icon
-                          style={styles.moreProductIcon}
-                          name="heart"
-                          size={18}
-                        />
-                        <Icon
-                          style={styles.moreProductIcon}
-                          name="shopping-bag"
-                          size={18}
-                        />
-                        <Icon
-                          style={styles.moreProductIcon}
-                          name="share"
-                          size={18}
-                        />
+                    </View>
+                    <View style={styles.productRightView}>
+                      <Text
+                        style={styles.productPriceText}
+                      >{`₹${product.price}`}</Text>
+                      <View style={styles.productItemCounterView}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (product.quantity === 1) {
+                              return Alert.alert(
+                                `Remove ${product.name}?`,
+                                '',
+                                [
+                                  { text: 'Cancel' },
+                                  {
+                                    text: 'Remove',
+                                    onPress: () => {
+                                      const newCart = cart.filter(
+                                        (p) => p.id !== product.id
+                                      );
+                                      setCart(newCart);
+                                    },
+                                  },
+                                ]
+                              );
+                            }
+                            const newProd = {
+                              ...product,
+                              quantity: product.quantity - 1,
+                              price: product.price - product.perPrice,
+                            };
+                            const restProds = cart.filter(
+                              (p) => p.id !== product.id
+                            );
+                            setCart([...restProds, newProd]);
+                          }}
+                        >
+                          <Icon
+                            style={styles.toggleCounterButton}
+                            name='minus-circle'
+                            type='font-awesome'
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.counterValue}>
+                          {product.quantity}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            const newProd = {
+                              ...product,
+                              quantity: product.quantity + 1,
+                              price: product.price + product.perPrice,
+                            };
+                            const restProds = cart.filter(
+                              (p) => p.id !== product.id
+                            );
+                            setCart([...restProds, newProd]);
+                          }}
+                        >
+                          <Icon
+                            style={styles.toggleCounterButton}
+                            name='plus-circle'
+                            type='font-awesome'
+                          />
+                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.moreProductBuyButton}>
-                    <Text style={styles.moreProductBuyButtonText}>Buy</Text>
+                ))}
+              <View style={styles.couponInputView}>
+                <TextInput
+                  placeholder='Coupon Code'
+                  style={styles.couponInput}
+                />
+                <TouchableOpacity style={styles.couponButton}>
+                  <Text style={styles.couponButtonText}>Apply Coupon</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.subtotalView}>
+                <Text style={styles.subtotalText}>Subtotal -</Text>
+                <Text style={styles.subtotalPrice}>
+                  ₹{cart.reduce((acc, val) => val.price + acc, 0)}
+                </Text>
+              </View>
+              <View style={styles.shippingView}>
+                <Text style={styles.shippingText}>Shipping -</Text>
+                <View style={styles.shippingItemsView}>
+                  <TouchableOpacity
+                    style={styles.shippingItem}
+                    onPress={() => {
+                      setShippingMethod('Normal');
+                    }}
+                  >
+                    <Text style={styles.shippingItemText}>Normal (Free)</Text>
+                    <Radio selected={shippingMethod === 'Normal'} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.shippingItem}
+                    onPress={() => {
+                      setShippingMethod('Express');
+                    }}
+                  >
+                    <Text style={styles.shippingItemText}>Express (₹60)</Text>
+                    <Radio selected={shippingMethod === 'Express'} />
                   </TouchableOpacity>
                 </View>
-              ))}
+              </View>
+              <View style={styles.totalView}>
+                <Text style={styles.totalText}>Total -</Text>
+                {shippingMethod === 'Normal' ? (
+                  <Text style={styles.totalPrice}>
+                    ₹{cart.reduce((acc, val) => val.price + acc, 0)}
+                  </Text>
+                ) : (
+                  <Text style={styles.totalPrice}>
+                    ₹{cart.reduce((acc, val) => val.price + acc, 0) + 60}
+                  </Text>
+                )}
+              </View>
+              <TouchableOpacity style={styles.checkoutButton}>
+                <Text style={styles.checkoutButtonText}>
+                  Proceed to Checkout
+                </Text>
+              </TouchableOpacity>
             </View>
-          </ScrollView>
-        </View>
-        <View style={{ height: 40 }}></View>
-      </ScrollView>
+          ) : (
+            <View style={styles.emptyCartView}>
+              <Text style={styles.emptyCartViewText}>Your cart is empty.</Text>
+            </View>
+          )}
+
+          <View style={{ height: 100 }}></View>
+        </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#333',
+    paddingTop: 40,
+  },
   header: {
-    height: 50,
-    backgroundColor: "#fff",
-    marginTop: Constants.statusBarHeight,
+    alignItems: 'flex-start',
+    marginTop: 10,
+    paddingHorizontal: 20,
+  },
+  paymentTitle: {
+    fontSize: 30,
+    fontWeight: '900',
+    color: '#fff',
+    marginVertical: 12,
+    paddingHorizontal: 20,
+  },
+  cartContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 10,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingTop: 30,
+    paddingHorizontal: 16,
+    shadowColor: '#333',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  cartTitleView: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cartTitle: {
+    fontSize: 26,
+    fontWeight: '700',
+    marginLeft: 10,
+  },
+  productView: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    // borderRadius: 10,
+    shadowColor: '#333',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    // shadowRadius: 2,
+    elevation: 2,
+    marginTop: 14,
+  },
+  productImage: {
+    width: 60,
+    height: 60,
+    alignSelf: 'center',
+  },
+  productMiddleView: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     paddingHorizontal: 10,
-    borderBottomColor: "#dfe4fe",
-    borderBottomWidth: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  headerTitle: {
-    fontSize: 18,
-  },
-  detailsView: {
-    paddingHorizontal: 10,
-    paddingVertical: 14,
-  },
-  productTitleView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'center',
   },
   productTitle: {
-    fontSize: 24,
+    fontSize: 20,
+    fontWeight: '500',
   },
-  productPriceView: {
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
+  productCompanyTitle: {
+    fontSize: 16,
+    fontWeight: '300',
   },
-  discountedPriceText: { fontSize: 20 },
-  actualPriceText: {
-    color: "#222",
-    marginLeft: 10,
-    textDecorationLine: "line-through",
-    fontSize: 18,
+  productRightView: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  buyNowButton: {
-    flex: 1,
-    backgroundColor: "#111",
-    paddingVertical: 10,
-    borderRadius: 4,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 6,
+  productItemCounterView: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 4,
   },
-  addToCartButton: {
-    flex: 1,
-    paddingVertical: 10,
-    backgroundColor: "#fff",
-    borderRadius: 4,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 6,
+  counterValue: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  productPriceText: {
+    alignSelf: 'flex-end',
+    paddingRight: 10,
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  toggleCounterButton: {
+    paddingHorizontal: 10,
+  },
+  couponInputView: {
+    width: '100%',
+    height: 50,
     borderWidth: 1,
-    borderColor: "#111",
+    borderColor: '#333',
+    marginTop: 20,
+    display: 'flex',
+    flexDirection: 'row',
   },
-  buttonText: {
-    fontSize: 16,
-    color: "#fff",
-  },
-  tag: {
-    borderRadius: 4,
-    backgroundColor: "#FFF",
-    marginRight: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  tagLabel: {
-    color: "#333",
-  },
-  tagSelected: {
-    backgroundColor: "#333",
-    borderRadius: 4,
-    marginRight: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  tagLabelSelected: {
-    color: "#FFF",
-  },
-  productDescriptionHeader: {
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottomWidth: 1,
-    borderBottomColor: "#dfe4fe",
-  },
-  moreProductImageView: {
+  couponInput: {
     flex: 1,
-    height: 240,
-    backgroundColor: "#fff",
-    borderRadius: 4,
-    overflow: "hidden",
+    fontSize: 20,
+    paddingHorizontal: 10,
   },
-  moreProductName: {
+  couponButton: {
+    backgroundColor: '#333',
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+  },
+  couponButtonText: {
+    color: '#fff',
     fontSize: 16,
+    fontWeight: '700',
   },
-  moreProductPriceView: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 8,
+  subtotalView: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 40,
+    justifyContent: 'space-between',
+    paddingBottom: 10,
+    borderBottomColor: '#333',
+    borderBottomWidth: 1,
   },
-  moreProductPrice: {
-    fontSize: 16,
-  },
-  moreProductIcon: {
-    marginLeft: 10,
-  },
-  moreProductBuyButton: {
-    backgroundColor: "#111",
-    marginTop: 10,
-    paddingVertical: 8,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  moreProductBuyButtonText: {
-    color: "#fff",
+  subtotalText: {
     fontSize: 18,
+    fontWeight: '500',
+  },
+  subtotalPrice: {
+    fontSize: 18,
+    fontWeight: '300',
+  },
+  shippingView: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 20,
+    paddingBottom: 10,
+    borderBottomColor: '#333',
+    borderBottomWidth: 1,
+  },
+  shippingItemsView: {
+    marginTop: 10,
+  },
+  shippingText: {
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  shippingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  shippingItemText: {
+    fontSize: 16,
+    paddingVertical: 4,
+    fontWeight: '300',
+  },
+  totalView: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 20,
+    justifyContent: 'space-between',
+    paddingBottom: 10,
+    borderBottomColor: '#333',
+    borderBottomWidth: 1,
+  },
+  totalText: {
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  totalPrice: {
+    fontSize: 18,
+    fontWeight: '300',
+  },
+  checkoutButton: {
+    backgroundColor: '#333',
+    paddingVertical: 14,
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  checkoutButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: '700',
+  },
+  emptyCartView: {
+    flex: 1,
+    marginTop: 140,
+  },
+  emptyCartViewText: {
+    fontSize: 20,
+    fontWeight: '300',
+    alignSelf: 'center',
   },
 });
