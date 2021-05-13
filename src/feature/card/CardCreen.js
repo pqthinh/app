@@ -84,14 +84,6 @@ export default function CardScreen() {
     StatusBar.setBackgroundColor("#fff");
   }, []);
 
-  if (!loaded) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>

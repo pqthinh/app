@@ -42,7 +42,8 @@ const HomeScreen = (props) => {
       <ListProduct />
       <ListProductlexDirection />
       <Button title="Go to chat" onPress={()=> navigation.navigate("Chat")}/>
-      <Text>{JSON.stringify(user)}</Text>
+      <Button title="Go to update profile" onPress={()=> navigation.navigate("Profile")}/>
+      {/* <Text>{JSON.stringify(user)}</Text> */}
     </ScrollView>
   );
 };

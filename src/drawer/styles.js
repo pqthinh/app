@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footerDrawer: {
-    flex: 1,
-    flexDirection: row,
+    // flex: 1,
+    flexDirection: 'column',
     height: 80,
     justifyContent: "space-around"
   }

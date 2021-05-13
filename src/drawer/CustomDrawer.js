@@ -8,7 +8,6 @@ import {
   Linking,
 } from "react-native";
 import styles from "./styles";
-
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -20,7 +19,10 @@ const CustomSidebarMenu = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Avatar.Image size={24} source={require("../../assets/logo_lg.png")} />
+        <Image
+          source={require("../../assets/logo_lg.png")}
+          style={styles.sideMenuProfileIcon}
+        />
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
@@ -38,18 +40,14 @@ const CustomSidebarMenu = (props) => {
           </Text>
           <Image
             source={{
-              uri:
-                "https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png",
+              uri: "https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png",
             }}
             style={styles.iconStyle}
           />
         </View>
       </DrawerContentScrollView>
       <View style={styles.footerDrawer}>
-        <Image
-          source={require("../../assets/logo_lg.png")}
-          style={styles.sideMenuProfileIcon}
-        />
+        
         <Text style={{ fontSize: 16, textAlign: "center", color: "grey" }}>
           https://github.com/pqthinh/app
         </Text>
@@ -59,3 +57,9 @@ const CustomSidebarMenu = (props) => {
 };
 
 export default CustomSidebarMenu;
+
+{/* <Avatar.Image size={50} source={require("../../assets/logo_lg.png")} /> */}
+{/* <Image
+  source={require("../../assets/logo_lg.png")}
+  style={styles.sideMenuProfileIcon}
+/> */}

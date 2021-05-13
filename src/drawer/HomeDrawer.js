@@ -40,9 +40,7 @@ const Drawer = createDrawerNavigator();
 export default function HomeDrawer(props) {
   return (
     <NavigationContainer>
-      {/* <Drawer.Navigator initialRouteName="Home" > */}
       <Drawer.Navigator drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-      {/* <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}> */}
         <Drawer.Screen name="Home" component={RootApp} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen2} />
         <Drawer.Screen name="Thinh" component={HomeScreen2} />
