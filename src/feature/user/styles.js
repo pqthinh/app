@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         backgroundColor: "pink"
     },
-    signupButton: {
+    updateButton: {
         width: 300,
         height: 45,
         borderRadius: 6,
