@@ -64,6 +64,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  footerDrawer: {
+    // flex: 1,
+    flexDirection: 'column',
+    height: 80,
+    justifyContent: "space-around"
+  }
 });
 
 export default styles;

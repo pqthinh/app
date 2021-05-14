@@ -1,8 +1,7 @@
 import React from "react";
 import { Text, View, Animated } from "react-native";
 import StickyParallaxHeader from "react-native-sticky-parallax-header";
-import { styles} from './styles'
-
+import styles from './styles'
 class DetailNews extends React.Component {
   state = {
     scroll: new Animated.Value(0),

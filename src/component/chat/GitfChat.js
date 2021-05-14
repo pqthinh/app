@@ -1,6 +1,13 @@
 // @refresh reset
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { connect } from "react-redux";
 
@@ -36,18 +43,14 @@ const ChatComponent = (props) => {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 1, marginVertical: 20}}>
-      <GiftedChat
-        messages={messages}
-        // onSend={handleSend}
-        onSend={onSend}
-        user={currentUser}
-      />
-      </View>
-
-      <Text>{JSON.stringify(user)}</Text>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, marginVertical: 20 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <GiftedChat messages={messages} onSend={onSend} user={currentUser} />
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

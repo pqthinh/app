@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -10,68 +10,53 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { connect } from "react-redux";
-import { requestSignup } from "./redux/action";
+import { Avatar } from 'react-native-paper';
+import styles from './styles'
 
-import styles from "./styleTypes";
-
-const RegisterScreen = (props) => {
-  const { navigation, user, isLoggedIn, requestSignup } = props;
-  const [loading, setLoading] = useState(false);
-
-  const [data, setData] = useState({
-    email: "",
-    phone: "",
-    place: "",
-    displayName: "",
-    password: "",
-    repassword: "",
-  });
-
-  const handleChange = (field) => (value) => {
-    if (field === "email") {
-      setData({
-        ...data,
-        [field]: value.toLowerCase(),
+const UpdateInfoUser = ({ props }) => {
+    const [data, setData] = useState({
+        email: "",
+        phone: "",
+        place: "",
+        displayName: "",
+        password: "",
+        repassword: "",
       });
-    } else {
-      setData({
-        ...data,
-        [field]: value,
-      });
-    }
-  };
-
-  useEffect(() => {
-    (async () => {})();
-  }, []);
-
-  const Divider = (props) => {
-    return (
-      <View {...props}>
-        <View style={styles.line}></View>
-        <Text style={styles.textOR}>OR</Text>
-        <View style={styles.line}></View>
-      </View>
-    );
-  };
-
+    
+      const handleChange = (field) => (value) => {
+        if (field === "email") {
+          setData({
+            ...data,
+            [field]: value.toLowerCase(),
+          });
+        } else {
+          setData({
+            ...data,
+            [field]: value,
+          });
+        }
+      };
+    
+      useEffect(() => {
+        (async () => {})();
+      }, []);
+    
+      const Divider = (props) => {
+        return (
+          <View {...props}>
+            <View style={styles.line}></View>
+            <Text style={styles.textOR}>OR</Text>
+            <View style={styles.line}></View>
+          </View>
+        );
+      };
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.up}>
             <View style={styles.Logo}>
-              <Image
-                source={{
-                  uri:
-                    "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
-                }}
-                style={[styles.imageLogo, { transform: [{ scale: 1.5 }] }]}
-              />
-              <Text style={styles.title}>Wellcome to Fchotot</Text>
+              <Avatar.Image source={{uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38"}} />
             </View>
           </View>
           <View style={styles.down}>
@@ -134,7 +119,12 @@ const RegisterScreen = (props) => {
               ></TextInput>
             </View>
 
-            <TouchableOpacity style={styles.signupButton} onPress={()=> {requestSignup(data)}}>
+            <TouchableOpacity
+              style={styles.signupButton}
+              onPress={() => {
+                requestSignup(data);
+              }}
+            >
               <Text style={styles.loginButtonTitle}>SIGNUP</Text>
             </TouchableOpacity>
             <View style={styles.clearBoth}></View>
@@ -153,10 +143,4 @@ const RegisterScreen = (props) => {
   );
 };
 
-export default connect(
-  (state) => ({
-    user: state.userReducer.user,
-    isLoggedIn: !state.userReducer.userLoading,
-  }),
-  { requestSignup }
-)(RegisterScreen);
+export default UpdateInfoUser;
