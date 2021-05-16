@@ -24,6 +24,8 @@ export default function HomeStack() {
         {/* <Stack.Screen name="Chat" component={ChatTest} /> */}
         <Stack.Screen name="Chat" component={ChatComponent} />
         <Stack.Screen name="Profile" component={UpdateInfoUser} />
+        <Stack.Screen name="Detail" component={UpdateInfoUser} />
+        <Stack.Screen name="PostNews" component={UpdateInfoUser} />
       </Stack.Navigator>
       {/* </NavigationContainer> */}
     </SafeAreaProvider>

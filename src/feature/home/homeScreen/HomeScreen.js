@@ -37,10 +37,10 @@ const HomeScreen = (props) => {
     <ScrollView>
       
       <Banner />
-      <Stories />
-      <CategoryComponent />
-      <ListProduct />
-      <ListProductlexDirection />
+      <Stories navigation={navigation}/>
+      <CategoryComponent navigation={navigation}/>
+      <ListProduct navigation={navigation}/>
+      <ListProductlexDirection navigation={navigation}/>
       <Button title="Go to chat" onPress={()=> navigation.navigate("Chat")}/>
       <Button title="Go to update profile" onPress={()=> navigation.navigate("Profile")}/>
       {/* <Text>{JSON.stringify(user)}</Text> */}
