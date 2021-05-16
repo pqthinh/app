@@ -31,17 +31,24 @@ const fakeNews = {
   },
 };
 
-export default function ItemFlex({ news }) {
-  news = news || fakeNews;
+export default function ItemFlex(props) {
+  // news đưuọc truyền từ props vào nhưng giờ đang fake data
+  const { navigation } = props
+
+  // const { news, navigation } = props
+  let news =  fakeNews;
   const handleImage = (anh) => {
-    // var imgs = anh.trim().split(",");
     let imgs = anh;
     if (imgs.length == 0 || anh.length == 0)
       return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
     return imgs[0];
   };
+
+  const handleNavagateToDetail = () => {
+    navigation.navigate("Detail", {news})
+  }
   return (
-    <View style={styles.containerNewsPost}>
+    <View style={styles.containerNewsPost} onPress={() => handleNavagateToDetail()}>
       <View>
         <Image
           style={styles.image}

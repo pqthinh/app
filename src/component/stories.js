@@ -70,7 +70,7 @@ const Stories = (props) => {
         text: "Go",
         onPress: () => {
           console.log("Sticky Item Pressed");
-          navigation.navigate("Post");
+          navigation.navigate("PostNews");
         },
       },
     ]);

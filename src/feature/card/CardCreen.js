@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-vector-icons';
 import { ListItem, Left, Right, Radio, Content } from 'native-base';
+// import HomeScreen from '../home/homeScreen/HomeScreen';
 
 export default function CardScreen({ navigation }) {
   const [cart, setCart] = useState([

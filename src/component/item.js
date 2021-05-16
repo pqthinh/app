@@ -37,8 +37,13 @@ export default function Item({ navigation, newspost, danhmuc }) {
       return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
     return imgs[0];
   };
+
+  const handleNavagateToDetail = () => {
+    navigation.navigate("Detail", {news})
+  }
+
   return (
-    <TouchableOpacity onPress={() => console.log("Details", { news })}>
+    <TouchableOpacity onPress={() => handleNavagateToDetail()}>
       <View style={styles.news}>
         <Image
           style={styles.image}
