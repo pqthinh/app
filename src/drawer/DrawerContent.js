@@ -17,7 +17,8 @@ import styles from "./styles";
 
 import { AuthContext } from "../component/context";
 
-export function DrawerContent(props) {
+export default function DrawerContent(props) {
+  const { navigation } = props
   const paperTheme = useTheme();
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
@@ -81,7 +82,7 @@ export function DrawerContent(props) {
               )}
               label="Home"
               onPress={() => {
-                // props.navigation.navigate("Home");
+                navigation.navigate("Home");
               }}
             />
             <DrawerItem
@@ -90,7 +91,7 @@ export function DrawerContent(props) {
               )}
               label="Profile"
               onPress={() => {
-                // props.navigation.navigate("Profile");
+                navigation.navigate("Profile");
               }}
             />
             <DrawerItem
@@ -99,7 +100,7 @@ export function DrawerContent(props) {
               )}
               label="Bookmarks"
               onPress={() => {
-                // props.navigation.navigate("BookmarkScreen");
+                navigation.navigate("BookmarkScreen");
               }}
             />
             <DrawerItem
@@ -108,7 +109,7 @@ export function DrawerContent(props) {
               )}
               label="Settings"
               onPress={() => {
-                // props.navigation.navigate("SettingsScreen");
+                navigation.navigate("SettingsScreen");
               }}
             />
             <DrawerItem
@@ -117,7 +118,7 @@ export function DrawerContent(props) {
               )}
               label="Support"
               onPress={() => {
-                // props.navigation.navigate("SupportScreen");
+                navigation.navigate("SupportScreen");
               }}
             />
           </Drawer.Section>

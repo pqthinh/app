@@ -44,6 +44,7 @@ const HomeScreen = (props) => {
       <Button title="Go to chat" onPress={()=> navigation.navigate("Chat")}/>
       <Button title="Go to update profile" onPress={()=> navigation.navigate("Profile")}/>
       {/* <Text>{JSON.stringify(user)}</Text> */}
+      <View style={{height: 100}}></View>
     </ScrollView>
   );
 };

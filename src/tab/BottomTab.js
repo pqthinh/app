@@ -5,20 +5,21 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import TopTab from "./TopTab";
 
 const Tab = createBottomTabNavigator();
-import HomeScreen from '../feature/home/homeScreen/HomeScreen'
+import HomeScreen from "../feature/home/homeScreen/HomeScreen";
 import PostNewsScreen from "../feature/news/screen/postNews";
 import HomeStack from "../navigation/HomeStack";
-import CardScreen from "../feature/card/CardCreen";
+import CardScreen from "../feature/card/CardScreen";
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ props }) => {
+  const { navigation } = props;
   return (
     <View>
-      <Text>Home</Text>
+      <CardScreen navigation={navigation} />
     </View>
   );
 };
 
-const IconPostNews = ({color}) => {
+const IconPostNews = ({ color }) => {
   return (
     <View
       style={{
@@ -29,14 +30,10 @@ const IconPostNews = ({color}) => {
         borderRadius: 68,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#e0e0e0"
+        backgroundColor: "#e0e0e0",
       }}
     >
-      <MaterialCommunityIcons
-        name="dolly"
-        color={color|| "#000"}
-        size={68}
-      />
+      <MaterialCommunityIcons name="dolly" color={color || "#000"} size={68} />
     </View>
   );
 };
@@ -69,9 +66,7 @@ function BottomTab() {
         component={PostNewsScreen}
         options={{
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => (
-          <IconPostNews color ={color}/>
-          ),
+          tabBarIcon: ({ color }) => <IconPostNews color={color} />,
         }}
       />
       <Tab.Screen
@@ -86,7 +81,7 @@ function BottomTab() {
       />
       <Tab.Screen
         name="Profile"
-        component={CardScreen}
+        component={SettingsScreen}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (

@@ -54,16 +54,20 @@ const UpdateInfoUser = ({ props }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.up}>
-            {/* { <View style={styles.Logo}> */}
-            {/* <Avatar.Image source={{uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38"}} />             */}
-            <Avatar
+            <View style={styles.Logo}>
+              <Avatar.Image
+                source={{
+                  uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
+                }}
+              />
+            </View>
+            {/* <Avatar
               size="xlarge"
               rounded
               title="ok"
               onPress={() => console.log("Works!")}
               activeOpacity={0.7}
-            />
-            {/* </View> */}
+            /> */}
           </View>
           <View style={styles.down}>
             <View style={styles.textInputContainer}>
@@ -75,7 +79,7 @@ const UpdateInfoUser = ({ props }) => {
               ></TextInput>
             </View>
 
-          <View style={styles.textInputContainer}>
+            <View style={styles.textInputContainer}>
               <TextInput
                 style={styles.textInput}
                 textContentType="emailAddress"
@@ -86,8 +90,6 @@ const UpdateInfoUser = ({ props }) => {
                 onChangeText={handleChange("email")}
               ></TextInput>
             </View>
-
-            
 
             <View style={styles.textInputContainer}>
               <TextInput
