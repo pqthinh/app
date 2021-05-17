@@ -10,6 +10,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import PhotoUpload from 'react-native-photo-upload'
 import { Avatar } from "react-native-elements";
 import styles from "./styles";
 
