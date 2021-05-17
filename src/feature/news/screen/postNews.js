@@ -38,36 +38,6 @@ export default function PostNewsScreen(props) {
     }
   };
 
-  // const handleUploadImage = (files) => {
-  //   console.log(files)
-
-  //   const images = [];
-  //   const uploaders = files.map((file) => {
-      // let name = file.uri.split('/').slice(-1)[0]
-      // console.log(name)
-      // const formData = new FormData();
-      // formData.append("file", file.uri);
-      // formData.append("folder", "images");
-      // formData.append("upload_preset", "sg9vcerw");
-      // formData.append("api_key", "458657474175494");
-      // formData.append("timestamp", Date.now() / 1000 || 0);
-
-      // return axios
-      //   .post(
-      //     "https://api.cloudinary.com/v1_1/thinhpq-its-app/image/upload",
-      //     formData
-      //   )
-      //   .then((response) => {
-      //     const { data } = response;
-      //     images.push(data.secure_url);
-      //     console.log(images);
-      //   });
-      // Promise.all(uploaders).then(() => {
-      //   Alert.alert("Tải ảnh lên thành công");
-      // })
-    // });
-      
-  // };
   const uploadImage = async (uri, imageName) => {
     const response = await fetch(uri);
     const blob = await response.blob();
