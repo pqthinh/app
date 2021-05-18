@@ -45,7 +45,6 @@ const reducer = (state = initialState, action) =>
                 newState.loading = true;
                 break;
             case types.LOGIN_SUCCESS:
-                console.log(action, "action after login");
                 newState.user = action.response.data;
                 newState.isLoggedIn = true;
                 // newState.accessToken = action.response.request._headers.token;

@@ -36,10 +36,10 @@ const ListContact = (props) => {
       {listContact.length > 0 ? (
         <ScrollView style={{ width: "100%" }}>
           {listContact.map(
-            (user) =>
+            (user, index) =>
               user && (
                 <TouchableOpacity
-                  key={user.id.value}
+                  key={index}
                   style={styles.userCard}
                   onPress={() => {
                     navigation.navigate("ChatDetail", {
@@ -83,6 +83,13 @@ const ListChat = (props) => {
   useEffect(() => {
     StatusBar.setBarStyle("dark-content", false);
     getListChat();
+  }, []);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "Danh sách hội thoại",
+      headerRight: () => <View></View>,
+    });
   }, []);
 
   return (
@@ -149,4 +156,5 @@ const styles = StyleSheet.create({
   userCardRight: {
     paddingHorizontal: 10,
   },
+  IconWrapper: { flexDirection: "row", marginHorizontal: 5, color: "#fff" },
 });

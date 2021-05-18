@@ -32,11 +32,11 @@ export default function HomeStack(props) {
             headerRight: () => (
               <View style={styles.IconWrapper}>
                 <Feather
-                  name="home"
+                  name="shopping-cart"
                   size={24}
                   style={styles.IconWrapper}
                   onPress={() => {
-                    navigation.navigate("Home");
+                    navigation.navigate("ChatStack" ,  {screen: "ListContact"});
                   }}
                 />
                 <Feather
@@ -44,7 +44,7 @@ export default function HomeStack(props) {
                   size={24}
                   style={styles.IconWrapper}
                   onPress={() => {
-                    navigation.navigate("Chat");
+                    navigation.navigate("ChatStack" ,  {screen: "ListContact"});
                   }}
                 />
               </View>
@@ -75,20 +75,22 @@ export default function HomeStack(props) {
         />
 
         <Stack.Screen
-          name="Chat"
+          name="ChatStack"
           component={StackChat}
-          options={{
-            headerBackTitle: <Feather name="arrow-left" size={24} />,
-            headerStyle: {
-              backgroundColor: "#aed581",
-            },
-            headerTintColor: "white",
-            headerTitleStyle: {
-              fontWeight: "bold",
-              alignSelf: "center",
-              textAlign: "center",
-            },
-          }}
+          options={{headerShown: false}}
+          // options={{
+          //   headerBackTitle: <Feather name="arrow-left" size={24} />,
+          //   headerStyle: {
+          //     backgroundColor: "#aed581",
+          //   },
+          //   headerTintColor: "white",
+          //   headerTitleStyle: {
+          //     fontWeight: "bold",
+          //     alignSelf: "center",
+          //     textAlign: "center",
+          //   },
+          //   title: "Danh sách hội thoại"
+          // }}
         />
         <Stack.Screen name="Profile" component={ChatTest} />
         <Stack.Screen name="Detail" component={ChatTest} />

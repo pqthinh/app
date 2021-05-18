@@ -2,6 +2,7 @@ import { TIMEOUT, API_ENDPOINT } from "../../../config/url";
 import axios from "axios";
 import { firebase } from "../../../config";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const auth = {
   async signup({ request }) {
@@ -60,12 +61,11 @@ const auth = {
 
   async login(request) {
     const { email, password } = request;
-
     let res = {};
     try {
       const userCredential = await firebase
         .auth()
-        .signInWithEmailAndPassword(email, password);
+        .signInWithEmailAndPassword(email||"thinhpq@its-global.vn", password || "123456");
 
       res.data = userCredential;
     } catch (e) {
@@ -74,69 +74,89 @@ const auth = {
       res.data = {};
     }
 
+    // let res = {};
+    res.data = {
+      accessToken:
+        "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
+      email: "phamquangquang2008@gmail.com",
+      familyName: "Thịnh pq",
+      givenName: "Phạm Quang",
+      id: "116212769007021476799",
+      name: "Phạm Quang Thịnh",
+      photoUrl:
+        "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
+    };
+
     return res;
   },
 
   async loginFacebook(request) {
-    const { payload } = request;
-    const deviceToken = await AsyncStorage.getItem("fcmToken");
+    // const { payload } = request;
+    // const deviceToken = await AsyncStorage.getItem("fcmToken");
 
-    const res = await axios({
-      method: "post",
-      url: API_ENDPOINT + "facebook/auth",
-      headers: {
-        "Device-Id-Token": deviceToken,
-        "Client-Type": Platform.OS,
-      },
-      data: {
-        facebook_token: payload,
-      },
-      timeout: TIMEOUT,
-    })
-      .then((res) => {
-        const user = getUserInfo(res.data.token, deviceToken);
+    // const res = await axios({
+    //   method: "post",
+    //   url: API_ENDPOINT + "facebook/auth",
+    //   headers: {
+    //     // "Device-Id-Token": deviceToken,
+    //     "Client-Type": Platform.OS,
+    //   },
+    //   data: {
+    //     facebook_token: payload,
+    //   },
+    //   timeout: TIMEOUT,
+    // }).catch((error) => {
+    //   return error.response.data;
+    // });
 
-        return user;
-      })
-      .catch((error) => {
-        return error.response.data;
-      });
+    // return res;
+    let res = {};
+    res.data = {
+      accessToken:
+        "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
+      email: "phamquangquang2008@gmail.com",
+      familyName: "Thịnh pq",
+      givenName: "Phạm Quang",
+      id: "116212769007021476799",
+      name: "Phạm Quang Thịnh",
+      photoUrl:
+        "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
+    };
+
+    return res;
   },
 
   async loginGoogle(request) {
-    const { payload } = request;
+    // const { payload } = request;
     // const deviceToken = await AsyncStorage.getItem("fcmToken");
 
-    const res = await axios({
-      method: "post",
-      url: API_ENDPOINT + "facebook/auth",
-      headers: {
-        // "Device-Id-Token": deviceToken,
-        // "Client-Type": Platform.OS,
-      },
-      data: {
-        token_gg: payload,
-      },
-      timeout: TIMEOUT,
-    })
-      .then((res) => {
-        // const user = getUserInfo(res.data.token, deviceToken);
-        const user = {
-          accessToken:
-            "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-          email: "phamquangquang2008@gmail.com",
-          familyName: "Thịnh",
-          givenName: "Phạm Quang",
-          id: "116212769007021476799",
-          name: "Phạm Quang Thịnh",
-          photoUrl:
-            "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
-        };
-        return user;
-      })
-      .catch((error) => {
-        return error.response.data;
-      });
+    // const res = await axios({
+    //   method: "post",
+    //   url: API_ENDPOINT + "facebook/auth",
+    //   headers: {
+    //     "Client-Type": Platform.OS,
+    //   },
+    //   data: {
+    //     token_gg: payload,
+    //   },
+    //   timeout: TIMEOUT,
+    // }).catch((error) => {
+    //   console.log(error);
+    //   return error.response.data;
+    // });
+
+    let res = {};
+    res.data = {
+      accessToken:
+        "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
+      email: "phamquangquang2008@gmail.com",
+      familyName: "Thịnh pq",
+      givenName: "Phạm Quang",
+      id: "116212769007021476799",
+      name: "Phạm Quang Thịnh",
+      photoUrl:
+        "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
+    };
 
     return res;
   },

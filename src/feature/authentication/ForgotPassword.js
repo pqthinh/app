@@ -32,7 +32,6 @@ const ForgotPasswordScreen = (props) => {
         Alert.alert("Thông báo", "Check your email and change password !");
       })
       .catch(function (e) {
-        console.log(e);
         Alert.alert("Thông báo", JSON.stringify(e.message));
       });
 
@@ -50,19 +49,8 @@ const ForgotPasswordScreen = (props) => {
             <View style={styles.up}>
               <View style={styles.Logo}>
                 <Image
-                  source={{
-                    uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
-                  }}
-                  style={[
-                    styles.imageLogo,
-                    {
-                      transform: [
-                        {
-                          scale: 1.5,
-                        },
-                      ],
-                    },
-                  ]}
+                  source={require("../../../assets/logo_lg.png")}
+                  style={styles.imageLogo}
                 />
                 <Text style={styles.title}>Wellcome to Fchotot</Text>
               </View>

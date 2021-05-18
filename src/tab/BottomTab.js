@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { connect } from "react-redux";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import TopTab from "./TopTab";
@@ -42,7 +43,13 @@ const IconPostNews = ({ color }) => {
   );
 };
 
-function BottomTab() {
+function BottomTab(props) {
+  const { user, navigation } = props;
+
+  React.useEffect(() => {
+    if (user.accessToken || !user) navigation.navigate("Login");
+  }, [user]);
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -106,4 +113,10 @@ function BottomTab() {
   );
 }
 
-export default BottomTab;
+export default connect(
+  (state) => ({
+    user: state.userReducer.user,
+    isLoggedIn: !state.userReducer.userLoading,
+  }),
+  {}
+)(BottomTab);

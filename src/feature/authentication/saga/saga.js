@@ -20,11 +20,9 @@ export function* fetchSignup(payload) {
 }
 
 export function* fetchLogin(payload) {
-  console.log(payload, "saga");
+
   const response = yield call(auth.login, payload);
   yield delay(2000);
-
-  console.log(JSON.stringify(response), "response login");
 
   if (response.data) {
     yield put(authAction.onLoginResponse(response));

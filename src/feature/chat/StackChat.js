@@ -9,36 +9,21 @@ const Stack = createStackNavigator();
 export default function StackChat() {
   return (
     <SafeAreaProvider>
-      <Stack.Navigator headerMode="none">
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#aed581",
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            alignSelf: "center",
+            textAlign: "center",
+          },
+        }}
+      >
         <Stack.Screen name="ListContact" component={ListChat} />
-        <Stack.Screen
-          name="ChatDetail"
-          component={DetailChat}
-          options={({ navigation, route }) => ({
-            title: route.params.title,
-            headerRight: () => (
-              <View style={styles.IconWrapper}>
-                  {console.log(route)}
-                <Feather
-                  name="phone-call"
-                  size={24}
-                  style={styles.IconWrapper}
-                  onPress={() => {
-                    console.log(route);
-                  }}
-                />
-                <Feather
-                  name="more-vertical"
-                  size={24}
-                  style={styles.IconWrapper}
-                  onPress={() => {
-                    console.log("more");
-                  }}
-                />
-              </View>
-            ),
-          })}
-        />
+        <Stack.Screen name="ChatDetail" component={DetailChat} />
       </Stack.Navigator>
     </SafeAreaProvider>
   );
