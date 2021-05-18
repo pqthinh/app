@@ -47,7 +47,7 @@ function BottomTab(props) {
   const { user, navigation } = props;
 
   React.useEffect(() => {
-    if (user.accessToken || !user) navigation.navigate("Login");
+    if (!user.accessToken || !user) navigation.navigate("Login");
   }, [user]);
 
   return (

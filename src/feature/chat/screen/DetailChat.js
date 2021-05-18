@@ -8,14 +8,14 @@ const DetailChat = (props) => {
   const { phone, title } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: title || "Tạo mới cuộc trò chuyện" ,
+      title: title || "Tạo mới cuộc trò chuyện",
       headerRight: () => (
         <View style={styles.IconWrapper}>
           <Feather
             name="phone-call"
             size={24}
             style={styles.IconWrapper}
-            onPress={()=> Linking.openURL(`tel: ${phone}`)}
+            onPress={() => Linking.openURL(`tel: ${phone}`)}
           />
           <Feather
             name="more-vertical"
@@ -31,13 +31,15 @@ const DetailChat = (props) => {
   }, [route]);
 
   return (
-    <View>
-      <ChatComponent navigation={navigation} user={user} />
+    <View style={styles.container}>
+      <ChatComponent navigation={navigation} user={user} style={styles.chat} />
     </View>
   );
 };
 export default DetailChat;
 
 const styles = StyleSheet.create({
+  container: { flex: 1, height: "100%", justifyContent: "center" },
+  chat: { flex: 1 },
   IconWrapper: { flexDirection: "row", marginHorizontal: 5, color: "#fff" },
 });

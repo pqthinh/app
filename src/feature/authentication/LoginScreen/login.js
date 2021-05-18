@@ -9,6 +9,7 @@ import {
   Image,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
 import { connect } from "react-redux";
 import { requestLogin, requestLoginFB, requestLoginGG } from "../redux/action";
@@ -31,7 +32,7 @@ const LoginScreen = (props) => {
 
   const handleLoginWithFB = () => {
     LoginAPI.logIn().then((token) => {
-      console.log(token, "token fb");
+      // console.log(token, "token fb");
       if (token) {
         requestLoginFB(token);
       }
@@ -77,10 +78,10 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     console.log(user);
-    if ((user.accessToken || user.token) && isLoggedIn) {
+    if (user.accessToken || user.token) {
       navigation.navigate("MainApp", { user: user });
     }
-  }, [user, isLoggedIn]);
+  }, [user]);
 
   const Divider = (props) => {
     return (
