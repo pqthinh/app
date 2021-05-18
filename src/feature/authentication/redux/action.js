@@ -1,8 +1,6 @@
 import * as types from "./actionType";
 
 export function requestSignup( request ) {
-    console.log(request)
-
   return { type: types.SIGNUP_REQUEST, request };
 }
 export function reponseSignup(response) {

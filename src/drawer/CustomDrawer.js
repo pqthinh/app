@@ -1,22 +1,32 @@
 import React from "react";
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Linking,
-} from "react-native";
-import styles from "./styles";
+import { SafeAreaView, View, Image, Text, Linking } from "react-native";
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/Feather";
-import { Avatar } from "react-native-paper";
+import GGAPI from "../feature/authentication/apiGG";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import styles from "./styles";
 
 const CustomSidebarMenu = (props) => {
+  const { navigation } = props;
+
+  const logout = async () => {
+    let StorageKey = "@MyApp:Auth";
+    let userReducer = "auth"
+    try {
+      await GGAPI.signOutAsync();
+      await AsyncStorage.removeItem(StorageKey);
+      await AsyncStorage.removeItem(userReducer);
+      await AsyncStorage.clear();
+    } catch (e) {
+      alert(`Failed to revoke token: ${e.message}`);
+    } finally  {
+      navigation.navigate("Login");
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -49,35 +59,25 @@ const CustomSidebarMenu = (props) => {
 
         <DrawerItem
           icon={({ color, size }) => (
-            <Icon name="git-branch" color={color} size={size} />
+            <Icon name="log-out" color={color} size={14} />
           )}
-          label="github.com/pqthinh/app"
-        />
-
-        <DrawerItem
-          style={styles.footerDrawer}
-          icon={({ color, size }) => (
-            <Icon name="log-out" color={color} size={size} />
-          )}
-          label="Sign Out"
-          onPress={() => {
-            // signOut();
-            console.log("sign out");
-          }}
+          label="Đăng xuất"
+          onPress={() => logout()}
         />
       </DrawerContentScrollView>
+      <View style={styles.footerDrawer}>
+        <Icon
+          name="git-branch"
+          color={"#000"}
+          size={12}
+          style={{ marginLeft: 20, marginRight: 10 }}
+        />
+        <Text onPress={() => Linking.openURL("https://github.com/pqthinh/app")}>
+          source code
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
 
 export default CustomSidebarMenu;
-
-{
-  /* <Avatar.Image size={50} source={require("../../assets/logo_lg.png")} /> */
-}
-{
-  /* <Image
-  source={require("../../assets/logo_lg.png")}
-  style={styles.sideMenuProfileIcon}
-/> */
-}

@@ -4,10 +4,9 @@ import * as authAction from "../redux/action";
 import auth from "./api";
 
 export function* fetchSignup(payload) {
-  console.log(payload, "sign up payload");
   const response = yield call(auth.signup, payload);
   yield delay(2000);
-  console.log(response, "response signup");
+  console.log(JSON.stringify(response), "response signup");
 
   if (response.data) {
     yield put(authAction.reponseSignup(response));
@@ -25,7 +24,7 @@ export function* fetchLogin(payload) {
   const response = yield call(auth.login, payload);
   yield delay(2000);
 
-  console.log(response, "response login");
+  console.log(JSON.stringify(response), "response login");
 
   if (response.data) {
     yield put(authAction.onLoginResponse(response));
@@ -69,6 +68,6 @@ export function* fetchLoginGG(payload) {
 export function* logout(payload) {
   const response = yield call(auth.logout, payload);
   yield delay(2000);
-  console.log(response, "login responsi")
+  console.log(JSON.stringify(response), "login responsi")
   yield put(authAction.logout());
 }

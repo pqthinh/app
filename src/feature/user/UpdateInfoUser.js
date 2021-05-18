@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
@@ -9,11 +8,12 @@ import {
   Keyboard,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
-import { Avatar } from "react-native-elements";
+import { Feather } from "react-native-vector-icons";
 import styles from "./styles";
 
-const UpdateInfoUser = ({ props }) => {
+const UpdateInfoUser = (props) => {
   const { navigation } = props;
   const [data, setData] = useState({
     email: "",
@@ -21,6 +21,7 @@ const UpdateInfoUser = ({ props }) => {
     name: "",
     password: "",
     gender: "",
+    avatar: "",
   });
 
   const handleChange = (field) => (value) => {
@@ -49,25 +50,21 @@ const UpdateInfoUser = ({ props }) => {
       </View>
     );
   };
+
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.up}>
-            <View style={styles.Logo}>
-              <Avatar.Image
-                source={{
-                  uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
-                }}
-              />
+            <Image
+              source={{
+                uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
+              }}
+              style={styles.Logo}
+            />
+            <View>
+              <Feather name="photo" size={30} />
             </View>
-            {/* <Avatar
-              size="xlarge"
-              rounded
-              title="ok"
-              onPress={() => console.log("Works!")}
-              activeOpacity={0.7}
-            /> */}
           </View>
           <View style={styles.down}>
             <View style={styles.textInputContainer}>
@@ -76,7 +73,7 @@ const UpdateInfoUser = ({ props }) => {
                 placeholder="Tên"
                 value={data.name}
                 onChangeText={handleChange("name")}
-              ></TextInput>
+              />
             </View>
 
             <View style={styles.textInputContainer}>
@@ -88,7 +85,7 @@ const UpdateInfoUser = ({ props }) => {
                 autoCapitalize="none"
                 value={data.email}
                 onChangeText={handleChange("email")}
-              ></TextInput>
+              />
             </View>
 
             <View style={styles.textInputContainer}>
@@ -98,7 +95,7 @@ const UpdateInfoUser = ({ props }) => {
                 secureTextEntry={true}
                 value={data.gender}
                 onChangeText={handleChange("gender")}
-              ></TextInput>
+              />
             </View>
             <View style={styles.textInputContainer}>
               <TextInput
@@ -107,7 +104,7 @@ const UpdateInfoUser = ({ props }) => {
                 autoCapitalize="none"
                 value={data.dateofbirth}
                 onChangeText={handleChange("dateofbirth")}
-              ></TextInput>
+              />
             </View>
 
             <View style={styles.textInputContainer}>
@@ -117,13 +114,13 @@ const UpdateInfoUser = ({ props }) => {
                 secureTextEntry={true}
                 value={data.password}
                 onChangeText={handleChange("password")}
-              ></TextInput>
+              />
             </View>
 
             <TouchableOpacity
               style={styles.updateButton}
               onPress={() => {
-                requestSignup(data);
+                Alert.alert("Đã gửi yêu cầu tcập nhật thông tin");
               }}
             >
               <Text style={styles.loginButtonTitle}>Cập nhật</Text>

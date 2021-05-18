@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginVertical: 20,
+    position: "relative",
   },
   sideMenuProfileIcon: {
     resizeMode: "center",
@@ -65,11 +66,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footerDrawer: {
-    // flex: 1,
-    flexDirection: 'column',
+    flex: 1,
+    flexDirection: "row",
     height: 80,
-    justifyContent: "space-around"
-  }
+    justifyContent: "flex-start",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    left: 50,
+  },
 });
 
 export default styles;

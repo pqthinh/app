@@ -1,32 +1,25 @@
-import * as React from 'react';
-import { Text, StatusBar, Button, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-// import SafeAreaView from 'react-native-safe-area-view';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import LoginScreen from '../feature/authentication/LoginScreen/login'
-import RegisterScreen from '../feature/authentication/SignUp'
-import MainApp from '../MainApp'
-import HomeStack from './HomeStack';
-import BottomTab from '../tab/BottomTab';
+import LoginScreen from "../feature/authentication/LoginScreen/login";
+import RegisterScreen from "../feature/authentication/SignUp";
+import MainApp from "../MainApp";
+import HomeStack from "./HomeStack";
+import BottomTab from "../tab/BottomTab";
+import ForgotPasswordScreen from "../feature/authentication/ForgotPassword";
 
 const Stack = createStackNavigator();
 
 export default function RootApp() {
   return (
     <SafeAreaProvider>
-      {/* <NavigationContainer> */}
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="MainApp" component={BottomTab} />
-        </Stack.Navigator>
-      {/* </NavigationContainer> */}
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="FogotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="MainApp" component={BottomTab} />
+      </Stack.Navigator>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-});

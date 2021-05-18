@@ -5,12 +5,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import TopTab from "./TopTab";
 
 const Tab = createBottomTabNavigator();
-import HomeScreen from "../feature/home/homeScreen/HomeScreen";
 import PostNewsScreen from "../feature/news/screen/postNews";
 import HomeStack from "../navigation/HomeStack";
 import CardScreen from "../feature/card/CardScreen";
 
-const SettingsScreen = ({ props }) => {
+const SettingsScreen = (props) => {
   const { navigation } = props;
   return (
     <View>
@@ -25,37 +24,47 @@ const IconPostNews = ({ color }) => {
       style={{
         position: "absolute",
         bottom: -10, // space from bottombar
-        height: 68,
-        width: 68,
-        borderRadius: 68,
+        height: 60,
+        width: 60,
+        borderRadius: 60,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e0e0e0",
       }}
     >
-      <MaterialCommunityIcons name="dolly" color={color || "#000"} size={68} />
+      <MaterialCommunityIcons
+        name="dolly"
+        color={color || "#000"}
+        size={50}
+        style={{ flex: 1, alignItems: "center" }}
+      />
     </View>
   );
 };
 
 function BottomTab() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: "#8BC34A",
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeStack}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Trang chủ",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="Updates"
+        name="Notify"
         component={SettingsScreen}
         options={{
-          tabBarLabel: "Updates",
+          tabBarLabel: "Thông báo",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="bell" color={color} size={26} />
           ),
@@ -73,9 +82,13 @@ function BottomTab() {
         name="Notifications"
         component={TopTab}
         options={{
-          tabBarLabel: "Notifications",
+          tabBarLabel: "Cài đặt",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="cog-outline"
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -83,7 +96,7 @@ function BottomTab() {
         name="Profile"
         component={SettingsScreen}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Trang cá nhân",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),

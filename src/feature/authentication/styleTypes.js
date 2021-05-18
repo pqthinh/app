@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     goToLogin: {
-        marginVertical: 40
+        marginTop: 20
     }
 });
 

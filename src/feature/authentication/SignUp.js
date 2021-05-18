@@ -9,6 +9,7 @@ import {
   Keyboard,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -44,9 +45,44 @@ const RegisterScreen = (props) => {
     }
   };
 
-  useEffect(() => {
-    (async () => {})();
-  }, []);
+  const handleSubmitForm = () => {
+    const regEmail =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!data.email) {
+      Alert.alert("Bạn chưa nhập email!");
+      return;
+    }
+    if (!regEmail.test(String(data.email).toLowerCase())) {
+      Alert.alert("Bạn nhập email không đúng định dạng!");
+      return;
+    }
+
+    const regPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+    if (!data.phone) {
+      Alert.alert("Bạn chưa nhập số điện thoại!");
+      return;
+    }
+    if (!regPhone.test(String(data.phone).toLowerCase())) {
+      Alert.alert("Bạn nhập sđt không đúng định dạng!");
+      return;
+    }
+
+    if (data.password.length < 6 || data.password.length > 30) {
+      Alert.alert("Kiểm tra lại đọ dài mật khẩu");
+      return;
+    }
+    if (data.repassword != data.repassword) {
+      Alert.alert("Mật khẩu nhập không khớp");
+      return;
+    }
+
+    if (!data.place) {
+      Alert.alert("Bạn chưa nhập địa chỉ");
+      return;
+    }
+
+    requestSignup(data);
+  };
 
   const Divider = (props) => {
     return (
@@ -66,8 +102,7 @@ const RegisterScreen = (props) => {
             <View style={styles.Logo}>
               <Image
                 source={{
-                  uri:
-                    "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
+                  uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
                 }}
                 style={[styles.imageLogo, { transform: [{ scale: 1.5 }] }]}
               />
@@ -134,7 +169,12 @@ const RegisterScreen = (props) => {
               ></TextInput>
             </View>
 
-            <TouchableOpacity style={styles.signupButton} onPress={()=> {requestSignup(data)}}>
+            <TouchableOpacity
+              style={styles.signupButton}
+              onPress={() => {
+                handleSubmitForm();
+              }}
+            >
               <Text style={styles.loginButtonTitle}>SIGNUP</Text>
             </TouchableOpacity>
             <View style={styles.clearBoth}></View>

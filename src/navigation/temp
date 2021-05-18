@@ -1,0 +1,38 @@
+// home stack
+
+{/* <NavigationContainer> headerMode="none"*/}
+{/* <Stack.Screen name="Chat" component={ChatTest} /> */}
+{/* </NavigationContainer> */}
+
+{/* <Stack.Screen
+    name="Register"
+    component={RegisterScreen}
+    options={() => ({
+    headerShown: false,
+    })}
+/> */}
+{/* <Stack.Screen name="MainApp" component={MainApp} /> */}
+
+
+onPress={() => navigation.openDrawer()}
+
+headerRight: (props) => (
+              <View style={styles.IconWrapper}>
+                <Feather
+                  name="phone-call"
+                  size={24}
+                  style={styles.IconWrapper}
+                  onPress={() => {
+                    console.log(props.phone)
+                  }}
+                />
+                <Feather
+                  name="more-vertical"
+                  size={24}
+                  style={styles.IconWrapper}
+                  onPress={() => {
+                    console.log("more")
+                  }}
+                />
+              </View>
+            ),
