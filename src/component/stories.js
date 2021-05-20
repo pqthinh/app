@@ -48,7 +48,7 @@ const StickyItemView = ({
 
   return (
     <Animated.View style={amazingAnimation}>
-      <View style={styles.itemStichkey}>
+      <View style={styles.itemSticky}>
         <Text>
           <MaterialCommunityIcons name="dolly" color={"#fff"} size={24} />
         </Text>

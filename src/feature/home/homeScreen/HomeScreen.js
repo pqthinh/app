@@ -9,13 +9,19 @@ import Stories from "../../../component/stories";
 import styles from "../style";
 
 const ListProduct = (props) => {
+  const { title, navigation } = props;
   return (
-    <View style={styles.ListProduct}>
-      <Item style={styles.ItemProduct} />
-      <Item style={styles.ItemProduct} />
-      <Item style={styles.ItemProduct} />
-      <Item style={styles.ItemProduct} />
-      <Item style={styles.ItemProduct} />
+    <View style={{ backgroundColor: "#fff", marginVertical: 10 }}>
+      <Text style={{ padding: 10, fontSize: 18, fontWeight: "500" }}>
+        {title}
+      </Text>
+      <View style={styles.ListProduct}>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </View>
     </View>
   );
 };
@@ -38,7 +44,7 @@ const HomeScreen = (props) => {
       <Banner />
       <Stories navigation={navigation} />
       <CategoryComponent navigation={navigation} />
-      <ListProduct navigation={navigation} />
+      <ListProduct navigation={navigation} title={"Tin rao bán mới"} />
       <ListProductlexDirection navigation={navigation} />
       <Button title="Go to chat" onPress={() => navigation.navigate("Chat")} />
       <Button

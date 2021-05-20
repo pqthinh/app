@@ -30,13 +30,30 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginTop: 5,
     width: heightImage + 10,
+    position: "relative"
   },
-  itemStichkey: {
+  itemSticky: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: STICKY_ITEM_BACKGROUNDS[1],
     height: 50,
     borderRadius: 50,
+  },
+  auth: {
+    position: "absolute",
+    bottom: 5,
+    left: 5,
+    fontWeight: "500",
+    color: "#fff",
+    fontSize: 10,
+    width: 80,
+    flexWrap: "wrap",
+    flex: 1
+  },
+  stickyAvatar: {
+    position: "absolute",
+    top: 5,
+    left: 5,
   },
   count: {
     position: "absolute",

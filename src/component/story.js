@@ -5,6 +5,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
+import { Avatar } from "react-native-paper";
 import styles from "./style";
 
 const currencyFormatter = require("currency-formatter");
@@ -43,7 +44,16 @@ export default function StoryItem(props) {
           source={{ uri: handleImage(news.anh) }}
           title={news.ten}
         />
-        <View></View>
+        <View style={styles.stickyAvatar}>
+          <Avatar.Image
+            size={40}
+            source={{
+              uri: "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
+            }}
+          />
+        </View>
+
+        <Text style={styles.auth}>Pham quang thinh</Text>
       </View>
     </TouchableOpacity>
   );

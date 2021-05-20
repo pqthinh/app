@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginHorizontal: 10,
-        marginVertical: 10,
+        marginHorizontal: 5,
+        marginVertical: 5,
         justifyContent: "center",
     },
     ItemProduct: {
-        marginHorizontal: 5,
-        marginVertical: 5,
+        marginHorizontal: 10,
+        marginVertical: 10,
     }
 })
 

@@ -39,12 +39,21 @@ export default function Item({ navigation, newspost, danhmuc }) {
   };
 
   const handleNavagateToDetail = () => {
-    navigation.navigate("Detail", {news})
-  }
+    navigation.navigate("Detail", { news });
+  };
 
   return (
     <TouchableOpacity onPress={() => handleNavagateToDetail()}>
-      <View style={styles.news}>
+      <View
+        style={[
+          styles.news,
+          {
+            marginHorizontal: 10,
+            marginVertical: 10,
+            backgroundColor: "#f0f0f0",
+          },
+        ]}
+      >
         <Image
           style={styles.image}
           source={{ uri: handleImage(news.anh) }}
