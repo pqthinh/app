@@ -1,13 +1,13 @@
-import React from "react";
-import { SafeAreaView, View, Image, Text, Linking } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerItem,
+  DrawerItemList,
 } from "@react-navigation/drawer";
+import React from "react";
+import { Image, Linking, SafeAreaView, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import GGAPI from "../feature/authentication/apiGG";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
 
 const CustomSidebarMenu = (props) => {
@@ -15,7 +15,7 @@ const CustomSidebarMenu = (props) => {
 
   const logout = async () => {
     let StorageKey = "@MyApp:Auth";
-    let userReducer = "auth"
+    let userReducer = "auth";
     try {
       await GGAPI.signOutAsync();
       await AsyncStorage.removeItem(StorageKey);
@@ -23,7 +23,7 @@ const CustomSidebarMenu = (props) => {
       await AsyncStorage.clear();
     } catch (e) {
       alert(`Failed to revoke token: ${e.message}`);
-    } finally  {
+    } finally {
       navigation.navigate("Login");
     }
   };

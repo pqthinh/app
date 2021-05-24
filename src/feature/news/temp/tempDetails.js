@@ -85,7 +85,153 @@ export default function DetailProduct() {
         <Text style={styles.headerTitle}>Shop</Text>
         <Icon name="shopping-bag" size={26} />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}></ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          <Image
+            style={{ height: 500, resizeMode: "cover" }}
+            source={{
+              uri: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            }}
+          />
+        </View>
+        <View style={styles.detailsView}>
+          <View style={styles.productTitleView}>
+            <Text style={styles.productTitle}>Men's OutCast T-Shirt</Text>
+            <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
+              <FAIcon name={isFavourite ? "heart" : "heart-o"} size={22} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.productPriceView}>
+            <Text style={styles.discountedPriceText}>$29.99</Text>
+            <Text style={styles.actualPriceText}>$40.00</Text>
+          </View>
+          <View style={{ marginTop: 10 }}>
+            <Rating rating={4} maxRating={5} />
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                marginBottom: 10,
+              }}
+            >
+              Size:
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              {size.map((s) => (
+                <TouchableOpacity
+                  key={s.id}
+                  style={
+                    selectedSize === s.label ? styles.tagSelected : styles.tag
+                  }
+                  onPress={() => setSelectedSize(s.label)}
+                >
+                  <Text
+                    style={
+                      selectedSize === s.label
+                        ? styles.tagLabelSelected
+                        : styles.tagLabel
+                    }
+                  >
+                    {s.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", paddingHorizontal: 10 }}>
+          <TouchableOpacity style={styles.buyNowButton}>
+            <Text style={styles.buttonText}>Buy Now</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.addToCartButton}>
+            <Text style={[styles.buttonText, { color: "#111" }]}>
+              Add to Cart
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ marginTop: 10, backgroundColor: "#fff" }}>
+          <TouchableOpacity
+            style={styles.productDescriptionHeader}
+            onPress={() => setSeeFullDescription((prev) => !prev)}
+          >
+            <Text style={{ fontSize: 18 }}>Product Description</Text>
+            <TouchableOpacity
+              onPress={() => setSeeFullDescription((prev) => !prev)}
+            >
+              {seeFullDescription ? (
+                <Icon name="chevron-up" size={26} />
+              ) : (
+                <Icon name="chevron-down" size={26} />
+              )}
+            </TouchableOpacity>
+          </TouchableOpacity>
+          <View style={{ padding: 10 }}>
+            <Text>
+              {seeFullDescription
+                ? `${productDescription}`
+                : `${productDescription.split("\n")[0]}`}
+            </Text>
+          </View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              marginHorizontal: 10,
+            }}
+          >
+            More Products
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={{ flex: 1, flexDirection: "row", paddingTop: 10 }}>
+              {moreProducts.map((item) => (
+                <View style={{ width: 180, marginHorizontal: 10 }} key={item}>
+                  <View style={styles.moreProductImageView}>
+                    <Image
+                      style={{ flex: 1 }}
+                      source={{
+                        uri: item.productImage,
+                      }}
+                    />
+                  </View>
+                  <View style={{ marginTop: 8 }}>
+                    <Text style={styles.moreProductName}>
+                      {item.productName}
+                    </Text>
+                    <View style={styles.moreProductPriceView}>
+                      <Text style={styles.moreProductPrice}>
+                        ${item.productPrice}
+                      </Text>
+                      <View style={{ flexDirection: "row" }}>
+                        <Icon
+                          style={styles.moreProductIcon}
+                          name="heart"
+                          size={18}
+                        />
+                        <Icon
+                          style={styles.moreProductIcon}
+                          name="shopping-bag"
+                          size={18}
+                        />
+                        <Icon
+                          style={styles.moreProductIcon}
+                          name="share"
+                          size={18}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <TouchableOpacity style={styles.moreProductBuyButton}>
+                    <Text style={styles.moreProductBuyButtonText}>Buy</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+        <View style={{ height: 40 }}></View>
+      </ScrollView>
     </View>
   );
 }

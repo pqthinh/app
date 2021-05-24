@@ -9,6 +9,7 @@ const Tab = createBottomTabNavigator();
 import PostNewsScreen from "../feature/news/screen/postNews";
 import HomeStack from "../navigation/HomeStack";
 import CardScreen from "../feature/card/CardScreen";
+import StackNews from "../feature/news/StackNews";
 
 const SettingsScreen = (props) => {
   const { navigation } = props;
@@ -79,7 +80,7 @@ function BottomTab(props) {
       />
       <Tab.Screen
         name="Post"
-        component={PostNewsScreen}
+        component={StackNews}
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ color }) => <IconPostNews color={color} />,

@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import {
-  useTheme,
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from "react-native-paper";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import React, { useState } from "react";
+import { View } from "react-native";
+import {
+  Avatar,
+  Caption,
+  Drawer,
+  Paragraph,
+  Switch,
+  Text,
+  Title,
+  TouchableRipple,
+  useTheme,
+} from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AuthContext } from "../component/context";
 import styles from "./styles";
 
-import { AuthContext } from "../component/context";
-
 export default function DrawerContent(props) {
-  const { navigation } = props
+  const { navigation } = props;
   const paperTheme = useTheme();
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});

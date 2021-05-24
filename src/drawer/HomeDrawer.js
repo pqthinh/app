@@ -1,11 +1,9 @@
-import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-
-import RootApp from "../navigation/RootStack";
+import React from "react";
 import DetailNews from "../feature/news/screen/detailsNews";
+import RootApp from "../navigation/RootStack";
 import CustomSidebarMenu from "./CustomDrawer";
-import styles from "./styles";
 
 const Drawer = createDrawerNavigator();
 
