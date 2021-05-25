@@ -32,7 +32,6 @@ const LoginScreen = (props) => {
 
   const handleLoginWithFB = () => {
     LoginAPI.logIn().then((token) => {
-      // console.log(token, "token fb");
       if (token) {
         requestLoginFB(token);
       }
@@ -77,7 +76,6 @@ const LoginScreen = (props) => {
   };
 
   useEffect(() => {
-    console.log(user);
     if (user.accessToken || user.token) {
       navigation.navigate("MainApp", { user: user });
     }

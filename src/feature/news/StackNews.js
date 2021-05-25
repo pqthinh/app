@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import DetailProduct from "./screen/detailProduct";
 import PostNewsScreen from "./screen/postNews";
+import DetailsNewsScreen from "./screen/detailsNews";
 
 const Stack = createStackNavigator();
 
@@ -14,15 +15,15 @@ export default function StackNews() {
           headerStyle: {
             backgroundColor: "#aed581",
           },
-          headerTintColor: "white",
+          headerTintColor: "#000",
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: "normal",
             alignSelf: "center",
             textAlign: "center",
           },
         }}
       >
-        <Stack.Screen name="Details" component={DetailProduct} />
+        <Stack.Screen name="Details" component={DetailsNewsScreen} />
         <Stack.Screen name="PostNews" component={PostNewsScreen} />
         <Stack.Screen name="PreviewNews" component={DetailProduct} />
       </Stack.Navigator>
