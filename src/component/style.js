@@ -25,18 +25,18 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   news: {
-    borderWidth: 0.25,
+    borderWidth: 1,
     borderColor: "#e0e0e0",
     marginRight: 5,
-    marginTop: 5,
+    // marginTop: 5,
     width: heightImage + 10,
-    position: "relative"
+    position: "relative",
   },
   itemSticky: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: STICKY_ITEM_BACKGROUNDS[1],
-    height: 50,
+    height: "20%",
     borderRadius: 50,
   },
   auth: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     width: 80,
     flexWrap: "wrap",
-    flex: 1
+    flex: 1,
   },
   stickyAvatar: {
     position: "absolute",

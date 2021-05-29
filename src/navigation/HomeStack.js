@@ -23,9 +23,7 @@ export default function HomeStack(props) {
           component={HomeScreen}
           options={{
             headerTitle: () => (
-              <TouchableOpacity
-                onPress={(() => navigation.navigate("Chat"))}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
                 <SearchComponent />
               </TouchableOpacity>
             ),
@@ -36,7 +34,7 @@ export default function HomeStack(props) {
                   size={24}
                   style={styles.IconWrapper}
                   onPress={() => {
-                    navigation.navigate("ChatStack" ,  {screen: "ListContact"});
+                    navigation.navigate("ChatStack", { screen: "ListContact" });
                   }}
                 />
                 <Feather
@@ -44,7 +42,7 @@ export default function HomeStack(props) {
                   size={24}
                   style={styles.IconWrapper}
                   onPress={() => {
-                    navigation.navigate("ChatStack" ,  {screen: "ListContact"});
+                    navigation.navigate("ChatStack", { screen: "ListContact" });
                   }}
                 />
               </View>
@@ -77,7 +75,7 @@ export default function HomeStack(props) {
         <Stack.Screen
           name="ChatStack"
           component={StackChat}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           // options={{
           //   headerBackTitle: <Feather name="arrow-left" size={24} />,
           //   headerStyle: {

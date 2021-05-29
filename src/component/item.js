@@ -33,17 +33,16 @@ export default function Item({ navigation, newspost, danhmuc }) {
   const news = fakeNews;
   const handleImage = (anh) => {
     let imgs = anh;
-    if (imgs.length == 0 || anh.length == 0)
-      return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
+    if (imgs.length == 0 || anh.length == 0) return "https://picsum.photos/300";
     return imgs[0];
   };
 
-  const handleNavagateToDetail = () => {
+  const handleNavigateToDetail = () => {
     navigation.navigate("Detail", { news });
   };
 
   return (
-    <TouchableOpacity onPress={() => handleNavagateToDetail()}>
+    <TouchableOpacity onPress={() => handleNavigateToDetail()}>
       <View
         style={[
           styles.news,

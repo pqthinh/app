@@ -1,40 +1,64 @@
-import React, { useEffect, useState } from "react";
+import { AntDesign, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Linking,
   Alert,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  TextInput,
+  View,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Feather } from "react-native-vector-icons";
 import { SliderBox } from "react-native-image-slider-box";
-import { Divider, Avatar, Card } from "react-native-paper";
-import { Rating, AirbnbRating } from "react-native-elements";
-import CommentComponent from "../../../component/comment";
+import { Avatar, Card, Divider } from "react-native-paper";
+import { Feather } from "react-native-vector-icons";
+import CommentComponent from "../../../component/CommentComponent/comment";
+const currencyFormatter = require("currency-formatter");
+
+const fakeNews = {
+  anh: [
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+  ],
+  giaban: 1000000,
+  ten: "Test product",
+  diadiem: "Ha noi, Me tri ha",
+  ngaydangtin: new Date(),
+  ngaycapnhat: new Date(),
+  user: {
+    name: "thinh",
+    place: "Thai Binh",
+    star: "4",
+    phone: "0866564502",
+    avatar_url: "https://picsum.photos/200",
+  },
+  mieuta: `Cấu hình : SURFACE LAPTOP 3 I5/ RAM 8GB/ SSD 256GB 13INCH NEW
+-CPU: Intel® Core™ Core i5
+-GPU: Intel Iris Plus Graphics
+-RAM: 8GB 3733MHz DDR4
+-Ổ lưu trữ: 256GB removable SSD
+-Kích thước: 308.1 x 223.27 x 14.48 mm
+-Trọng lượng: 1283g
+-Hệ điều hành: Widows 10`,
+};
 
 const DetailsNewsScreen = ({ navigation, route }) => {
-  const fake = [
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
-  ];
+  const [news, setNews] = useState(fakeNews);
   const [comment, setComment] = useState("");
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: <Text style={styles.title}>Máy khoan đẹp giá rẻ</Text>,
+      title: <Text style={styles.title}>{news.ten}</Text>,
       headerRight: () => (
         <View style={styles.IconWrapper}>
           <Feather
             name="phone-call"
             size={24}
             style={styles.IconWrapper}
-            onPress={() => Linking.openURL(`tel: ${phone || "0866564502"}`)}
+            onPress={() =>
+              Linking.openURL(`tel: ${news.user.phone || "0866564502"}`)
+            }
           />
           <Feather
             name="more-vertical"
@@ -46,94 +70,178 @@ const DetailsNewsScreen = ({ navigation, route }) => {
           />
         </View>
       ),
+      // headerLeft: (props) => <View>
+
+      // </View>,
     });
   }, []);
 
   return (
-    <ScrollView>
-      <View style={{ width: "100%", height: 150 }}>
-        <SliderBox
-          images={fake}
-          autoplay
-          circleLoop
-          sliderBoxHeight={220}
-          resizeMethod={"resize"}
-          resizeMode={"cover"}
-          paginationBoxStyle={{
-            position: "absolute",
-            bottom: 0,
-            padding: 0,
-            alignItems: "center",
-            alignSelf: "center",
-            justifyContent: "center",
-            paddingVertical: 10,
-          }}
-        />
-      </View>
-
-      <View style={styles.blockName}>
-        <Text style={styles.title}>{"Máy khoan tốt giả rẻ"}</Text>
-        <Text style={styles.money}>{4000000}</Text>
-        <Text style={styles.time}>
-          {new Date().toLocaleDateString("vi-VN")}
-        </Text>
-        <View style={styles.function}>
-          <View style={styles.IconWrapper}>
-            <Feather
-              name="shopping-cart"
-              size={24}
-              style={styles.IconWrapper}
-              onPress={() => {
-                console.log("more");
-              }}
-            />
-          </View>
-          <View>
-            <Feather
-              name="heart"
-              size={24}
-              style={styles.IconWrapper}
-              onPress={() => {
-                console.log("more");
-              }}
-            />
-          </View>
-        </View>
-      </View>
-      <View>
-        <Divider />
-        <View style={styles.blockUser}>
-          <Card.Title
-            title={"Pham quang thinh"}
-            subtitle="4,5 sao"
-            left={(props) => (
-              <Avatar.Image
-                size={50}
-                source={{ uri: "https://picsum.photos/700" }}
-              />
-            )}
-            right={(props) => (
-              <TouchableOpacity
-                onPress={() => Alert.alert("Xem trang ca nhan")}
-                style={styles.moreInfoUser}
-              >
-                <Text style={{ color: "#fe9900" }}>Trang cá nhân</Text>
-              </TouchableOpacity>
-            )}
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
+        <View style={{ width: "100%", height: 150 }}>
+          <SliderBox
+            images={news.anh}
+            autoplay
+            circleLoop
+            sliderBoxHeight={220}
+            resizeMethod={"resize"}
+            resizeMode={"cover"}
+            paginationBoxStyle={{
+              position: "absolute",
+              bottom: 0,
+              padding: 0,
+              alignItems: "center",
+              alignSelf: "center",
+              justifyContent: "center",
+              paddingVertical: 10,
+            }}
           />
         </View>
-        <Divider />
-      </View>
 
-      <View style={styles.description}>
-        <Text>{"         Discription\n".repeat(8)}</Text>
-      </View>
+        <View style={styles.blockName}>
+          <Text style={styles.title}>{news.ten}</Text>
+          <Text style={styles.money}>
+            Giá bán:{" "}
+            {" " + currencyFormatter.format(news.giaban, { code: "VND" })}
+          </Text>
+          <Text style={styles.time}>
+            Ngày đăng tin: {" " + new Date().toLocaleDateString("vi-VN")}
+          </Text>
+          <Text> Địa chỉ: {" " + news.diadiem}</Text>
+          <View style={styles.function}>
+            <View style={styles.IconWrapper}>
+              <Feather
+                name="shopping-cart"
+                size={24}
+                style={styles.IconWrapper}
+                onPress={() => {
+                  console.log("more");
+                }}
+              />
+            </View>
+            <View>
+              <Feather
+                name="heart"
+                size={24}
+                style={styles.IconWrapper}
+                onPress={() => {
+                  console.log("more");
+                }}
+              />
+            </View>
+          </View>
+        </View>
+        <View>
+          <Divider />
+          <View style={styles.blockUser}>
+            <Card.Title
+              title={news.user.name}
+              subtitle={news.user.star + " sao"}
+              left={(props) => (
+                <Avatar.Image
+                  size={50}
+                  source={{ uri: news.user.avatar_url }}
+                />
+              )}
+              right={(props) => (
+                <TouchableOpacity
+                  onPress={() => Alert.alert("Xem trang ca nhan")}
+                  style={styles.moreInfoUser}
+                >
+                  <Text style={{ color: "#fe9900" }}>Trang cá nhân</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+          <Divider />
+        </View>
 
-      <View>
-        <CommentComponent comment={comment} setComent={setComment} />
-        <Text>comment wrapper</Text>
+        <View style={styles.description}>
+          <Text>{news.mieuta}</Text>
+        </View>
+
+        <View>
+          <CommentComponent />
+        </View>
+      </ScrollView>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          height: 40,
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          left: 0,
+          backgroundColor: "#fff",
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            backgroundColor: "#aed581",
+            paddingHorizontal: 10,
+            alignItems: "center",
+            paddingVertical: 10,
+          }}
+          onPress={() => Linking.openURL(`tel: ${news.user.phone}`)}
+        >
+          <Ionicons
+            name="ios-call"
+            style={{ paddingRight: 10 }}
+            size={24}
+            color="#000"
+          />
+          <Text style={{ color: "#000" }}>Gọi điện</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            color: "#aed581",
+            paddingHorizontal: 10,
+            alignItems: "center",
+            paddingVertical: 10,
+          }}
+          onPress={() => Linking.openURL(`sms: ${news.user.phone}`)}
+        >
+          <FontAwesome5
+            name="sms"
+            size={24}
+            color="#aed581"
+            style={{ paddingRight: 10 }}
+          />
+          <Text style={{ color: "black" }}>Nhắn tin</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            backgroundColor: "#aed581",
+            paddingHorizontal: 10,
+            alignItems: "center",
+            paddingVertical: 10,
+          }}
+          onPress={() => {
+            alert("Chat online");
+            navigation.navigate("ChatDetails", {
+              title: `${news.user.name}`,
+              phone: `${news.user.phone}`,
+              id: news.id,
+            });
+          }}
+        >
+          <AntDesign
+            name="wechat"
+            style={{ paddingRight: 10 }}
+            size={24}
+            color="#000"
+          />
+          <Text style={{ color: "#000" }}>Chat online</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -148,8 +256,9 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   title: {
-    fontWeight: "600",
+    fontWeight: "bold",
     fontSize: 16,
+    marginVertical: 5,
   },
   money: { color: "red" },
   function: {

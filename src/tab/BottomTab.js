@@ -10,6 +10,7 @@ import PostNewsScreen from "../feature/news/screen/postNews";
 import HomeStack from "../navigation/HomeStack";
 import CardScreen from "../feature/card/CardScreen";
 import StackNews from "../feature/news/StackNews";
+import ProfileScreen from "../feature/user/ProfileScreen";
 
 const SettingsScreen = (props) => {
   const { navigation } = props;
@@ -87,22 +88,18 @@ function BottomTab(props) {
         }}
       />
       <Tab.Screen
-        name="Notifications"
+        name="Card"
         component={TopTab}
         options={{
-          tabBarLabel: "Cài đặt",
+          tabBarLabel: "Giỏ hàng",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="cog-outline"
-              color={color}
-              size={26}
-            />
+            <MaterialCommunityIcons name="shopping" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
         name="Profile"
-        component={SettingsScreen}
+        component={ProfileScreen}
         options={{
           tabBarLabel: "Trang cá nhân",
           tabBarIcon: ({ color }) => (
