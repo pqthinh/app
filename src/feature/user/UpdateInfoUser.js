@@ -13,11 +13,10 @@ import {
 import { Feather } from "react-native-vector-icons";
 import styles from "./styles";
 
-const UpdateInfoUser = (props) => {
-  const { navigation } = props;
+const UpdateInfoUser = ({ navigation }) => {
   const [data, setData] = useState({
     email: "",
-    dateofbirth: "",
+    dateOfBirth: "",
     name: "",
     password: "",
     gender: "",
@@ -51,19 +50,85 @@ const UpdateInfoUser = (props) => {
     );
   };
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: (
+        <Text style={{ fontWeight: "bold", color: "#fff" }}>
+          Cập nhật thông tin
+        </Text>
+      ),
+      headerLeft: () => (
+        <View style={{ marginHorizontal: 5 }}>
+          <Feather
+            name="arrow-left"
+            size={24}
+            color="#fff"
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={{ marginRight: 0 }}
+          />
+        </View>
+      ),
+      headerRight: () => (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            marginHorizontal: 5,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Feather
+            name="heart"
+            size={24}
+            style={styles.IconWrapper}
+            onPress={() => Alert.alert("preview news")}
+            color="#fff"
+          />
+          <Feather
+            name="more-vertical"
+            size={24}
+            style={styles.IconWrapper}
+            onPress={() => {
+              console.log("more");
+            }}
+            color="#fff"
+          />
+        </View>
+      ),
+    });
+  }, []);
+
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.up}>
-            <Image
-              source={{
-                uri: "https://scontent.fhan2-2.fna.fbcdn.net/v/t1.15752-9/167274302_468639401019563_7861387796358691871_n.png?_nc_cat=111&ccb=1-3&_nc_sid=58c789&_nc_ohc=aJJHOeKZ9vIAX_mRS02&_nc_ht=scontent.fhan2-2.fna&oh=4f59c8753225bfff847b2a5b6b827ab5&oe=60888C38",
+            <View
+              style={{
+                width: 100,
+                height: 100,
+                marginVertical: 20,
+                backgroundColor: "red",
+                borderRadius: 100,
               }}
-              style={styles.Logo}
-            />
-            <View>
-              <Feather name="photo" size={30} />
+            >
+              <Image
+                source={{
+                  uri: "https://picsum.photos/200",
+                }}
+                style={[
+                  styles.Logo,
+                  { justifyContent: "center", borderRadius: 100 },
+                ]}
+              />
+              <Feather
+                name="add-a-photo"
+                size={30}
+                style={{ position: "absolute", bottom: 0, right: 0 }}
+              />
             </View>
           </View>
           <View style={styles.down}>
@@ -102,8 +167,8 @@ const UpdateInfoUser = (props) => {
                 style={styles.textInput}
                 placeholder="Ngày sinh"
                 autoCapitalize="none"
-                value={data.dateofbirth}
-                onChangeText={handleChange("dateofbirth")}
+                value={data.dateOfBirth}
+                onChangeText={handleChange("dateOfBirth")}
               />
             </View>
 
@@ -120,13 +185,13 @@ const UpdateInfoUser = (props) => {
             <TouchableOpacity
               style={styles.updateButton}
               onPress={() => {
-                Alert.alert("Đã gửi yêu cầu tcập nhật thông tin");
+                Alert.alert("Đã gửi yêu cầu cập nhật thông tin");
               }}
             >
               <Text style={styles.loginButtonTitle}>Cập nhật</Text>
             </TouchableOpacity>
             <View style={styles.clearBoth}></View>
-            <Divider style={styles.divider}></Divider>
+            {/* <Divider /> */}
 
             <Text style={styles.goToLogin} onPress={() => navigation.goBack()}>
               Hủy

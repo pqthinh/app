@@ -1,61 +1,73 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
+  Alert,
 } from "react-native";
 import {
-  List,
   Avatar,
+  Caption,
   Divider,
+  List,
   Paragraph,
   Title,
-  Caption,
 } from "react-native-paper";
+import { Feather } from "react-native-vector-icons";
 import { connect } from "react-redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import axios from "axios";
-import { BASE_URL } from "../../config/url";
 import EmptyScreen from "../../component/EmptyScreen";
 import ItemFlex from "../../component/item-flex";
+import { BASE_URL } from "../../config/url";
 
 const ProfileScreen = ({ navigation, user }) => {
   const [currentUser, setCurrentUser] = useState(user);
-
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: (
+        <Text style={{ fontWeight: "bold", color: "#fff" }}>Trang cá nhân</Text>
+      ),
+      headerRight: () => (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            marginHorizontal: 5,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Feather
+            name="heart"
+            size={24}
+            style={styles.IconWrapper}
+            onPress={() => Alert.alert("preview news")}
+            color="#fff"
+          />
+          <Feather
+            name="more-vertical"
+            size={24}
+            style={styles.IconWrapper}
+            onPress={() => {
+              console.log("more");
+            }}
+            color="#fff"
+          />
+        </View>
+      ),
+    });
+  }, []);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <MaterialCommunityIcons
-          name="keyboard-backspace"
-          size={24}
-          color="black"
-          onPress={() => {
-            navigation.navigate("Explore");
-          }}
-        />
-        <Text style={{ fontSize: 16 }}>{currentUser.name}</Text>
-        <MaterialCommunityIcons
-          size={24}
-          name="backspace-outline"
-          color="black"
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        />
-      </View>
-
       <ScrollView>
         <List.Section>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image
                 source={{
-                  uri:
-                    currentUser.avatar ||
-                    "https://api.adorable.io/avatars/50/abott@adorable.png",
+                  uri: currentUser.avatar || "https://picsum.photos/200",
                 }}
                 size={50}
               />
@@ -83,9 +95,8 @@ const ProfileScreen = ({ navigation, user }) => {
               <Text
                 style={styles.buttontext}
                 onPress={() =>
-                  navigation.navigate("EditInfor", {
-                    id: currentUser.id,
-                    password: currentUser.password,
+                  navigation.navigate("UpdateProfile", {
+                    user: currentUser,
                   })
                 }
               >

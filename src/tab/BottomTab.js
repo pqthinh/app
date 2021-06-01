@@ -1,32 +1,23 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { connect } from "react-redux";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from "react";
+import { View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import TopTab from "./TopTab";
+import { connect } from "react-redux";
+import CardScreen from "../feature/card/CardScreen";
+import StackCard from "../feature/card/CardStack";
+import StackNews from "../feature/news/StackNews";
+import StackNotify from "../feature/Notifycation/Notifications";
+import StackUser from "../feature/user/StackUser";
+import HomeStack from "../navigation/HomeStack";
 
 const Tab = createBottomTabNavigator();
-import PostNewsScreen from "../feature/news/screen/postNews";
-import HomeStack from "../navigation/HomeStack";
-import CardScreen from "../feature/card/CardScreen";
-import StackNews from "../feature/news/StackNews";
-import ProfileScreen from "../feature/user/ProfileScreen";
-
-const SettingsScreen = (props) => {
-  const { navigation } = props;
-  return (
-    <View>
-      <CardScreen navigation={navigation} />
-    </View>
-  );
-};
 
 const IconPostNews = ({ color }) => {
   return (
     <View
       style={{
         position: "absolute",
-        bottom: -10, // space from bottombar
+        bottom: -10,
         height: 60,
         width: 60,
         borderRadius: 60,
@@ -71,7 +62,7 @@ function BottomTab(props) {
       />
       <Tab.Screen
         name="Notify"
-        component={SettingsScreen}
+        component={StackNotify}
         options={{
           tabBarLabel: "Thông báo",
           tabBarIcon: ({ color }) => (
@@ -89,7 +80,7 @@ function BottomTab(props) {
       />
       <Tab.Screen
         name="Card"
-        component={TopTab}
+        component={StackCard}
         options={{
           tabBarLabel: "Giỏ hàng",
           tabBarIcon: ({ color }) => (
@@ -99,7 +90,7 @@ function BottomTab(props) {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={StackUser}
         options={{
           tabBarLabel: "Trang cá nhân",
           tabBarIcon: ({ color }) => (
