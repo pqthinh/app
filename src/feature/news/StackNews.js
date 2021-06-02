@@ -1,11 +1,11 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import DetailProduct from "./screen/detailProduct";
-import PostNewsScreen from "./screen/postNews";
-import DetailsNewsScreen from "./screen/detailsNews";
-import { View, Text } from "react-native";
 import { Feather } from "react-native-vector-icons";
+import DetailsNewsScreen from "./screen/detailsNews";
+import PostNewsScreen from "./screen/postNews";
+import PreviewScreen from "./screen/preview";
 
 const Stack = createStackNavigator();
 
@@ -40,7 +40,7 @@ export default function StackNews({ navigation }) {
       >
         <Stack.Screen name="PostNews" component={PostNewsScreen} />
         <Stack.Screen name="Details" component={DetailsNewsScreen} />
-        <Stack.Screen name="PreviewNews" component={DetailProduct} />
+        <Stack.Screen name="PreviewNews" component={PreviewScreen} />
       </Stack.Navigator>
     </SafeAreaProvider>
   );

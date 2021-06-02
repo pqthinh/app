@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import * as ImagePicker from "expo-image-picker";
+import * as firebase from "firebase";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Image,
-  View,
-  Platform,
   Alert,
-  StyleSheet,
+  Dimensions,
+  Image,
+  Platform,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  Dimensions,
+  View,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import { Picker } from "@react-native-picker/picker";
 import { TextInput } from "react-native-paper";
-import { Feather, Octicons, MaterialIcons } from "@expo/vector-icons";
-import * as firebase from "firebase";
 import { connect } from "react-redux";
 import Helpers from "../../../utils/Constants/index";
 
@@ -41,16 +41,19 @@ const PostNewsScreen = (props) => {
   const [tieude, setTieude] = useState(null);
   const [mieuta, setMieuta] = useState(null);
 
-  const news = {
-    idnguoiban: user.id || 5,
-    loaitin: theloai,
-    tendanhmuc: danhmuc,
-    diadiem: xa + ", " + huyen + ", " + tinh,
-    giaban: giaban,
-    ten: tieude,
-    mieuta: mieuta,
-    anh: img,
-  };
+  const news = useMemo(() => {
+    return {
+      idnguoiban: user.id || 5,
+      loaitin: theloai,
+      tendanhmuc: danhmuc,
+      diadiem: xa + ", " + huyen + ", " + tinh,
+      giaban: giaban,
+      ten: tieude,
+      mieuta: mieuta,
+      anh: image,
+    };
+  }, [image, user, theloai, danhmuc, xa, huyen, tinh, giaban, tieude, mieuta]);
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -183,6 +186,10 @@ const PostNewsScreen = (props) => {
     }
   }, [news]);
 
+  const _handleToConfirm = useCallback((news) => {
+    navigation.navigate("PreviewNews", { news: news });
+  }, []);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: (
@@ -311,7 +318,10 @@ const PostNewsScreen = (props) => {
           />
 
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => {}} style={styles.submit}>
+            <TouchableOpacity
+              onPress={() => _handleToConfirm(news)}
+              style={styles.submit}
+            >
               <Text>Đăng tin</Text>
             </TouchableOpacity>
           </View>

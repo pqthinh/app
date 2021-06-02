@@ -121,7 +121,11 @@ const UpdateInfoUser = ({ navigation }) => {
                 }}
                 style={[
                   styles.Logo,
-                  { justifyContent: "center", borderRadius: 100 },
+                  {
+                    justifyContent: "center",
+                    borderRadius: 100,
+                    width: "100%",
+                  },
                 ]}
               />
               <Feather
