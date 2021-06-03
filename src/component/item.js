@@ -29,8 +29,8 @@ const fakeNews = {
   },
 };
 
-export default function Item({ navigation, newspost, danhmuc }) {
-  const news = fakeNews;
+export default function Item({ navigation, newsPost, danhmuc }) {
+  const news = newsPost || fakeNews;
   const handleImage = (anh) => {
     let imgs = anh;
     if (imgs.length == 0 || anh.length == 0) return "https://picsum.photos/300";
@@ -50,11 +50,13 @@ export default function Item({ navigation, newspost, danhmuc }) {
             marginHorizontal: 10,
             marginVertical: 10,
             backgroundColor: "#f0f0f0",
+            flex: 1,
+            justifyContent: "center",
           },
         ]}
       >
         <Image
-          style={styles.image}
+          style={[styles.image, { resizeMode: "cover", width: "95%" }]}
           source={{ uri: handleImage(news.anh) }}
           title={news.ten}
         />

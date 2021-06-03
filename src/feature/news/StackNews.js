@@ -6,6 +6,7 @@ import { Feather } from "react-native-vector-icons";
 import DetailsNewsScreen from "./screen/detailsNews";
 import PostNewsScreen from "./screen/postNews";
 import PreviewScreen from "./screen/preview";
+import SearchProductScreen from "./screen/searchProduct";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ export default function StackNews({ navigation }) {
         <Stack.Screen name="PostNews" component={PostNewsScreen} />
         <Stack.Screen name="Details" component={DetailsNewsScreen} />
         <Stack.Screen name="PreviewNews" component={PreviewScreen} />
+        <Stack.Screen name="Search" component={SearchProductScreen} />
       </Stack.Navigator>
     </SafeAreaProvider>
   );

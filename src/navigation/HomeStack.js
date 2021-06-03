@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -10,11 +10,17 @@ import ChatTest from "../component/chat/network";
 import UpdateInfoUser from "../feature/user/UpdateInfoUser";
 import SearchComponent from "../component/SearchComponent";
 import StackChat from "../feature/chat/StackChat";
+import postNews from "../feature/news/screen/postNews";
+import DetailsNewsScreen from "../feature/news/screen/detailsNews";
+import StackUser from "../feature/user/StackUser";
+import StackNews from "../feature/news/StackNews";
+import StackCard from "../feature/card/CardStack";
 
 const Stack = createStackNavigator();
 
 export default function HomeStack(props) {
   const { navigation } = props;
+  const [search, setSearch] = useState("");
   return (
     <SafeAreaProvider>
       <Stack.Navigator>
@@ -23,8 +29,16 @@ export default function HomeStack(props) {
           component={HomeScreen}
           options={{
             headerTitle: () => (
-              <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
-                <SearchComponent />
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("News", { screen: "Search" })
+                }
+              >
+                <SearchComponent
+                  value={search}
+                  onChangeData={setSearch}
+                  navigation={navigation}
+                />
               </TouchableOpacity>
             ),
             headerRight: () => (
@@ -34,7 +48,7 @@ export default function HomeStack(props) {
                   size={24}
                   style={styles.IconWrapper}
                   onPress={() => {
-                    navigation.navigate("ChatStack", { screen: "ListContact" });
+                    navigation.navigate("Card");
                   }}
                 />
                 <Feather
@@ -76,23 +90,32 @@ export default function HomeStack(props) {
           name="ChatStack"
           component={StackChat}
           options={{ headerShown: false }}
-          // options={{
-          //   headerBackTitle: <Feather name="arrow-left" size={24} />,
-          //   headerStyle: {
-          //     backgroundColor: "#aed581",
-          //   },
-          //   headerTintColor: "white",
-          //   headerTitleStyle: {
-          //     fontWeight: "bold",
-          //     alignSelf: "center",
-          //     textAlign: "center",
-          //   },
-          //   title: "Danh sách hội thoại"
-          // }}
         />
-        <Stack.Screen name="Profile" component={ChatTest} />
-        <Stack.Screen name="Detail" component={ChatTest} />
-        <Stack.Screen name="PostNews" component={UpdateInfoUser} />
+        <Stack.Screen
+          name="Card"
+          component={StackCard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="News"
+          component={StackNews}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={StackUser}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Detail"
+          component={DetailsNewsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PostNews"
+          component={StackNews}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </SafeAreaProvider>
   );

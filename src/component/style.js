@@ -1,8 +1,9 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 const heightImage =
   Platform.OS == "android" ? 150 : Platform.OS == "ios" ? 120 : 180;
 const STICKY_ITEM_BACKGROUNDS = ["#01579B", "#9CCC65"];
+const WIDTH = Dimensions.get("screen").width;
 
 const styles = StyleSheet.create({
   image: {
@@ -28,8 +29,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e0e0e0",
     marginRight: 5,
-    // marginTop: 5,
-    width: heightImage + 10,
+    width: WIDTH / 2 - 20,
     position: "relative",
   },
   itemSticky: {
