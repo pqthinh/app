@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "react-native-vector-icons";
 import DetailsNewsScreen from "./screen/detailsNews";
+import DetailProduct from "./screen/filter";
 import PostNewsScreen from "./screen/postNews";
 import PreviewScreen from "./screen/preview";
 import SearchProductScreen from "./screen/searchProduct";
@@ -43,6 +44,7 @@ export default function StackNews({ navigation }) {
         <Stack.Screen name="Details" component={DetailsNewsScreen} />
         <Stack.Screen name="PreviewNews" component={PreviewScreen} />
         <Stack.Screen name="Search" component={SearchProductScreen} />
+        <Stack.Screen name="Filter" component={DetailProduct} />
       </Stack.Navigator>
     </SafeAreaProvider>
   );

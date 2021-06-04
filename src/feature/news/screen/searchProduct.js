@@ -1,10 +1,10 @@
 import React from "react";
+import { TouchableOpacity } from "react-native";
 import { View, Text, ScrollView, Alert, StyleSheet } from "react-native";
 import { Feather } from "react-native-vector-icons";
 import SearchComponent from "../../../component/SearchComponent";
 
 const SearchProductScreen = ({ navigation, route }) => {
-  console.log(route, "route -----------------");
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: () => {
@@ -57,6 +57,13 @@ const SearchProductScreen = ({ navigation, route }) => {
       <Text> Search screen</Text>
       <ScrollView>
         <View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Filter");
+            }}
+          >
+            <Text>go to filter</Text>
+          </TouchableOpacity>
           <Text>Filter</Text>
         </View>
 
