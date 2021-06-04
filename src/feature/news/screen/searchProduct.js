@@ -55,6 +55,7 @@ const SearchProductScreen = ({ navigation, route }) => {
   return (
     <View>
       <Text> Search screen</Text>
+
       <ScrollView>
         <View>
           <TouchableOpacity
@@ -64,6 +65,7 @@ const SearchProductScreen = ({ navigation, route }) => {
           >
             <Text>go to filter</Text>
           </TouchableOpacity>
+
           <Text>Filter</Text>
         </View>
 

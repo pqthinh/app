@@ -9,79 +9,20 @@ import {
 } from "react-native";
 
 import Constants from "expo-constants";
-import { Feather as Icon, FontAwesome as FAIcon } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
-const Rating = ({ rating, maxRating }) => {
-  return (
-    <View style={{ flexDirection: "row" }}>
-      {Array(rating)
-        .fill(1)
-        .map((el) => (
-          <FAIcon name="star" size={20} color="#2e2e2e" key={el} />
-        ))}
-      {Array(maxRating - rating)
-        .fill(1)
-        .map((el) => (
-          <FAIcon name="star-o" size={20} color="#2e2e2e" key={el} />
-        ))}
-    </View>
-  );
-};
-
-export default function DetailProduct() {
-  const [isFavorite, setFavorite] = useState(false);
-  const [size] = useState([
-    { id: 1, label: "S" },
-    { id: 1, label: "M" },
-    { id: 1, label: "L" },
-    { id: 1, label: "XL" },
-  ]);
-
-  const [selectedSize, setSelectedSize] = useState("M");
-
-  const [productDescription] = useState(`test .`.repeat(200));
-
-  const [seeFullDescription, setSeeFullDescription] = useState(false);
-
-  const [moreProducts] = useState([
-    {
-      productName: "Black Printed Tshirt",
-      productPrice: 19.49,
-      productImage:
-        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
-    },
-    {
-      productName: "Black Printed Top (Women)",
-      productPrice: 19.49,
-      productImage:
-        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=90",
-    },
-    {
-      productName: "White Solid Tshirt",
-      productPrice: 34.99,
-      productImage:
-        "https://images.unsplash.com/photo-1574180566232-aaad1b5b8450?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
-    },
-    {
-      productName: "Black Solid Tshirt",
-      productPrice: 34.99,
-      productImage:
-        "https://images.unsplash.com/photo-1512327428889-607eeb19efe8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
-    },
-    {
-      productName: "Red Top (Women)",
-      productPrice: 44.85,
-      productImage:
-        "https://images.unsplash.com/photo-1456885284447-7dd4bb8720bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
-    },
-  ]);
-
+export default function Filter() {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: none,
+    });
+  }, []);
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
-        <Icon name="menu" size={30} />
+        <Feather name="menu" size={30} />
         <Text style={styles.headerTitle}>Shop</Text>
-        <Icon name="shopping-bag" size={26} />
+        <Feather name="shopping-bag" size={26} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}></ScrollView>
     </View>

@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Feather } from "react-native-vector-icons";
 import axios from "axios";
 
 const Tab = createMaterialTopTabNavigator();
@@ -89,6 +90,19 @@ const ListChat = (props) => {
     navigation.setOptions({
       title: "Danh sách hội thoại",
       headerRight: () => <View></View>,
+      headerLeft: () => (
+        <View style={{ marginHorizontal: 5 }}>
+          <Feather
+            name="arrow-left"
+            size={24}
+            color="#fff"
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={{ marginRight: 0 }}
+          />
+        </View>
+      ),
     });
   }, []);
 

@@ -27,6 +27,19 @@ const DetailChat = (props) => {
           />
         </View>
       ),
+      headerLeft: () => (
+        <View style={{ marginHorizontal: 5 }}>
+          <Feather
+            name="arrow-left"
+            size={24}
+            color="#fff"
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={{ marginRight: 0 }}
+          />
+        </View>
+      ),
     });
   }, [route]);
 
