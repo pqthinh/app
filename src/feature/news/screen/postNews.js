@@ -138,11 +138,11 @@ const PostNewsScreen = (props) => {
     );
   }, []);
 
-  const _renderImage = useCallback(
-    (image) => {
-      return (
-        <View style={styles.imagePost}>
-          {image?.map((x, index) => (
+  const _renderImage = useCallback(() => {
+    return (
+      <View style={styles.imagePost}>
+        {image &&
+          image.map((x, index) => (
             <View style={{ position: "relative" }} key={index}>
               <Image
                 key={x.id}
@@ -163,17 +163,14 @@ const PostNewsScreen = (props) => {
               />
             </View>
           ))}
-        </View>
-      );
-    },
-    [image]
-  );
+      </View>
+    );
+  }, [image]);
 
   const removeImage = useCallback(
     (index) => {
-      let images = image;
-      images.splice(index, 1);
-      setImage(images);
+      if (index == 0) return setImage([...image.slice(1)]);
+      return setImage([...image.splice(0, index), ...image.splice(index)]);
     },
     [image]
   );
@@ -367,12 +364,10 @@ const styles = StyleSheet.create({
   },
   row: {
     marginVertical: 20,
-    color: "red",
     borderColor: "#52c7b8",
     width: "90%",
     marginHorizontal: 20,
     padding: 5,
-    backgroundColor: "#fff",
     borderRadius: 5,
     backgroundColor: "#f0f0f0",
   },

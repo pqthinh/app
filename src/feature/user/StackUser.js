@@ -3,6 +3,7 @@ import React from "react";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "react-native-vector-icons";
+import ListProductManagement from "./NewsList";
 import ProfileScreen from "./ProfileScreen";
 import UpdateInfoUser from "./UpdateInfoUser";
 
@@ -39,6 +40,10 @@ export default function StackUser({ navigation }) {
       >
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="UpdateProfile" component={UpdateInfoUser} />
+        <Stack.Screen
+          name="ProductManagement"
+          component={ListProductManagement}
+        />
         <Stack.Screen name="PickImage" component={UpdateInfoUser} />
       </Stack.Navigator>
     </SafeAreaProvider>

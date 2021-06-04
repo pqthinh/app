@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -135,43 +135,44 @@ const ProfileScreen = ({ navigation, user }) => {
         <Divider />
 
         <List.Section>
-          <List.Subheader>Tin đang bán</List.Subheader>
-          <TinDangBan />
+          <List.Subheader
+            onPress={() => {
+              navigation.navigate("ProductManagement");
+            }}
+          >
+            Xem thông tin thêm về tin đăng
+          </List.Subheader>
+
+          <TinDangBan navigation={navigation} user={currentUser} />
         </List.Section>
       </ScrollView>
     </View>
   );
 };
 
-const TinDangBan = ({ navigation }) => {
+const TinDangBan = ({ navigation, user }) => {
   const [newsposted, setNewsposted] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = user || null;
   // fetch data tin da lưu
   useEffect(() => {
     if (!newsposted) setNewsposted([]);
-
     if (typeof newsposted.length === "undefined" || !newsposted.length) {
       loadPost();
     }
   }, [currentUser]);
 
-  const loadPost = async () => {
+  const loadPost = useCallback(async () => {
     setLoading(true);
 
-    if (
-      currentUser &&
-      typeof currentUser !== "undefined" &&
-      typeof currentUser.id !== "undefined"
-    ) {
-      const news = await axios.get(
-        `${BASE_URL}/search?owner=${currentUser ? currentUser.id : 5}&state=2`
-      );
-      setNewsposted(news.data);
-      console.log("Tin đang bán: " + news.data.length);
-    }
+    const news = await axios.get(
+      `${BASE_URL}/search?owner=${currentUser ? currentUser.id : 5}&state=2`
+    );
+    setNewsposted(news.data);
+    console.log("Tin đang bán: " + news.data.length);
     setLoading(false);
-  };
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 16, fontWeight: "bold", margin: 10 }}>
