@@ -10,6 +10,7 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import { Feather } from "react-native-vector-icons";
 import styles from "./styles";
 
@@ -34,6 +35,19 @@ const UpdateInfoUser = ({ navigation }) => {
         ...data,
         [field]: value,
       });
+    }
+  };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.1,
+    });
+
+    if (!result.cancelled) {
+      setData({ ...data, avatar: result.uri });
     }
   };
 
@@ -111,13 +125,13 @@ const UpdateInfoUser = ({ navigation }) => {
                 width: 100,
                 height: 100,
                 marginVertical: 20,
-                backgroundColor: "red",
+                backgroundColor: "transparent",
                 borderRadius: 100,
               }}
             >
               <Image
                 source={{
-                  uri: "https://picsum.photos/200",
+                  uri: data.avatar || "https://picsum.photos/200",
                 }}
                 style={[
                   styles.Logo,
@@ -125,13 +139,31 @@ const UpdateInfoUser = ({ navigation }) => {
                     justifyContent: "center",
                     borderRadius: 100,
                     width: "100%",
+                    height: 100,
                   },
                 ]}
               />
               <Feather
-                name="add-a-photo"
-                size={30}
-                style={{ position: "absolute", bottom: 0, right: 0 }}
+                name="image"
+                size={40}
+                style={{ position: "absolute", bottom: -10, right: 0 }}
+                onPress={() => {
+                  Alert.alert("", "Đổi ảnh mới", [
+                    {
+                      text: "Hủy",
+                      onPress: () => {
+                        return;
+                      },
+                      style: "cancel",
+                    },
+                    {
+                      text: "Xác nhận",
+                      onPress: () => {
+                        pickImage();
+                      },
+                    },
+                  ]);
+                }}
               />
             </View>
           </View>

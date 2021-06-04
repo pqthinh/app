@@ -30,9 +30,13 @@ export default function HomeStack(props) {
           options={{
             headerTitle: () => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("News", { screen: "Search" })
-                }
+                onPress={() => {
+                  navigation.navigate("News", {
+                    screen: "Search",
+                    search: search,
+                  });
+                  setSearch("");
+                }}
               >
                 <SearchComponent
                   value={search}

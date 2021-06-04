@@ -26,7 +26,7 @@ const ListProduct = (props) => {
   );
 };
 
-const ListProductlexDirection = (props) => {
+const ListProductFlexDirection = (props) => {
   return (
     <View style={styles.ItemFlex}>
       <ItemFlex />
@@ -45,7 +45,7 @@ const HomeScreen = (props) => {
       <Stories navigation={navigation} />
       <CategoryComponent navigation={navigation} />
       <ListProduct navigation={navigation} title={"Tin rao bán mới"} />
-      <ListProductlexDirection navigation={navigation} />
+      <ListProductFlexDirection navigation={navigation} />
       <Button title="Go to chat" onPress={() => navigation.navigate("Chat")} />
       <Button
         title="Go to update profile"

@@ -29,7 +29,7 @@ export default function StackUser({ navigation }) {
                 size={24}
                 color="#fff"
                 onPress={() => {
-                  navigation.goBack();
+                  navigation.navigate("Home");
                 }}
                 style={{ marginRight: 0 }}
               />
@@ -39,6 +39,7 @@ export default function StackUser({ navigation }) {
       >
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="UpdateProfile" component={UpdateInfoUser} />
+        <Stack.Screen name="PickImage" component={UpdateInfoUser} />
       </Stack.Navigator>
     </SafeAreaProvider>
   );

@@ -43,7 +43,23 @@ const ProfileScreen = ({ navigation, user }) => {
             name="heart"
             size={24}
             style={styles.IconWrapper}
-            onPress={() => Alert.alert("preview news")}
+            onPress={() =>
+              Alert.alert("", "Theo dõi người này", [
+                {
+                  text: "Hủy",
+                  onPress: () => {
+                    return;
+                  },
+                  style: "cancel",
+                },
+                {
+                  text: "Xác nhận",
+                  onPress: () => {
+                    Alert.alert("Đã theo dõi");
+                  },
+                },
+              ])
+            }
             color="#fff"
           />
           <Feather
@@ -80,18 +96,23 @@ const ProfileScreen = ({ navigation, user }) => {
             <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  {currentUser.following}
+                  {currentUser.following || 20}
                 </Paragraph>
                 <Caption style={styles.caption}>Following</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  {currentUser.follower}
+                  {currentUser.follower || 10}
                 </Paragraph>
                 <Caption style={styles.caption}>Followers</Caption>
               </View>
             </View>
-            <View style={styles.row}>
+            <View
+              style={[
+                styles.row,
+                { justifyContent: "space-between", marginHorizontal: 10 },
+              ]}
+            >
               <Text
                 style={styles.buttontext}
                 onPress={() =>

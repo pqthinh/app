@@ -70,9 +70,6 @@ const DetailsNewsScreen = ({ navigation, route }) => {
           />
         </View>
       ),
-      // headerLeft: (props) => <View>
-
-      // </View>,
     });
   }, []);
 

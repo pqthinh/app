@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput } from "react-native";
 import { Feather } from "react-native-vector-icons";
 
 const SearchComponent = (props) => {
-  const { navigation, value, onChangeData, ...other } = props;
+  const { navigation, value, onChangeData, children, ...other } = props;
   return (
     <View style={styles.container}>
       <View style={styles.icon}>
@@ -16,6 +16,7 @@ const SearchComponent = (props) => {
         onChangeText={(value) => onChangeData(value)}
         value={value}
       />
+      {children}
     </View>
   );
 };
@@ -32,12 +33,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     marginLeft: 0,
-    borderRadius: 10
+    borderRadius: 10,
   },
   icon: {
     marginHorizontal: 10,
   },
   searchInput: {
-    fontSize: 14
+    fontSize: 14,
   },
 });
