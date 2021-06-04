@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import CardScreen from "../feature/card/CardScreen";
 import StackCard from "../feature/card/CardStack";
 import StackNews from "../feature/news/StackNews";
-import StackNotify from "../feature/Notifycation/Notifications";
+import StackNotify from "../feature/Notification/StackNotify";
 import StackUser from "../feature/user/StackUser";
 import HomeStack from "../navigation/HomeStack";
 

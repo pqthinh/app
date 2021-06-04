@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { Feather } from "react-native-vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import axios from "axios";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -46,18 +45,28 @@ const ListNotifyTabComponent = (props) => {
                 <TouchableOpacity
                   key={index}
                   style={styles.notifyCard}
-                  onPress={() => {}}
+                  onPress={() => {
+                    navigation.navigate("DetailsNotify", {
+                      screen: "DetailsNotify",
+                      notify: notify,
+                    });
+                  }}
                 >
                   <Image
                     style={styles.notifyImage}
-                    source={{ uri: notify.picture?.large }}
+                    source={{
+                      uri: notify.image || "https://picsum.photos/200",
+                    }}
                   />
                   <View style={styles.notifyCardRight}>
                     <Text style={{ fontSize: 18, fontWeight: "500" }}>
-                      {"thong bao"}
+                      {notify.title || "Thông báo"}
                     </Text>
-                    <Text>{`chi tiet`}</Text>
+                    <Text>{notify.content || "Chi tiết tin đăng"}</Text>
                   </View>
+                  <Text style={styles.time}>
+                    {notify.create_at || new Date().toLocaleDateString()}
+                  </Text>
                 </TouchableOpacity>
               )
           )}
@@ -74,6 +83,11 @@ const ListNotify = (props) => {
   const { navigation } = props;
   const [listNotify, setListNotify] = useState([]);
   const [listNews, setListNews] = useState([]);
+
+  useEffect(() => {
+    setListNotify(fakeNotify);
+    setListNews([]);
+  }, [fakeNotify]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -157,6 +171,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     color: "#fff",
   },
+  notifyCard: {
+    flex: 1,
+    marginVertical: 20,
+    paddingVertical: 10,
+    marginHorizontal: 10,
+  },
+  notifyImage: {
+    height: 150,
+    width: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -188,13 +213,29 @@ const styles = StyleSheet.create({
   userCardRight: {
     paddingHorizontal: 10,
   },
+  time: {
+    color: "blue",
+    textAlign: "right",
+  },
 });
 
 const fakeNotify = [
   {
-    image: "",
-    title: "",
-    content: "",
-    create_at: new Date(),
+    image: "https://picsum.photos/200",
+    title: "Hoạt động",
+    content: "Thịnh đã thích tin đăng của bạn",
+    create_at: new Date().toLocaleDateString(),
+  },
+  {
+    image: "https://picsum.photos/200",
+    title: "Tin máy khoan giá rẻ",
+    content: "Thịnh đã thích tin đăng của bạn",
+    create_at: new Date().toLocaleDateString(),
+  },
+  {
+    image: "https://picsum.photos/200",
+    title: "Tin máy khoan giá rẻ",
+    content: "Thịnh đã thích đăng bình luận và đánh giá về sản phẩm của bạn",
+    create_at: new Date().toLocaleDateString(),
   },
 ];
