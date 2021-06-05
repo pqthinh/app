@@ -68,6 +68,7 @@ function BottomTab(props) {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="bell" color={color} size={26} />
           ),
+          tabBarBadge: 3,
         }}
       />
       <Tab.Screen
@@ -86,6 +87,7 @@ function BottomTab(props) {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="shopping" color={color} size={26} />
           ),
+          tabBarBadge: 3,
         }}
       />
       <Tab.Screen

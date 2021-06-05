@@ -16,6 +16,9 @@ export default function Filter({ navigation }) {
     navigation.setOptions({
       headerShown: false,
     });
+    navigation.tabBarOptions = {
+      tabBarVisible: false,
+    };
   }, []);
   return (
     <View style={{ flex: 1 }}>

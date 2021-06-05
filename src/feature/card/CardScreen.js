@@ -35,7 +35,10 @@ const CardScreen = ({ navigation }) => {
         {listProduct &&
           listProduct.map((news, index) => {
             return (
-              <View style={typeShow ? { width: "100%" } : { width: "50%" }}>
+              <View
+                style={typeShow ? { width: "100%" } : { width: "50%" }}
+                key={index}
+              >
                 {typeShow && (
                   <ItemFlex news={news} key={index} navigation={navigation} />
                 )}
