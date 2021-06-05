@@ -1,5 +1,6 @@
 import { AntDesign, FontAwesome5, Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import { withArray, withEmpty, withNull } from "exp-value";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Alert,
   Linking,
@@ -15,37 +16,19 @@ import { Feather } from "react-native-vector-icons";
 import CommentComponent from "../../../component/CommentComponent/comment";
 const currencyFormatter = require("currency-formatter");
 
-const fakeNews = {
-  anh: [
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
-  ],
-  giaban: 1000000,
-  ten: "Test product",
-  diadiem: "Ha noi, Me tri ha",
-  ngaydangtin: new Date(),
-  ngaycapnhat: new Date(),
-  user: {
-    name: "thinh",
-    place: "Thai Binh",
-    star: "4",
-    phone: "0866564502",
-    avatar_url: "https://picsum.photos/200",
-  },
-  mieuta: `Cấu hình : SURFACE LAPTOP 3 I5/ RAM 8GB/ SSD 256GB 13INCH NEW
--CPU: Intel® Core™ Core i5
--GPU: Intel Iris Plus Graphics
--RAM: 8GB 3733MHz DDR4
--Ổ lưu trữ: 256GB removable SSD
--Kích thước: 308.1 x 223.27 x 14.48 mm
--Trọng lượng: 1283g
--Hệ điều hành: Widows 10`,
-};
-
 const DetailsNewsScreen = ({ navigation, route }) => {
-  const [news, setNews] = useState(fakeNews);
+  const [news, setNews] = useState([]);
   const [comment, setComment] = useState("");
+
+  useEffect(() => {
+    const r = withNull("params.news", route);
+    if (r) return setNews(r);
+    return setNews(fakeNews);
+  }, [withNull("params.news", route)]);
+
+  const _renderComment = useCallback(() => {
+    return <CommentComponent comment={comment} setComment={setComment} />;
+  }, [news]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -57,7 +40,9 @@ const DetailsNewsScreen = ({ navigation, route }) => {
             size={24}
             style={styles.IconWrapper}
             onPress={() =>
-              Linking.openURL(`tel: ${news.user.phone || "0866564502"}`)
+              Linking.openURL(
+                `tel: ${withEmpty("user.phone", news) || "0866564502"}`
+              )
             }
           />
           <Feather
@@ -78,10 +63,10 @@ const DetailsNewsScreen = ({ navigation, route }) => {
       <ScrollView style={{ flex: 1 }}>
         <View style={{ width: "100%", height: 150 }}>
           <SliderBox
-            images={news.anh}
+            images={withArray("anh", news)}
             autoplay
             circleLoop
-            sliderBoxHeight={220}
+            sliderBoxHeight={300}
             resizeMethod={"resize"}
             resizeMode={"cover"}
             paginationBoxStyle={{
@@ -94,18 +79,30 @@ const DetailsNewsScreen = ({ navigation, route }) => {
               paddingVertical: 10,
             }}
           />
+          <Feather
+            name={"arrow-left"}
+            size={30}
+            color={"#000"}
+            style={{ position: "absolute", top: 20, left: 5 }}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
         </View>
 
         <View style={styles.blockName}>
-          <Text style={styles.title}>{news.ten}</Text>
+          <Text style={styles.title}>{withEmpty("ten", news)}</Text>
           <Text style={styles.money}>
             Giá bán:{" "}
-            {" " + currencyFormatter.format(news.giaban, { code: "VND" })}
+            {" " +
+              currencyFormatter.format(withEmpty("giaban", news), {
+                code: "VND",
+              })}
           </Text>
           <Text style={styles.time}>
             Ngày đăng tin: {" " + new Date().toLocaleDateString("vi-VN")}
           </Text>
-          <Text> Địa chỉ: {" " + news.diadiem}</Text>
+          <Text> Địa chỉ: {" " + withEmpty("diadiem", news)}</Text>
           <View style={styles.function}>
             <View style={styles.IconWrapper}>
               <Feather
@@ -133,12 +130,16 @@ const DetailsNewsScreen = ({ navigation, route }) => {
           <Divider />
           <View style={styles.blockUser}>
             <Card.Title
-              title={news.user.name}
-              subtitle={news.user.star + " sao"}
+              title={withEmpty("user.name", news)}
+              subtitle={withEmpty("user.star", news) || 5 + " sao"}
               left={(props) => (
                 <Avatar.Image
                   size={50}
-                  source={{ uri: news.user.avatar_url }}
+                  source={{
+                    uri:
+                      withEmpty("user.avatar_url", news) ||
+                      fakeNews.user.avatar_url,
+                  }}
                 />
               )}
               right={(props) => (
@@ -155,12 +156,10 @@ const DetailsNewsScreen = ({ navigation, route }) => {
         </View>
 
         <View style={styles.description}>
-          <Text>{news.mieuta}</Text>
+          <Text>{withEmpty("mieuta", news)}</Text>
         </View>
 
-        <View>
-          <CommentComponent />
-        </View>
+        <View>{_renderComment()}</View>
       </ScrollView>
       <View
         style={{
@@ -235,8 +234,8 @@ const DetailsNewsScreen = ({ navigation, route }) => {
                   navigation.navigate("ChatStack", {
                     screen: "ChatDetail",
                     params: {
-                      title: `${news.user.name}`,
-                      phone: `${news.user.phone}`,
+                      title: `${withEmpty("user.name", news)}`,
+                      phone: `${withEmpty("user.phone", news)}`,
                       id: news.id,
                     },
                   });
@@ -300,3 +299,31 @@ const styles = StyleSheet.create({
   listComment: {},
   userComment: { fontSize: 14 },
 });
+
+const fakeNews = {
+  anh: [
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+  ],
+  giaban: 1000000,
+  ten: "Test product",
+  diadiem: "Ha noi, Me tri ha",
+  ngaydangtin: new Date(),
+  ngaycapnhat: new Date(),
+  user: {
+    name: "thinh",
+    place: "Thai Binh",
+    star: "4",
+    phone: "0866564502",
+    avatar_url: "https://picsum.photos/200",
+  },
+  mieuta: `Cấu hình : SURFACE LAPTOP 3 I5/ RAM 8GB/ SSD 256GB 13INCH NEW
+-CPU: Intel® Core™ Core i5
+-GPU: Intel Iris Plus Graphics
+-RAM: 8GB 3733MHz DDR4
+-Ổ lưu trữ: 256GB removable SSD
+-Kích thước: 308.1 x 223.27 x 14.48 mm
+-Trọng lượng: 1283g
+-Hệ điều hành: Widows 10`,
+};

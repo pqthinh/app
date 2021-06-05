@@ -11,10 +11,10 @@ import {
 import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 
-export default function Filter() {
+export default function Filter({ navigation }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerShown: none,
+      headerShown: false,
     });
   }, []);
   return (

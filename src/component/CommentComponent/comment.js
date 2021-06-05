@@ -63,16 +63,19 @@ const CommentComponent = ({ ...others }) => {
     [star]
   );
 
-  const addComment = useCallback(() => {
-    const data = {
-      user: fakeUser,
-      comment: comment,
-      create_at: new Date(),
-      star: star,
-    };
-    setComments([data, ...comments]);
-    setComment("");
-  }, [comment, star]);
+  const addComment = useCallback(
+    (star, comment) => {
+      const data = {
+        user: fakeUser,
+        comment: comment,
+        create_at: new Date(),
+        star: star,
+      };
+      setComments([data, ...comments]);
+      setComment("");
+    },
+    [comment, star]
+  );
 
   const renderComment = useCallback(
     (comments) => {
@@ -124,7 +127,7 @@ const CommentComponent = ({ ...others }) => {
               onFinishRating={(e) => {
                 Alert.alert(`Bạn đã vote ${e} sao cho tin đăng này`);
                 handleVoteStar(e);
-                addComment();
+                addComment(e, comment);
               }}
               style={{ paddingVertical: 10 }}
             />
