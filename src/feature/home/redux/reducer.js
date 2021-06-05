@@ -5,63 +5,33 @@ import { persistReducer } from "redux-persist";
 import * as types from "./actionType";
 
 const persistConfig = {
-  key: "auth",
+  key: "news",
   storage: AsyncStorage,
-  whitelist: ["accessToken", "user"],
+  whitelist: ["accessToken", "news"],
 };
 
 const initialState = {
   requesting: false,
   loading: false,
-  loadingImageUser: false,
-  changeLoading: false,
-  userLoading: false,
   messages: [],
   errors: [],
-  user: {},
-  accessToken: "",
-  isLoggedIn: false,
+  news: [],
+  stories: [],
 };
 
 const reducer = (state = initialState, action) =>
   produce(state, (newState) => {
     switch (action.type) {
-      case types.SIGNUP_REQUEST:
+      case types.FETCH_DATA:
         newState.loading = true;
         break;
-      case types.SIGNUP_SUCCESS:
-        console.log(action, "action after signup");
-        newState.user = action.response.data;
-        newState.isLoggedIn = true;
+      case types.GET_PRODUCT_lIST:
+        newState.news = action.response.data;
         newState.loading = false;
         break;
-      case types.LOGIN_REQUEST:
-        newState.loading = true;
-        break;
-      case types.LOGINFB_REQUEST:
-        newState.loading = true;
-        break;
-      case types.LOGINGG_REQUEST:
-        newState.loading = true;
-        break;
-      case types.LOGIN_SUCCESS:
-        newState.user = action.response.data;
-        newState.isLoggedIn = true;
+      case types.GET_STORY_LIST:
+        newState.news = action.response.data;
         newState.loading = false;
-        break;
-      case types.LOGIN_FAILED:
-        newState.loading = false;
-        newState.isLoggedIn = false;
-        newState.user = {};
-        break;
-      case types.LOGOUT_REQUEST:
-        newState.loading = true;
-        break;
-      case types.LOGOUT_SUCCESS:
-        newState.user = null;
-        newState.isLoggedIn = false;
-        newState.accessToken = null;
-        newState = {};
         break;
     }
   });

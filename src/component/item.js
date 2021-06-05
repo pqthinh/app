@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, Platform, StyleSheet } from "react-native";
+import { EvilIcons, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { Image, Platform, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { EvilIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
 import styles from "./style";
 
 const currencyFormatter = require("currency-formatter");
-
-const heightImage =
-  Platform.OS == "android" ? 150 : Platform.OS == "ios" ? 120 : 180;
 
 const fakeNews = {
   anh: [
@@ -21,8 +16,8 @@ const fakeNews = {
   giaban: 1000000,
   ten: "Test product",
   diadiem: "Ha noi, Me tri ha",
-  ngaydangtin: new Date(),
-  ngaycapnhat: new Date(),
+  ngaydangtin: new Date("01/06/2021"),
+  ngaycapnhat: new Date("01/06/2021"),
   user: {
     name: "thinh",
     place: "Thai Binh",
@@ -32,9 +27,8 @@ const fakeNews = {
 export default function Item({ navigation, newsPost, danhmuc }) {
   const news = newsPost || fakeNews;
   const handleImage = (anh) => {
-    let imgs = anh;
-    if (imgs.length == 0 || anh.length == 0) return "https://picsum.photos/300";
-    return imgs[0];
+    if (anh.length == 0) return "https://picsum.photos/300";
+    return anh[0];
   };
 
   const handleNavigateToDetail = () => {

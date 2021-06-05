@@ -1,5 +1,6 @@
-import React from "react";
-import { View, Text, ScrollView, Button } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Feather } from "react-native-vector-icons";
 import { connect } from "react-redux";
 import Banner from "../../../component/banner";
 import CategoryComponent from "../../../component/category";
@@ -8,50 +9,76 @@ import ItemFlex from "../../../component/item-flex";
 import Stories from "../../../component/stories";
 import styles from "../style";
 
-const ListProduct = (props) => {
-  const { title, navigation } = props;
-  return (
-    <View style={{ backgroundColor: "#fff", marginVertical: 10 }}>
-      <Text style={{ padding: 10, fontSize: 18, fontWeight: "500" }}>
-        {title}
-      </Text>
+const fakeNews = {
+  anh: [
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+  ],
+  giaban: 1000000,
+  ten: "Test product",
+  diadiem: "Ha noi, Me tri ha",
+  ngaydangtin: "01/06/2021",
+  user: {
+    name: "thinh",
+    place: "Thai Binh",
+  },
+  mieuta: "abc",
+};
+
+const fakeData = [fakeNews, fakeNews, fakeNews, fakeNews, fakeNews, fakeNews];
+
+const HomeScreen = ({ user, navigation }) => {
+  const [listNews, setListNews] = useState([]);
+  const [showType, setShowType] = useState(false);
+  const [listStory, setListStory] = useState([]);
+
+  const _renderGroupItem = useCallback(() => {
+    return (
       <View style={styles.ListProduct}>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        {listNews.length > 0 ? (
+          listNews?.map((news, index) => {
+            if (!showType)
+              return (
+                <Item key={index} newsPost={news} navigation={navigation} />
+              );
+            return (
+              <ItemFlex key={index} newsPost={news} navigation={navigation} />
+            );
+          })
+        ) : (
+          <Text>Danh mục rỗng</Text>
+        )}
       </View>
-    </View>
-  );
-};
+    );
+  }, [listNews, showType]);
 
-const ListProductFlexDirection = (props) => {
-  return (
-    <View style={styles.ItemFlex}>
-      <ItemFlex />
-      <ItemFlex />
-      <ItemFlex />
-      <ItemFlex />
-    </View>
-  );
-};
+  useEffect(() => {
+    setListNews(fakeData);
+  }, [fakeData]);
 
-const HomeScreen = (props) => {
-  const { user, navigation } = props;
   return (
     <ScrollView>
       <Banner />
-      <Stories navigation={navigation} />
+      <Stories navigation={navigation} listStory={listStory} />
       <CategoryComponent navigation={navigation} />
-      <ListProduct navigation={navigation} title={"Tin rao bán mới"} />
-      <ListProductFlexDirection navigation={navigation} />
-      <Button title="Go to chat" onPress={() => navigation.navigate("Chat")} />
-      <Button
-        title="Go to update profile"
-        onPress={() => navigation.navigate("Profile")}
-      />
-      <Text>{JSON.stringify(user)}</Text>
+
+      <View style={stylesCustomize.container}>
+        <View style={{ backgroundColor: "#fff", marginVertical: 10 }}>
+          <Text style={{ padding: 10, fontSize: 18, fontWeight: "500" }}>
+            Tin đăng mới
+          </Text>
+          {_renderGroupItem()}
+        </View>
+        <Feather
+          name={showType ? "list" : "grid"}
+          size={24}
+          style={stylesCustomize.IconWrapper}
+          onPress={() => setShowType(!showType)}
+          color="#000"
+        />
+      </View>
+
       <View style={{ height: 100 }}></View>
     </ScrollView>
   );
@@ -64,3 +91,14 @@ export default connect(
   }),
   {}
 )(HomeScreen);
+
+const stylesCustomize = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  IconWrapper: {
+    position: "absolute",
+    top: 20,
+    right: 10,
+  },
+});

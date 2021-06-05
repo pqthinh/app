@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { EvilIcons, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import React from "react";
 import {
-  View,
-  Text,
   Image,
-  Platform,
-  StyleSheet,
   ImageBackground,
+  Platform,
+  Text,
+  View,
+  TouchableOpacity,
 } from "react-native";
-import { EvilIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
-import styles from './style'
+import styles from "./style";
 
 var currencyFormatter = require("currency-formatter");
 
@@ -31,24 +29,22 @@ const fakeNews = {
   },
 };
 
-export default function ItemFlex(props) {
-  // news đưuọc truyền từ props vào nhưng giờ đang fake data
-  const { navigation } = props
-
-  // const { news, navigation } = props
-  let news =  fakeNews;
+export default function ItemFlex({ navigation, newsPost }) {
+  const news = newsPost || fakeNews;
   const handleImage = (anh) => {
-    let imgs = anh;
-    if (imgs.length == 0 || anh.length == 0)
+    if (anh.length == 0)
       return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
-    return imgs[0];
+    return anh[0];
   };
 
-  const handleNavagateToDetail = () => {
-    navigation.navigate("Detail", {news})
-  }
+  const handleNavigateToDetail = () => {
+    navigation.navigate("Detail", { news });
+  };
   return (
-    <View style={styles.containerNewsPost} onPress={() => handleNavagateToDetail()}>
+    <TouchableOpacity
+      style={styles.containerNewsPost}
+      onPress={() => handleNavigateToDetail()}
+    >
       <View>
         <Image
           style={styles.image}
@@ -58,8 +54,7 @@ export default function ItemFlex(props) {
         <View style={styles.count}>
           <ImageBackground
             source={{
-              uri:
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5Tlh0NeiDGXb3Ya7mQ8Y07qq6IMYR6ggNw&usqp=CAU",
+              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5Tlh0NeiDGXb3Ya7mQ8Y07qq6IMYR6ggNw&usqp=CAU",
             }}
             style={styles.countImg}
           >
@@ -97,6 +92,6 @@ export default function ItemFlex(props) {
           <TimeAgo time={news.ngaycapnhat} />
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

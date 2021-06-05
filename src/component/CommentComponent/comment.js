@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   Alert,
   Image,
@@ -49,7 +49,7 @@ const fakeUser = {
 const CommentComponent = ({ ...others }) => {
   const [star, setStar] = useState(5);
   const [visible, setVisible] = useState(false);
-  const [comments, setComments] = useState(fakeComment);
+  const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
   const handleSubmitComment = useCallback(() => {
@@ -78,9 +78,9 @@ const CommentComponent = ({ ...others }) => {
     (comments) => {
       return (
         <>
-          {comments.map((comment) => {
+          {comments.map((comment, index) => {
             return (
-              <View style={styles.commentRow}>
+              <View style={styles.commentRow} key={index}>
                 <Image
                   source={{ uri: comment.user.avatar_url }}
                   style={styles.avatar}
@@ -104,6 +104,10 @@ const CommentComponent = ({ ...others }) => {
     [comments]
   );
 
+  useEffect(() => {
+    setComments(fakeComment);
+  }, [fakeComment]);
+
   return (
     <View style={styles.container}>
       <View>
@@ -116,7 +120,7 @@ const CommentComponent = ({ ...others }) => {
           <DialogContent>
             <Rating
               showRating
-              startingValue="{3}"
+              startingValue={5}
               onFinishRating={(e) => {
                 Alert.alert(`Bạn đã vote ${e} sao cho tin đăng này`);
                 handleVoteStar(e);

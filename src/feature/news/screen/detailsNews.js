@@ -221,12 +221,28 @@ const DetailsNewsScreen = ({ navigation, route }) => {
             paddingVertical: 10,
           }}
           onPress={() => {
-            alert("Chat online");
-            navigation.navigate("ChatDetails", {
-              title: `${news.user.name}`,
-              phone: `${news.user.phone}`,
-              id: news.id,
-            });
+            Alert.alert("", "Chat với người bán", [
+              {
+                text: "Hủy",
+                onPress: () => {
+                  return;
+                },
+                style: "cancel",
+              },
+              {
+                text: "Tiếp tục",
+                onPress: () => {
+                  navigation.navigate("ChatStack", {
+                    screen: "ChatDetail",
+                    params: {
+                      title: `${news.user.name}`,
+                      phone: `${news.user.phone}`,
+                      id: news.id,
+                    },
+                  });
+                },
+              },
+            ]);
           }}
         >
           <AntDesign
