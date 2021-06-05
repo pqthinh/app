@@ -61,12 +61,12 @@ const DetailsNewsScreen = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
-        <View style={{ width: "100%", height: 150 }}>
+        <View style={{ width: "100%", height: 250 }}>
           <SliderBox
             images={withArray("anh", news)}
             autoplay
             circleLoop
-            sliderBoxHeight={300}
+            sliderBoxHeight={400}
             resizeMethod={"resize"}
             resizeMode={"cover"}
             paginationBoxStyle={{

@@ -7,6 +7,7 @@ import { Fontisto } from "@expo/vector-icons";
 import TimeAgo from "react-native-timeago";
 import { Avatar } from "react-native-paper";
 import styles from "./style";
+import { withEmpty } from "exp-value";
 
 const currencyFormatter = require("currency-formatter");
 
@@ -27,17 +28,15 @@ const fakeNews = {
   },
 };
 
-export default function StoryItem(props) {
-  const { navigation, newspost, danhmuc, item } = props;
-  const news = fakeNews;
+export default function StoryItem({ navigation, newspost, danhmuc, item }) {
+  const news = newspost || fakeNews;
   const handleImage = (anh) => {
-    let imgs = anh;
-    if (imgs.length == 0 || anh.length == 0)
+    if (anh.length == 0)
       return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
-    return imgs[0];
+    return anh[0];
   };
   return (
-    <TouchableOpacity onPress={() => console.log("Details", { news })}>
+    <TouchableOpacity onPress={() => navigation.navigate("Detail", { news })}>
       <View style={styles.news}>
         <Image
           style={styles.stickyItem}
@@ -53,7 +52,7 @@ export default function StoryItem(props) {
           />
         </View>
 
-        <Text style={styles.auth}>Pham quang thinh</Text>
+        <Text style={styles.auth}>{withEmpty("user.name", news)}</Text>
       </View>
     </TouchableOpacity>
   );

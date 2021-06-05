@@ -67,7 +67,7 @@ export default function Banner({ images, styleBanner }) {
   }, [images]);
 
   return (
-    <View style={styleBanner || { width: "100%", height: 150 }}>
+    <View style={styleBanner || { width: "100%", height: 160 }}>
       {_renderBanner()}
     </View>
   );

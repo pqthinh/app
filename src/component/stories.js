@@ -6,20 +6,18 @@ import styles from "./style";
 import StoryItem from "./story";
 
 // dummy data
-const data = [...Array(20)]
-  .map((_, index) => ({
-    id: `item-${index}`,
-    user: {
-      name: "thinh",
-      avatar:
-        "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
-    },
-    news: {
-      img:
-        "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
-      name: "bans buon",
-    },
-  }));
+const data = [...Array(20)].map((_, index) => ({
+  id: `item-${index}`,
+  user: {
+    name: "thinh",
+    avatar:
+      "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
+  },
+  news: {
+    img: "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
+    name: "bans buon",
+  },
+}));
 
 // configs
 const ITEM_WIDTH = 80;
@@ -57,8 +55,7 @@ const StickyItemView = ({
   );
 };
 
-const Stories = (props) => {
-  const { navigation } = props;
+const Stories = ({ navigation }) => {
   const handleStickyItemPress = () => {
     Alert.alert("Tạo tin đăng", "Đi đến trang đăng tin", [
       {
@@ -85,7 +82,7 @@ const Stories = (props) => {
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
       }}
-      children={<StoryItem item={item} />}
+      children={<StoryItem item={item} navigation={navigation} />}
     />
   );
   return (
