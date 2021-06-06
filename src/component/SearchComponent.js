@@ -30,15 +30,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     width: "100%",
     backgroundColor: "#e0ffb1",
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 5,
     marginLeft: 0,
     borderRadius: 10,
+    alignItems: "center",
   },
   icon: {
     marginHorizontal: 10,
   },
   searchInput: {
     fontSize: 14,
+    marginRight: 20,
   },
 });

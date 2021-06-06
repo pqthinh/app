@@ -56,6 +56,8 @@ const SearchProductScreen = ({ navigation, route }) => {
   const ctg = withEmpty("params.category", route);
   const tensp = withEmpty("params.dataQuery", route);
 
+  const [search, setSearch] = useState("");
+
   const [modalVisible, setModalVisible] = useState(false);
   const [showType, setShowType] = useState(false);
   const [listNews, setListNews] = useState([]);
@@ -119,7 +121,7 @@ const SearchProductScreen = ({ navigation, route }) => {
           <ScrollView
             style={{
               flex: 1,
-              marginTop: 10,
+              marginTop: 0,
               backgroundColor: "#fff",
             }}
           >
@@ -316,14 +318,16 @@ const SearchProductScreen = ({ navigation, route }) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: () => {
-        <SearchComponent
-          value={search}
-          onChangeData={setSearch}
-          navigation={navigation}
-          children={<Text>thinh</Text>}
-        />;
-      },
+      headerTitle: () => (
+        <TouchableOpacity>
+          <SearchComponent
+            value={search}
+            onChangeData={setSearch}
+            navigation={navigation}
+            children={<Feather name={"bookmark"} size={24} />}
+          />
+        </TouchableOpacity>
+      ),
       headerRight: () => (
         <View
           style={{
