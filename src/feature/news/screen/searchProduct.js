@@ -9,14 +9,23 @@ import {
   Modal,
 } from "react-native";
 import { Feather } from "react-native-vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import PickerCity from "../../../component/PickerCity";
 import SearchComponent from "../../../component/SearchComponent";
+import Helpers from "../../../utils/Constants/index";
 
 const SearchProductScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [showType, setShowType] = useState(false);
   const [listNews, setListNews] = useState([]);
+  const [khuVuc, setKhuVuc] = useState("");
+  const [danhmuc, setDanhmuc] = useState("");
 
-  const ModalFilter = () => {
+  const handleCancel = useCallback(() => {
+    console.log("huy loc");
+  }, []);
+
+  const ModalFilter = useCallback(() => {
     return (
       <View style={styles.centeredView}>
         <Modal
@@ -24,11 +33,39 @@ const SearchProductScreen = ({ navigation, route }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
             setModalVisible(!modalVisible);
           }}
         >
-          <View style={styles.centeredView}>
+          <View
+            style={{
+              flex: 1,
+              marginTop: 10,
+              backgroundColor: "#fff",
+              justifyContent: "flex-start",
+            }}
+          >
+            <View style={styles.topFilter}>
+              <Feather
+                name={"x"}
+                size={30}
+                color={"#000"}
+                onPress={() => setModalVisible(false)}
+              />
+              <Text>Lọc tin đăng</Text>
+              <Text
+                style={{
+                  backgroundColor: "#e0ffb1",
+                  color: "#000",
+                  padding: 10,
+                  borderRadius: 5,
+                  margin: 10,
+                }}
+                onPress={() => handleCancel()}
+              >
+                Bỏ lọc
+              </Text>
+            </View>
+
             <Text>hihi </Text>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Hello World!</Text>
@@ -43,7 +80,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         </Modal>
       </View>
     );
-  };
+  }, [modalVisible]);
 
   const _renderGroupItem = useCallback(() => {
     return (
@@ -64,6 +101,40 @@ const SearchProductScreen = ({ navigation, route }) => {
       </View>
     );
   }, [listNews, showType]);
+
+  const _renderPicker = useCallback(() => {
+    const { CATEGORY } = Helpers;
+    return (
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          height: 40,
+          width: 100,
+          alignItems: "center",
+          margin: 10,
+          borderRadius: 5,
+          borderWidth: 0.5,
+          borderColor: "#000",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Picker
+          selectedValue={danhmuc}
+          onValueChange={(itemValue, itemIndex) => setDanhmuc(itemValue)}
+          style={{
+            height: 40,
+            width: 100,
+            fontSize: 12,
+          }}
+        >
+          {CATEGORY.map((item, index) => {
+            return <Picker.Item label={item} value={item} key={index} />;
+          })}
+        </Picker>
+      </TouchableOpacity>
+    );
+  }, []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -114,33 +185,82 @@ const SearchProductScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View style={{ paddingHorizontal: 0 }}>
+    <ScrollView style={{ paddingHorizontal: 0 }}>
       {/* Filter */}
-      <TouchableOpacity
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
+      {modalVisible && ModalFilter()}
+
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          height: 40,
+          width: "100%",
+          alignItems: "center",
+          margin: 10,
+        }}
       >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </TouchableOpacity>
-      {modalVisible && <ModalFilter />}
-
-      <View>
-        <Text>Khu vực</Text>
-        <Text>Render khu vuc</Text>
+        <Feather name={"map-pin"} size={24} style={{ marginHorizontal: 10 }} />
+        <Text>Khu vực: </Text>
+        <PickerCity
+          khuVuc={khuVuc}
+          setKhuVuc={setKhuVuc}
+          style={{
+            height: 40,
+            backgroundColor: "#fff",
+            width: 200,
+            marginHorizontal: 10,
+            borderRadius: 5,
+          }}
+        />
       </View>
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <Text>
-          Lọc <Feather name={"filter"} size={30} color={"#000"} />
-        </Text>
-        <Text>Danh mục</Text>
 
-        <View>
-          <Text style={{ backgroundColor: "#f0f0f0", padding: 10 }}>Giá +</Text>
-        </View>
+      <View style={{ flex: 1, flexDirection: "row", flexBasis: 30 }}>
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            backgroundColor: "#fff",
+            width: 40,
+            borderRadius: 5,
+            borderWidth: 0.5,
+            borderColor: "#000",
+            margin: 10,
+            alignItems: "center",
+            justifyContent: "center",
+            paddingVertical: 5,
+          }}
+        >
+          <Text style={{ color: "#000", fontSize: 16 }}>
+            Lọc <Feather name={"filter"} size={14} color={"#000"} />
+          </Text>
+        </TouchableOpacity>
+
+        <View style={{ flex: 1, flexDirection: "row" }}>{_renderPicker()}</View>
+        <TouchableOpacity>
+          <Text
+            style={{
+              flex: 1,
+              backgroundColor: "#fff",
+              width: 60,
+              fontSize: 16,
+              borderRadius: 5,
+              borderWidth: 0.5,
+              borderColor: "#000",
+              margin: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              paddingVertical: 5,
+              paddingHorizontal: 10,
+            }}
+          >
+            Giá +
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* Result */}
-      <ScrollView>
+      <View>
         <View style={{ flex: 1, justifyContent: "center" }}>
           <View style={{ backgroundColor: "#fff", marginVertical: 10 }}>
             <Text style={{ padding: 10, fontSize: 18, fontWeight: "500" }}>
@@ -159,8 +279,8 @@ const SearchProductScreen = ({ navigation, route }) => {
             color="#000"
           />
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -175,9 +295,8 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "baseline",
     marginTop: 10,
-    backgroundColor: "#fff",
   },
   modalView: {
     margin: 20,
@@ -221,5 +340,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginVertical: 5,
     justifyContent: "center",
+  },
+  topFilter: {
+    flex: 1,
+    height: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    marginHorizontal: 10,
+    marginVertical: 5,
   },
 });
