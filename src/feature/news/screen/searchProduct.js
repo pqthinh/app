@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { Checkbox, RadioButton } from "react-native-paper";
 import { Feather } from "react-native-vector-icons";
+import RangeSlider from "react-native-range-slider-expo";
 import EmptyScreen from "../../../component/EmptyScreen";
 import Item from "../../../component/item";
 import ItemFlex from "../../../component/item-flex";
@@ -22,7 +23,15 @@ import { BASE_URL } from "../../../config/url";
 import Helpers from "../../../utils/Constants/index";
 
 var currencyFormatter = require("currency-formatter");
-axios.defaults.timeout === 3000;
+const API = axios.create({
+  baseURL: BASE_URL,
+
+  timeout: 1000,
+
+  headers: {
+    "X-CSRF-Token": "Beaer thinh_faketoken",
+  },
+});
 
 const fakeNews = {
   anh: [
@@ -65,14 +74,12 @@ const SearchProductScreen = ({ navigation, route }) => {
 
   const loadPost = async () => {
     setLoading(true);
-    const news = await axios.get(
-      `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}`,
-      { timeout: 3000 }
-    );
-    console.log(
-      "So luong tin loc danh muc / tim theo ten : " + news.data.length
-    );
-    await setNewsposted(news.data);
+    // const news = await axios.get({
+    //   url: `/search?type=${danhmuc}&tensp=${tensp}`,
+    //   timeout: 1000,
+    //   baseURL: BASE_URL,
+    // });
+    // await setNewsposted(news.data);
     setLoading(false);
   };
 
@@ -80,8 +87,9 @@ const SearchProductScreen = ({ navigation, route }) => {
     setLoading(true);
     const news = await axios.get(
       `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`,
-      { timeout: 3000 }
+      { API }
     );
+
     await setNewsposted(news.data);
     setLoading(false);
   };
@@ -192,7 +200,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         )}
       </View>
     );
-  }, [listNews, showType]);
+  }, [listNews, showType, loading]);
 
   const _renderPicker = useCallback(() => {
     const { CATEGORY } = Helpers;
@@ -278,7 +286,7 @@ const SearchProductScreen = ({ navigation, route }) => {
             code: "VND",
           })} đến ${currencyFormatter.format(toValue, { code: "VND" })}`}
         </Text>
-        {/* <RangeSlider
+        <RangeSlider
           min={0}
           max={1000000000}
           step={10000000}
@@ -288,7 +296,7 @@ const SearchProductScreen = ({ navigation, route }) => {
           initialFromValue={100000}
           showValueLabels={false}
           showRangeLabels={false}
-        /> */}
+        />
       </View>
     );
   }, [fromValue, toValue, modalVisible]);
@@ -303,7 +311,7 @@ const SearchProductScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    handleFilter();
+    // handleFilter();
   }, [type, fromValue, toValue, khuVuc, danhmuc, sort]);
 
   React.useLayoutEffect(() => {
