@@ -1,33 +1,105 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-} from "react-native";
-import { Feather } from "react-native-vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import axios from "axios";
+import { withEmpty } from "exp-value";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Alert,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Checkbox, RadioButton } from "react-native-paper";
+import { Feather } from "react-native-vector-icons";
+import EmptyScreen from "../../../component/EmptyScreen";
+import Item from "../../../component/item";
+import ItemFlex from "../../../component/item-flex";
 import PickerCity from "../../../component/PickerCity";
 import SearchComponent from "../../../component/SearchComponent";
+import { BASE_URL } from "../../../config/url";
 import Helpers from "../../../utils/Constants/index";
 
+var currencyFormatter = require("currency-formatter");
+axios.defaults.timeout === 3000;
+
+const fakeNews = {
+  anh: [
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+    "https://picsum.photos/700",
+  ],
+  giaban: 1000000,
+  ten: "Test product",
+  diadiem: "Ha noi, Me tri ha",
+  ngaydangtin: "01/06/2021",
+  user: {
+    name: "thinh",
+    place: "Thai Binh",
+  },
+  mieuta: "abc",
+};
+
+const fakeData = [fakeNews, fakeNews, fakeNews, fakeNews, fakeNews, fakeNews];
+
 const SearchProductScreen = ({ navigation, route }) => {
+  const ctg = withEmpty("params.category", route);
+  const tensp = withEmpty("params.dataQuery", route);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [showType, setShowType] = useState(false);
   const [listNews, setListNews] = useState([]);
   const [khuVuc, setKhuVuc] = useState("");
-  const [danhmuc, setDanhmuc] = useState("");
+  const [danhmuc, setDanhmuc] = useState(ctg);
+
+  const [fromValue, setFromValue] = useState(1000);
+  const [toValue, setToValue] = useState(10000000000);
+
+  const [sort, setSort] = useState(null);
+  const [type, setType] = useState(null);
+
+  const [checked, setChecked] = useState("first");
+
+  const [loading, setLoading] = useState(false);
+
+  const loadPost = async () => {
+    setLoading(true);
+    const news = await axios.get(
+      `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}`,
+      { timeout: 3000 }
+    );
+    console.log(
+      "So luong tin loc danh muc / tim theo ten : " + news.data.length
+    );
+    await setNewsposted(news.data);
+    setLoading(false);
+  };
+
+  const handleFilter = async () => {
+    setLoading(true);
+    const news = await axios.get(
+      `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`,
+      { timeout: 3000 }
+    );
+    await setNewsposted(news.data);
+    setLoading(false);
+  };
 
   const handleCancel = useCallback(() => {
-    console.log("huy loc");
+    setModalVisible(false);
+    setKhuVuc("");
+    setDanhmuc("");
+    setFromValue(0);
+    setToValue(10000000000);
+    setSort(null);
+    setLoading(false);
+    setType(null);
   }, []);
 
   const ModalFilter = useCallback(() => {
     return (
-      <View style={styles.centeredView}>
+      <View style={{ flex: 1 }}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -36,12 +108,11 @@ const SearchProductScreen = ({ navigation, route }) => {
             setModalVisible(!modalVisible);
           }}
         >
-          <View
+          <ScrollView
             style={{
               flex: 1,
               marginTop: 10,
               backgroundColor: "#fff",
-              justifyContent: "flex-start",
             }}
           >
             <View style={styles.topFilter}>
@@ -58,7 +129,7 @@ const SearchProductScreen = ({ navigation, route }) => {
                   color: "#000",
                   padding: 10,
                   borderRadius: 5,
-                  margin: 10,
+                  marginHorizontal: 20,
                 }}
                 onPress={() => handleCancel()}
               >
@@ -66,7 +137,27 @@ const SearchProductScreen = ({ navigation, route }) => {
               </Text>
             </View>
 
-            <Text>hihi </Text>
+            {renderPrice()}
+
+            {renderPickerType()}
+
+            <View>
+              <RadioButton
+                value="first"
+                status={checked === "first" ? "checked" : "unchecked"}
+                onPress={() => setChecked("first")}
+              />
+              <RadioButton
+                value="second"
+                status={checked === "second" ? "checked" : "unchecked"}
+                onPress={() => setChecked("second")}
+              />
+            </View>
+
+            <View>
+              <Checkbox.Item label="Item" status="checked" />
+            </View>
+
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Hello World!</Text>
               <TouchableOpacity
@@ -76,13 +167,14 @@ const SearchProductScreen = ({ navigation, route }) => {
                 <Text style={styles.textStyle}>Hide Modal</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </ScrollView>
         </Modal>
       </View>
     );
   }, [modalVisible]);
 
   const _renderGroupItem = useCallback(() => {
+    if (loading) return <EmptyScreen />;
     return (
       <View style={styles.ListProduct}>
         {listNews.length > 0 ? (
@@ -110,7 +202,7 @@ const SearchProductScreen = ({ navigation, route }) => {
           flex: 1,
           flexDirection: "row",
           height: 40,
-          width: 100,
+          width: 200,
           alignItems: "center",
           margin: 10,
           borderRadius: 5,
@@ -124,8 +216,9 @@ const SearchProductScreen = ({ navigation, route }) => {
           onValueChange={(itemValue, itemIndex) => setDanhmuc(itemValue)}
           style={{
             height: 40,
-            width: 100,
+            width: 200,
             fontSize: 12,
+            marginHorizontal: 10,
           }}
         >
           {CATEGORY.map((item, index) => {
@@ -135,6 +228,83 @@ const SearchProductScreen = ({ navigation, route }) => {
       </TouchableOpacity>
     );
   }, []);
+
+  const renderPickerType = useCallback(() => {
+    if (!modalVisible) return;
+    const TYPE = [
+      { label: "Cần mua", value: "Cần mua" },
+      { label: "Cần bán", value: "Cần bán" },
+    ];
+
+    return (
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          height: 40,
+          width: 200,
+          alignItems: "center",
+          margin: 10,
+          borderRadius: 5,
+          borderWidth: 0.5,
+          borderColor: "#000",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Picker
+          selectedValue={type}
+          onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+          style={{
+            height: 40,
+            width: 200,
+            fontSize: 12,
+            marginHorizontal: 10,
+          }}
+        >
+          {TYPE.map((item, index) => {
+            return <Picker.Item label={item} value={item} key={index} />;
+          })}
+        </Picker>
+      </TouchableOpacity>
+    );
+  }, [type]);
+
+  const renderPrice = useCallback(() => {
+    if (!modalVisible) return;
+    return (
+      <View>
+        <Text>
+          {`Giá từ: ${currencyFormatter.format(fromValue, {
+            code: "VND",
+          })} đến ${currencyFormatter.format(toValue, { code: "VND" })}`}
+        </Text>
+        {/* <RangeSlider
+          min={0}
+          max={1000000000}
+          step={10000000}
+          styleSize="small"
+          fromValueOnChange={(value) => setFromValue(value)}
+          toValueOnChange={(value) => setToValue(value)}
+          initialFromValue={100000}
+          showValueLabels={false}
+          showRangeLabels={false}
+        /> */}
+      </View>
+    );
+  }, [fromValue, toValue, modalVisible]);
+
+  useEffect(() => {
+    setListNews(fakeData);
+  }, [fakeData]);
+
+  // fetch form search
+  useEffect(() => {
+    loadPost();
+  }, []);
+
+  useEffect(() => {
+    handleFilter();
+  }, [type, fromValue, toValue, khuVuc, danhmuc, sort]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -214,14 +384,12 @@ const SearchProductScreen = ({ navigation, route }) => {
         />
       </View>
 
-      <View style={{ flex: 1, flexDirection: "row", flexBasis: 30 }}>
+      <View style={{ flex: 1, flexDirection: "row" }}>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
           style={{
-            flex: 1,
-            flexDirection: "row",
             backgroundColor: "#fff",
-            width: 40,
+            width: 60,
             borderRadius: 5,
             borderWidth: 0.5,
             borderColor: "#000",
@@ -229,14 +397,24 @@ const SearchProductScreen = ({ navigation, route }) => {
             alignItems: "center",
             justifyContent: "center",
             paddingVertical: 5,
+            paddingHorizontal: 0,
           }}
         >
-          <Text style={{ color: "#000", fontSize: 16 }}>
+          <Text
+            style={{
+              color: "#000",
+              fontSize: 16,
+              flex: 1,
+              flexDirection: "row",
+            }}
+          >
             Lọc <Feather name={"filter"} size={14} color={"#000"} />
           </Text>
         </TouchableOpacity>
 
-        <View style={{ flex: 1, flexDirection: "row" }}>{_renderPicker()}</View>
+        <View style={{ flex: 1, flexDirection: "row", width: 200 }}>
+          {_renderPicker()}
+        </View>
         <TouchableOpacity>
           <Text
             style={{
