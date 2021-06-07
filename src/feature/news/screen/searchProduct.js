@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
-import { withEmpty } from "exp-value";
+import { withArray, withEmpty, withNumber } from "exp-value";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   Alert,
@@ -76,25 +76,24 @@ const SearchProductScreen = ({ navigation, route }) => {
 
   const loadPost = async () => {
     setLoading(true);
-    // const news = await axios.get({
-    //   url: `/search?type=${danhmuc}&tensp=${tensp}`,
-    //   timeout: 1000,
-    //   baseURL: BASE_URL,
-    // });
-    // await setNewsposted(news.data);
-    setLoading(false);
-  };
-
-  const handleFilter = async () => {
-    setLoading(true);
-    const news = await axios.get(
-      `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`,
-      { API }
-    );
+    const news = await axios.get(`/search?type=${danhmuc}&tensp=${tensp}`);
 
     await setNewsposted(news.data);
     setLoading(false);
   };
+
+  const handleFilter = useCallback(() => {
+    setLoading(true);
+
+    setTimeout(async () => {
+      setLoading(false);
+      const news = await axios.get(
+        `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`
+      );
+      if (withNumber("length", news.data)) await setNewsposted(news.data);
+      else setNewsposted([]);
+    }, 5000);
+  }, [type, fromValue, toValue, khuVuc, danhmuc, sort, loading]);
 
   const handleCancel = useCallback(() => {
     setModalVisible(false);
@@ -102,9 +101,9 @@ const SearchProductScreen = ({ navigation, route }) => {
     setDanhmuc("");
     setFromValue(0);
     setToValue(10000000000);
-    setSort(null);
+    setSort("");
     setLoading(false);
-    setType(null);
+    setType("");
   }, []);
 
   const ModalFilter = useCallback(() => {
@@ -149,7 +148,7 @@ const SearchProductScreen = ({ navigation, route }) => {
 
             {renderPrice()}
 
-            {renderPickerType()}
+            {/* {renderPickerType()} */}
 
             <View>
               <RadioButton
@@ -272,17 +271,26 @@ const SearchProductScreen = ({ navigation, route }) => {
           }}
         >
           {TYPE.map((item, index) => {
-            return <Picker.Item label={item} value={item} key={index} />;
+            return (
+              <Picker.Item label={item.label} value={item.value} key={index} />
+            );
           })}
         </Picker>
       </TouchableOpacity>
     );
-  }, [type]);
+  }, [type, modalVisible]);
 
   const renderPrice = useCallback(() => {
     if (!modalVisible) return;
     return (
-      <View>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 10,
+          marginVertical: 10,
+          justifyContent: "center",
+        }}
+      >
         <Text>
           {`Giá từ: ${currencyFormatter.format(fromValue, {
             code: "VND",
@@ -308,12 +316,14 @@ const SearchProductScreen = ({ navigation, route }) => {
   }, [fakeData]);
 
   // fetch form search
-  useEffect(() => {
-    loadPost();
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     return loadPost();
+  //   }, 1000);
+  // }, []);
 
   useEffect(() => {
-    // handleFilter();
+    handleFilter();
   }, [type, fromValue, toValue, khuVuc, danhmuc, sort]);
 
   React.useLayoutEffect(() => {
