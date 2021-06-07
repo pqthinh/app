@@ -27,7 +27,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/logo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.pqthinh_.app"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
