@@ -74,7 +74,6 @@ const auth = {
 
       res.data = userCredential;
     } catch (e) {
-      console.log(e);
       Alert.alert("Bạn nhập sai email hoặc mật khẩu");
       res.data = {};
     }

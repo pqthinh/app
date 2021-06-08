@@ -8,8 +8,8 @@ let config = {
   issuer: "https://accounts.google.com",
   scopes: ["openid", "profile"],
   clientId:
-    "253659412928-258pf1mfl5bip7pm0u8matsfdjk1vedi.apps.googleusercontent.com",
-  // "603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com",
+    "603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com",
+  // "253659412928-258pf1mfl5bip7pm0u8matsfdjk1vedi.apps.googleusercontent.com",
 };
 
 let StorageKey = "@MyApp:Auth";
