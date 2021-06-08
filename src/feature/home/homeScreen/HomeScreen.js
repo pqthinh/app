@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Feather } from "react-native-vector-icons";
 import { connect } from "react-redux";
+import { getProduct, getStory } from "../redux/action";
 import Banner from "../../../component/banner";
 import CategoryComponent from "../../../component/category";
 import Item from "../../../component/item";
@@ -28,7 +29,7 @@ const fakeNews = {
 
 const fakeData = [fakeNews, fakeNews, fakeNews, fakeNews, fakeNews, fakeNews];
 
-const HomeScreen = ({ user, navigation }) => {
+const HomeScreen = ({ user, navigation, getProduct, getStory, news }) => {
   const [listNews, setListNews] = useState([]);
   const [showType, setShowType] = useState(false);
   const [listStory, setListStory] = useState([]);
@@ -54,13 +55,17 @@ const HomeScreen = ({ user, navigation }) => {
   }, [listNews, showType]);
 
   useEffect(() => {
+    getProduct();
+  }, [news]);
+
+  useEffect(() => {
     setListNews(fakeData);
   }, [fakeData]);
 
   return (
     <ScrollView>
       <Banner />
-      <Stories navigation={navigation} listStory={listStory} />
+      <Stories navigation={navigation} listStory={listStory.slice(0, 10)} />
       <CategoryComponent navigation={navigation} />
 
       <View style={stylesCustomize.container}>
@@ -88,8 +93,9 @@ export default connect(
   (state) => ({
     user: state.userReducer.user,
     isLoggedIn: !state.userReducer.userLoading,
+    news: state.newsReducer.news,
   }),
-  {}
+  { getProduct, getStory }
 )(HomeScreen);
 
 const stylesCustomize = StyleSheet.create({
