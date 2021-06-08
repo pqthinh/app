@@ -76,13 +76,19 @@ const Stories = ({ navigation, newspost }) => {
   // render
   const renderItem = ({ item, index }) => (
     <View
-      key={`item-${index}`}
+      key={`item-story-${index}`}
       style={{
         backgroundColor: "#CFFBBB",
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
       }}
-      children={<StoryItem newspost={item} navigation={navigation} />}
+      children={
+        <StoryItem
+          newspost={item}
+          key={`item-${index}`}
+          navigation={navigation}
+        />
+      }
     />
   );
   return (

@@ -109,8 +109,7 @@ const HomeScreen = ({ user, navigation }) => {
 
       if (data) handleCleanData(data.data);
     } catch (e) {
-      console.log(e);
-      Alert.alert("Lỗi call API");
+      Alert.alert("Lỗi call API lấy danh sách tin đăng mới");
     }
 
     setLoading(false);

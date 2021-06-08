@@ -19,12 +19,13 @@ import Item from "../../../component/item";
 import ItemFlex from "../../../component/item-flex";
 import PickerCity from "../../../component/PickerCity";
 import SearchComponent from "../../../component/SearchComponent";
-import { BASE_URL } from "../../../config/url";
+import BASE_URL from "../../../config/url";
 import Helpers from "../../../utils/Constants/index";
+import LoadingScreen from "../../../component/modalLoading";
 
 var currencyFormatter = require("currency-formatter");
 const API = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL.BASE_URL,
 
   timeout: 1000,
 
@@ -74,11 +75,55 @@ const SearchProductScreen = ({ navigation, route }) => {
 
   const [loading, setLoading] = useState(false);
 
+  const _loading = useCallback(() => {
+    return <LoadingScreen loading={loading} />;
+  }, [loading]);
+
+  const cleanImage = useCallback((anh) => {
+    if (!anh) return ["https://picsum.photos/700"];
+    return anh.split(",");
+  }, []);
+
+  const handleCleanData = useCallback((news) => {
+    if (withNumber("length", news) <= 0) return [];
+
+    const data = news.map((item, index) => {
+      const user = {
+        name: withEmpty("name", item),
+        avatar_url: withEmpty("avatar", item),
+        phone: withEmpty("mobile", item),
+        star: "4",
+        place: withEmpty("diadiem", item),
+        follower: withEmpty("follower", item),
+        following: withEmpty("following", item),
+        email: withEmpty("email", item),
+      };
+
+      const anh = cleanImage(withEmpty("anh", item));
+      return {
+        anh: anh,
+        giaban: withNumber("giaban", item),
+        ten: withEmpty("ten", item),
+        diadiem: withEmpty("diadiem", item),
+        ngaydangtin: withEmpty("ngaydangtin", item),
+        mieuta: withEmpty("describe", item),
+        user: user,
+      };
+    });
+    setListNews(data);
+  }, []);
+
   const loadPost = async () => {
     setLoading(true);
-    const news = await axios.get(`/search?type=${danhmuc}&tensp=${tensp}`);
+    try {
+      const news = await axios.get(
+        `${BASE_URL.BASE_URL}/search?type=${danhmuc}&tensp=${tensp}`
+      );
+      await handleCleanData(news.data);
+    } catch (e) {
+      Alert.alert("Lỗi call API search");
+    }
 
-    await setNewsposted(news.data);
     setLoading(false);
   };
 
@@ -87,12 +132,16 @@ const SearchProductScreen = ({ navigation, route }) => {
 
     setTimeout(async () => {
       setLoading(false);
-      const news = await axios.get(
-        `${BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`
-      );
-      if (withNumber("length", news.data)) await setNewsposted(news.data);
-      else setNewsposted([]);
-    }, 5000);
+      try {
+        const news = await axios.get(
+          `${BASE_URL.BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`
+        );
+        if (withNumber("data.length", news)) await handleCleanData(news.data);
+        else setListNews([]);
+      } catch (e) {
+        Alert.alert("Lỗi call API search");
+      }
+    }, 500);
   }, [type, fromValue, toValue, khuVuc, danhmuc, sort, loading]);
 
   const handleCancel = useCallback(() => {
@@ -312,15 +361,8 @@ const SearchProductScreen = ({ navigation, route }) => {
   }, [fromValue, toValue, modalVisible]);
 
   useEffect(() => {
-    setListNews(fakeData);
+    if (withNumber("length", listNews) <= 0) setListNews(fakeData);
   }, [fakeData]);
-
-  // fetch form search
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     return loadPost();
-  //   }, 1000);
-  // }, []);
 
   useEffect(() => {
     handleFilter();
@@ -380,7 +422,7 @@ const SearchProductScreen = ({ navigation, route }) => {
     <ScrollView style={{ paddingHorizontal: 0 }}>
       {/* Filter */}
       {modalVisible && ModalFilter()}
-
+      {_loading()}
       <View
         style={{
           flex: 1,
@@ -437,7 +479,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         <View style={{ flex: 1, flexDirection: "row", width: 200 }}>
           {_renderPicker()}
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Text
             style={{
               flex: 1,
@@ -459,7 +501,6 @@ const SearchProductScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Result */}
       <View>
         <View style={{ flex: 1, justifyContent: "center" }}>
           <View style={{ backgroundColor: "#fff", marginVertical: 10 }}>

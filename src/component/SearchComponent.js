@@ -2,8 +2,13 @@ import React from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { Feather } from "react-native-vector-icons";
 
-const SearchComponent = (props) => {
-  const { navigation, value, onChangeData, children, ...other } = props;
+const SearchComponent = ({
+  navigation,
+  value,
+  onChangeData,
+  children,
+  ...other
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.icon}>
