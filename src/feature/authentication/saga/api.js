@@ -23,7 +23,6 @@ const auth = {
         });
     }
     try {
-      // email, phoneNumber, photoURL, displayName, api key, auth domain
       await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
@@ -48,13 +47,16 @@ const auth = {
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         Alert.alert("That email address is already in use!");
+        return;
       }
 
       if (error.code === "auth/invalid-email") {
         Alert.alert("That email address is invalid!");
+        return;
       }
 
       Alert.alert("Email này đã được sử dụng");
+      return;
     }
     return res;
   },
@@ -65,7 +67,10 @@ const auth = {
     try {
       const userCredential = await firebase
         .auth()
-        .signInWithEmailAndPassword(email||"thinhpq@its-global.vn", password || "123456");
+        .signInWithEmailAndPassword(
+          email || "thinhpq@its-global.vn",
+          password || "123456"
+        );
 
       res.data = userCredential;
     } catch (e) {
@@ -74,11 +79,10 @@ const auth = {
       res.data = {};
     }
 
-    // let res = {};
     res.data = {
       accessToken:
         "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-      email: "phamquangquang2008@gmail.com",
+      email: "thinhpq@its-global.vn",
       familyName: "Thịnh pq",
       givenName: "Phạm Quang",
       id: "116212769007021476799",
@@ -114,7 +118,7 @@ const auth = {
     res.data = {
       accessToken:
         "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-      email: "phamquangquang2008@gmail.com",
+      email: "thinhpq@its-global.vn",
       familyName: "Thịnh pq",
       givenName: "Phạm Quang",
       id: "116212769007021476799",
@@ -149,7 +153,7 @@ const auth = {
     res.data = {
       accessToken:
         "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-      email: "phamquangquang2008@gmail.com",
+      email: "thinhpq@its-global.vn",
       familyName: "Thịnh pq",
       givenName: "Phạm Quang",
       id: "116212769007021476799",
@@ -212,31 +216,3 @@ const getUserInfo = (accessToken, deviceToken, idUser) => {
 };
 
 export default auth;
-
-// let res = {};
-// res.data = {
-//   accessToken:
-//     "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-//   email: "phamquangquang2008@gmail.com",
-//   familyName: "Thịnh pq",
-//   givenName: "Phạm Quang",
-//   id: "116212769007021476799",
-//   name: "Phạm Quang Thịnh",
-//   photoUrl:
-//     "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
-// };
-// return res;
-
-// let res = {};
-// res.data = {
-//   accessToken:
-//     "ya29.a0AfH6SMC_6YGJ6nIu3Iwpn4quI1Uxksvzknnr6-IxyToppCNfrl9n58Y2S-mawe9HAvVgIBgZhnSWEju2fkvuatbDNJjbMlFtOE-szefpGNPSlYPOv1U4LUe1eexAGADq12q9OuAmrdLQjBFTiCGBBJ9oIEgG",
-//   email: "abc",
-//   familyName: "Thịnh pq sdwqhdbqw login dm no",
-//   givenName: "Phạm Quang",
-//   id: "116212769007021476799",
-//   name: "Phạm Quang Thịnh login thuong",
-//   photoUrl:
-//     "https://lh3.googleusercontent.com/a-/AOh14GhMV6KwkNik1FXEixSp-jQ7mjUe8GodLzZKhJj_=s96-c",
-// };
-// return res;

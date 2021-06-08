@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Text,
   View,
@@ -12,11 +12,14 @@ import {
   Alert,
 } from "react-native";
 import { connect } from "react-redux";
+import { withEmpty } from "exp-value";
 import { requestLogin, requestLoginFB, requestLoginGG } from "../redux/action";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import LoginAPI from "../apiFB";
 import GGAPI from "../apiGG";
 import styles from "../styleTypes";
+import EmptyScreen from "../../../component/EmptyScreen";
+import LoadingScreen from "../../../component/modalLoading";
 
 const LoginScreen = (props) => {
   const {
@@ -26,9 +29,10 @@ const LoginScreen = (props) => {
     requestLoginGG,
     user,
     isLoggedIn,
+    loading,
   } = props;
 
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({ email: ".", password: "" });
 
   const handleLoginWithFB = () => {
     LoginAPI.logIn().then((token) => {
@@ -50,12 +54,12 @@ const LoginScreen = (props) => {
     if (field === "email") {
       setData({
         ...data,
-        [field]: value.toLowerCase(),
+        [field]: value.toString().toLowerCase(),
       });
     } else {
       setData({
         ...data,
-        [field]: value,
+        [field]: value.toString(),
       });
     }
   };
@@ -91,12 +95,17 @@ const LoginScreen = (props) => {
     );
   };
 
+  const _loading = useCallback(() => {
+    return <LoadingScreen loading={loading} />;
+  }, [loading]);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
       <ScrollView>
+        {_loading()}
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             <View style={styles.up}>
@@ -116,7 +125,7 @@ const LoginScreen = (props) => {
                   keyboardType={"email-address"}
                   placeholder={"Enter your email"}
                   autoCapitalize={"none"}
-                  value={data.email}
+                  value={withEmpty("email", data)}
                   onChangeText={_handleChangeData("email")}
                 ></TextInput>
               </View>
@@ -126,7 +135,7 @@ const LoginScreen = (props) => {
                   placeholder={"Enter your password"}
                   secureTextEntry={true}
                   onChangeText={_handleChangeData("password")}
-                  value={data.password}
+                  value={withEmpty("password", data)}
                 ></TextInput>
               </View>
               <TouchableOpacity
@@ -189,6 +198,7 @@ const LoginScreen = (props) => {
 export default connect(
   (state) => ({
     user: state.userReducer.user,
+    loading: state.userReducer.loading,
     isLoggedIn: !state.userReducer.userLoading,
   }),
   { requestLogin, requestLoginFB, requestLoginGG }

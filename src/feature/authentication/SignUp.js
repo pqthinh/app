@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import {
-  StyleSheet,
+  Alert,
+  Image,
+  Keyboard,
+  ScrollView,
   Text,
-  View,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard,
-  Image,
-  ScrollView,
-  Alert,
+  View,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
+import LoadingScreen from "../../component/modalLoading";
 import { requestSignup } from "./redux/action";
-
 import styles from "./styleTypes";
 
 const RegisterScreen = (props) => {
-  const { navigation, user, isLoggedIn, requestSignup } = props;
-  const [loading, setLoading] = useState(false);
+  const { navigation, user, isLoggedIn, requestSignup, loading } = props;
 
   const [data, setData] = useState({
     email: "",
@@ -84,6 +80,10 @@ const RegisterScreen = (props) => {
     requestSignup(data);
   };
 
+  const _loading = useCallback(() => {
+    return <LoadingScreen loading={loading} />;
+  }, [loading]);
+
   const Divider = (props) => {
     return (
       <View {...props}>
@@ -96,6 +96,7 @@ const RegisterScreen = (props) => {
 
   return (
     <ScrollView>
+      {_loading()}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.up}>
@@ -195,6 +196,7 @@ export default connect(
   (state) => ({
     user: state.userReducer.user,
     isLoggedIn: !state.userReducer.userLoading,
+    loading: state.userReducer.loading,
   }),
   { requestSignup }
 )(RegisterScreen);

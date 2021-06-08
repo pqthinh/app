@@ -5,7 +5,7 @@ import auth from "./api";
 
 export function* fetchSignup(payload) {
   const response = yield call(auth.signup, payload);
-  yield delay(2000);
+  yield delay(500);
   console.log(JSON.stringify(response), "response signup");
 
   if (response.data) {
@@ -20,9 +20,8 @@ export function* fetchSignup(payload) {
 }
 
 export function* fetchLogin(payload) {
-
   const response = yield call(auth.login, payload);
-  yield delay(2000);
+  yield delay(500);
 
   if (response.data) {
     yield put(authAction.onLoginResponse(response));
@@ -37,7 +36,7 @@ export function* fetchLogin(payload) {
 
 export function* fetchLoginFB(payload) {
   const response = yield call(auth.loginFacebook, payload);
-  yield delay(2000);
+  yield delay(500);
   if (response.data) {
     yield put(authAction.onLoginResponse(response));
   } else {
@@ -51,7 +50,7 @@ export function* fetchLoginFB(payload) {
 
 export function* fetchLoginGG(payload) {
   const response = yield call(auth.loginGoogle, payload);
-  yield delay(2000);
+  yield delay(500);
   if (response.data) {
     yield put(authAction.onLoginResponse(response));
   } else {
@@ -65,7 +64,7 @@ export function* fetchLoginGG(payload) {
 
 export function* logout(payload) {
   const response = yield call(auth.logout, payload);
-  yield delay(2000);
-  console.log(JSON.stringify(response), "login responsi")
+  yield delay(500);
+
   yield put(authAction.logout());
 }

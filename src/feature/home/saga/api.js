@@ -13,3 +13,5 @@ const News = {
     console.log(request, "request get sttory");
   },
 };
+
+export default News

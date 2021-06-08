@@ -1,70 +1,35 @@
 import { put, delay, call } from "redux-saga/effects";
 import { Alert } from "react-native";
-import * as authAction from "../redux/action";
-import auth from "./api";
+import * as newsAction from "../redux/action";
+import news from "./api";
 
 export function* fetchSignup(payload) {
-  const response = yield call(auth.signup, payload);
+  const response = yield call(news.signup, payload);
   yield delay(2000);
   console.log(JSON.stringify(response), "response signup");
 
   if (response.data) {
-    yield put(authAction.reponseSignup(response));
+    yield put(newsAction.reponseSignup(response));
   } else {
-    yield put(authAction.loginFailed(response));
+    yield put(newsAction.loginFailed(response));
     const messages = response.errors;
     setTimeout(() => {
       Alert.alert("Login error", messages);
-    }, 200);
+    }, 100);
   }
 }
 
 export function* fetchLogin(payload) {
-  const response = yield call(auth.login, payload);
+  const response = yield call(news.login, payload);
   yield delay(2000);
 
   if (response.data) {
-    yield put(authAction.onLoginResponse(response));
+    yield put(newsAction.onLoginResponse(response));
   } else {
-    yield put(authAction.loginFailed(response));
+    yield put(newsAction.loginFailed(response));
     const messages = response.errors;
     setTimeout(() => {
       Alert.alert("Login error", messages);
     }, 200);
   }
-}
-
-export function* fetchLoginFB(payload) {
-  const response = yield call(auth.loginFacebook, payload);
-  yield delay(2000);
-  if (response.data) {
-    yield put(authAction.onLoginResponse(response));
-  } else {
-    yield put(authAction.loginFailed(response));
-    const messages = response.errors;
-    setTimeout(() => {
-      Alert.alert("Facebook login error", messages);
-    }, 200);
-  }
-}
-
-export function* fetchLoginGG(payload) {
-  const response = yield call(auth.loginGoogle, payload);
-  yield delay(2000);
-  if (response.data) {
-    yield put(authAction.onLoginResponse(response));
-  } else {
-    yield put(authAction.loginFailed(response));
-    const messages = response.errors;
-    setTimeout(() => {
-      Alert.alert("Google login error", messages);
-    }, 200);
-  }
-}
-
-export function* logout(payload) {
-  const response = yield call(auth.logout, payload);
-  yield delay(2000);
-  console.log(JSON.stringify(response), "login responsi");
-  yield put(authAction.logout());
 }

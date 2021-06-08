@@ -1,13 +1,13 @@
 import * as types from "./actionType";
 
-export function requestSignup( request ) {
+export function requestSignup(request) {
   return { type: types.SIGNUP_REQUEST, request };
 }
 export function reponseSignup(response) {
-    return { type: types.SIGNUP_SUCCESS, response };
+  return { type: types.SIGNUP_SUCCESS, response };
 }
 
-export function requestLogin( request ) {
+export function requestLogin(request) {
   return { type: types.LOGIN_REQUEST, request };
 }
 
@@ -25,13 +25,6 @@ export function requestLogout(accessToken) {
 export function logout() {
   return { type: types.LOGOUT_SUCCESS };
 }
-
-// export function requestRegister(payload) {
-//     return {
-//       type: types.REGISTER_REQUEST,
-//       payload,
-//     };
-// }
 
 export function requestLoginFB(payload) {
   return { type: types.LOGINFB_REQUEST, payload };
