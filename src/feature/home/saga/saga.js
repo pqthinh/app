@@ -3,15 +3,15 @@ import { Alert } from "react-native";
 import * as newsAction from "../redux/action";
 import news from "./api";
 
-export function* fetchSignup(payload) {
-  const response = yield call(news.signup, payload);
+export function* fetchNews(payload) {
+  const response = yield call(news.getProduct, payload);
   yield delay(2000);
   console.log(JSON.stringify(response), "response signup");
 
   if (response.data) {
-    yield put(newsAction.reponseSignup(response));
+    yield put(newsAction.getProduct(response));
   } else {
-    yield put(newsAction.loginFailed(response));
+    // yield put(newsAction.loginFailed(response));
     const messages = response.errors;
     setTimeout(() => {
       Alert.alert("Login error", messages);
@@ -19,17 +19,17 @@ export function* fetchSignup(payload) {
   }
 }
 
-export function* fetchLogin(payload) {
-  const response = yield call(news.login, payload);
+export function* fetchStories(payload) {
+  const response = yield call(news.getStory, payload);
   yield delay(2000);
 
   if (response.data) {
-    yield put(newsAction.onLoginResponse(response));
+    yield put(newsAction.getStory(response));
   } else {
-    yield put(newsAction.loginFailed(response));
+    // yield put(newsAction.loginFailed(response));
     const messages = response.errors;
     setTimeout(() => {
       Alert.alert("Login error", messages);
-    }, 200);
+    }, 100);
   }
 }
