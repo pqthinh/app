@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
-import { withArray, withEmpty, withNumber } from "exp-value";
+import { withEmpty, withNumber } from "exp-value";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   Alert,
@@ -12,27 +12,19 @@ import {
   View,
 } from "react-native";
 import { Checkbox, RadioButton } from "react-native-paper";
-import { Feather } from "react-native-vector-icons";
 import RangeSlider from "react-native-range-slider-expo";
+import { Feather } from "react-native-vector-icons";
 import EmptyScreen from "../../../component/EmptyScreen";
 import Item from "../../../component/item";
 import ItemFlex from "../../../component/item-flex";
+import LoadingScreen from "../../../component/modalLoading";
 import PickerCity from "../../../component/PickerCity";
 import SearchComponent from "../../../component/SearchComponent";
 import BASE_URL from "../../../config/url";
+import useDebounce from "../../../hooks/useDebounce";
 import Helpers from "../../../utils/Constants/index";
-import LoadingScreen from "../../../component/modalLoading";
 
 var currencyFormatter = require("currency-formatter");
-const API = axios.create({
-  baseURL: BASE_URL.BASE_URL,
-
-  timeout: 1000,
-
-  headers: {
-    "X-CSRF-Token": "Beaer thinh_faketoken",
-  },
-});
 
 const fakeNews = {
   anh: [
@@ -55,9 +47,9 @@ const fakeData = [fakeNews, fakeNews, fakeNews, fakeNews, fakeNews, fakeNews];
 
 const SearchProductScreen = ({ navigation, route }) => {
   const ctg = withEmpty("params.category", route);
-  const tensp = withEmpty("params.dataQuery", route);
+  const tensp = withEmpty("params.search", route);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [showType, setShowType] = useState(false);
@@ -73,7 +65,13 @@ const SearchProductScreen = ({ navigation, route }) => {
 
   const [checked, setChecked] = useState("first");
 
+  const debounceValue = useDebounce(search, 3000);
+
   const [loading, setLoading] = useState(false);
+
+  const handleSearch = (e) => {
+    setSearch(e);
+  };
 
   const _loading = useCallback(() => {
     return <LoadingScreen loading={loading} />;
@@ -117,7 +115,7 @@ const SearchProductScreen = ({ navigation, route }) => {
     setLoading(true);
     try {
       const news = await axios.get(
-        `${BASE_URL.BASE_URL}/search?type=${danhmuc}&tensp=${tensp}`
+        `${BASE_URL.BASE_URL}/search?type=${danhmuc}&tensp=${debounceValue}`
       );
       await handleCleanData(news.data);
     } catch (e) {
@@ -134,7 +132,9 @@ const SearchProductScreen = ({ navigation, route }) => {
       setLoading(false);
       try {
         const news = await axios.get(
-          `${BASE_URL.BASE_URL}/search?type=${danhmuc}&tensp=${tensp}&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`
+          `${BASE_URL.BASE_URL}/search?type=${danhmuc}&tensp=${
+            debounceValue || tensp
+          }&min_price=${fromValue}&max_price=${toValue}&address=${khuVuc}&sort=${sort}&loaitin=${type}`
         );
         if (withNumber("data.length", news)) await handleCleanData(news.data);
         else setListNews([]);
@@ -142,7 +142,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         Alert.alert("Lỗi call API search");
       }
     }, 500);
-  }, [type, fromValue, toValue, khuVuc, danhmuc, sort, loading]);
+  }, [type, fromValue, toValue, khuVuc, danhmuc, sort, debounceValue]);
 
   const handleCancel = useCallback(() => {
     setModalVisible(false);
@@ -327,7 +327,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         </Picker>
       </TouchableOpacity>
     );
-  }, [type, modalVisible]);
+  }, [modalVisible]);
 
   const renderPrice = useCallback(() => {
     if (!modalVisible) return;
@@ -358,7 +358,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         />
       </View>
     );
-  }, [fromValue, toValue, modalVisible]);
+  }, [modalVisible]);
 
   useEffect(() => {
     if (withNumber("length", listNews) <= 0) setListNews(fakeData);
@@ -366,20 +366,25 @@ const SearchProductScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     handleFilter();
-  }, [type, fromValue, toValue, khuVuc, danhmuc, sort]);
+  }, [type, debounceValue, fromValue, toValue, khuVuc, danhmuc, sort]);
+
+  const renderSearch = useCallback(() => {
+    return (
+      <TouchableOpacity>
+        <SearchComponent
+          placeholder={tensp}
+          value={search}
+          onChangeText={(e) => handleSearch(e)}
+          navigation={navigation}
+          children={<Feather name={"bookmark"} size={24} />}
+        />
+      </TouchableOpacity>
+    );
+  }, [search]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: () => (
-        <TouchableOpacity>
-          <SearchComponent
-            value={search}
-            onChangeData={setSearch}
-            navigation={navigation}
-            children={<Feather name={"bookmark"} size={24} />}
-          />
-        </TouchableOpacity>
-      ),
+      headerTitle: () => renderSearch(),
       headerRight: () => (
         <View
           style={{
@@ -416,7 +421,7 @@ const SearchProductScreen = ({ navigation, route }) => {
         </View>
       ),
     });
-  }, []);
+  }, [search]);
 
   return (
     <ScrollView style={{ paddingHorizontal: 0 }}>

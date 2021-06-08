@@ -33,7 +33,7 @@ export default function CategoryComponent(props) {
               onPress={() =>
                 navigation.navigate("News", {
                   screen: "Search",
-                  category: x?.name || "Tất cả danh mục",
+                  params: { category: x?.name || "Tất cả danh mục" },
                 })
               }
               key={index}

@@ -7,6 +7,7 @@ const SearchComponent = ({
   value,
   onChangeData,
   children,
+  placeholder,
   ...other
 }) => {
   return (
@@ -15,11 +16,12 @@ const SearchComponent = ({
         <Feather name="search" size={24} color="#000" />
       </View>
       <TextInput
-        placeholder="Tìm kiếm sản phẩm"
+        placeholder={placeholder || "Tìm kiếm sản phẩm"}
         placeholderTextColor="#000"
         style={styles.searchInput}
-        onChangeText={(value) => onChangeData(value)}
         value={value}
+        onChangeText={(value) => onChangeData(value)}
+        {...other}
       />
       {children}
     </View>
@@ -47,5 +49,6 @@ const styles = StyleSheet.create({
   searchInput: {
     fontSize: 14,
     marginRight: 20,
+    width: 140,
   },
 });
