@@ -197,34 +197,49 @@ const SearchProductScreen = ({ navigation, route }) => {
 
             {renderPrice()}
 
-            {/* {renderPickerType()} */}
+            {renderPickerType()}
 
-            <View>
-              <RadioButton
-                value="first"
-                status={checked === "first" ? "checked" : "unchecked"}
-                onPress={() => setChecked("first")}
-              />
-              <RadioButton
-                value="second"
-                status={checked === "second" ? "checked" : "unchecked"}
-                onPress={() => setChecked("second")}
-              />
-            </View>
-
-            <View>
-              <Checkbox.Item label="Item" status="checked" />
-            </View>
-
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
+            <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
+              <View
+                style={[
+                  styles.itemRowFilter,
+                  { marginVertical: 10, marginHorizontal: 0 },
+                ]}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </TouchableOpacity>
+                <Text> Đồ cho tặng, miễn phí</Text>
+                <Checkbox.Item label="" status="" />
+              </View>
+
+              <Text style={styles.blockFilter}>Sắp xếp theo:</Text>
+
+              <View style={styles.itemRowFilter}>
+                <Text> Tin mới trước</Text>
+                <RadioButton
+                  value="first"
+                  status={checked === "first" ? "checked" : "unchecked"}
+                  onPress={() => setChecked("first")}
+                />
+              </View>
+              <View style={styles.itemRowFilter}>
+                <Text> Giá rẻ trước</Text>
+                <RadioButton
+                  value="first"
+                  status={checked === "first" ? "checked" : "unchecked"}
+                  onPress={() => setChecked("first")}
+                />
+              </View>
             </View>
+
+            <TouchableOpacity
+              style={[
+                styles.button,
+                styles.buttonClose,
+                { marginVertical: 100, marginHorizontal: 40 },
+              ]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Đóng</Text>
+            </TouchableOpacity>
           </ScrollView>
         </Modal>
       </View>
@@ -295,39 +310,49 @@ const SearchProductScreen = ({ navigation, route }) => {
     ];
 
     return (
-      <TouchableOpacity
+      <View
         style={{
           flex: 1,
           flexDirection: "row",
           height: 40,
-          width: 200,
           alignItems: "center",
-          margin: 10,
-          borderRadius: 5,
-          borderWidth: 0.5,
-          borderColor: "#000",
-          backgroundColor: "#fff",
+          marginHorizontal: 20,
+          marginTop: -20,
         }}
       >
-        <Picker
-          selectedValue={type}
-          onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+        <Text>Loại tin đăng: </Text>
+        <TouchableOpacity
           style={{
-            height: 40,
-            width: 200,
-            fontSize: 12,
-            marginHorizontal: 10,
+            margin: 10,
+            borderRadius: 5,
+            borderWidth: 0.5,
+            borderColor: "#000",
           }}
         >
-          {TYPE.map((item, index) => {
-            return (
-              <Picker.Item label={item.label} value={item.value} key={index} />
-            );
-          })}
-        </Picker>
-      </TouchableOpacity>
+          <Picker
+            selectedValue={type}
+            onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+            style={{
+              height: 40,
+              width: 200,
+              fontSize: 12,
+              marginHorizontal: 10,
+            }}
+          >
+            {TYPE.map((item, index) => {
+              return (
+                <Picker.Item
+                  label={item.label}
+                  value={item.value}
+                  key={index}
+                />
+              );
+            })}
+          </Picker>
+        </TouchableOpacity>
+      </View>
     );
-  }, [modalVisible]);
+  }, [type, modalVisible]);
 
   const renderPrice = useCallback(() => {
     if (!modalVisible) return;
@@ -340,7 +365,7 @@ const SearchProductScreen = ({ navigation, route }) => {
           justifyContent: "center",
         }}
       >
-        <Text>
+        <Text style={{ fontWeight: "500", marginHorizontal: 10 }}>
           {`Giá từ: ${currencyFormatter.format(fromValue, {
             code: "VND",
           })} đến ${currencyFormatter.format(toValue, { code: "VND" })}`}
@@ -596,5 +621,17 @@ const styles = StyleSheet.create({
     width: "100%",
     marginHorizontal: 10,
     marginVertical: 5,
+  },
+  itemRowFilter: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  blockFilter: {
+    textTransform: "uppercase",
+    fontWeight: "700",
+    color: "#000",
+    marginVertical: 15,
   },
 });
