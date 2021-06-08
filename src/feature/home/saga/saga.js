@@ -9,9 +9,9 @@ export function* fetchSignup(payload) {
   console.log(JSON.stringify(response), "response signup");
 
   if (response.data) {
-    yield put(newsAction.reponseSignup(response));
+    yield put(newsAction.getProduct(response));
   } else {
-    yield put(newsAction.loginFailed(response));
+    // yield put(newsAction.loginFailed(response));
     const messages = response.errors;
     setTimeout(() => {
       Alert.alert("Login error", messages);
@@ -23,13 +23,8 @@ export function* fetchLogin(payload) {
   const response = yield call(news.login, payload);
   yield delay(200);
 
-  if (response.data) {
-    yield put(newsAction.onLoginResponse(response));
-  } else {
-    yield put(newsAction.loginFailed(response));
-    const messages = response.errors;
     setTimeout(() => {
       Alert.alert("Login error", messages);
-    }, 200);
+    }, 100);
   }
 }
