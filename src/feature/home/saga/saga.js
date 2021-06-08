@@ -1,11 +1,11 @@
 import { put, delay, call } from "redux-saga/effects";
 import { Alert } from "react-native";
-import * as newsAction from "../redux/action";
+import * as newsAction from "../redux/actions";
 import news from "./api";
 
-export function* fetchNews(payload) {
-  const response = yield call(news.getProduct, payload);
-  yield delay(2000);
+export function* fetchSignup(payload) {
+  const response = yield call(news.signup, payload);
+  yield delay(200);
   console.log(JSON.stringify(response), "response signup");
 
   if (response.data) {
@@ -19,17 +19,11 @@ export function* fetchNews(payload) {
   }
 }
 
-export function* fetchStories(payload) {
-  const response = yield call(news.getStory, payload);
-  yield delay(2000);
+export function* fetchLogin(payload) {
+  const response = yield call(news.login, payload);
+  yield delay(200);
 
-  if (response.data) {
-    yield put(newsAction.getStory(response));
-  } else {
-    // yield put(newsAction.loginFailed(response));
-    const messages = response.errors;
-    setTimeout(() => {
-      Alert.alert("Login error", messages);
-    }, 100);
-  }
+  setTimeout(() => {
+    Alert.alert("Login error", messages);
+  }, 100);
 }

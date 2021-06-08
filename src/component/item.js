@@ -78,7 +78,7 @@ export default function Item({ navigation, newsPost, danhmuc }) {
           <Text style={{ fontSize: 12 }}>
             <Fontisto name="date" size={16} color="black" />
             {"  "}
-            <TimeAgo time={news.ngaycapnhat} />
+            <TimeAgo time={news.ngaydangtin} />
           </Text>
         </View>
       </View>

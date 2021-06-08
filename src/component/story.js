@@ -13,9 +13,9 @@ const currencyFormatter = require("currency-formatter");
 
 const fakeNews = {
   anh: [
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
-    "https://picsum.photos/700",
+    "https://source.unsplash.com/collection/190727/1600x900",
+    "https://picsum.photos/200",
+    "https://source.unsplash.com/assets/grid-likes-17d8c9c95aa04afeb7128e2f52893dc46f7e3dc087fa9e2ff37fc8f5a8bafc67.png",
   ],
   giaban: 1000000,
   ten: "Test product",
@@ -31,9 +31,12 @@ const fakeNews = {
 export default function StoryItem({ navigation, newspost, danhmuc, item }) {
   const news = newspost || fakeNews;
   const handleImage = (anh) => {
-    if (anh.length == 0)
-      return "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg";
-    return anh[0];
+    if (anh?.length == 0)
+      return "https://source.unsplash.com/assets/grid-likes-17d8c9c95aa04afeb7128e2f52893dc46f7e3dc087fa9e2ff37fc8f5a8bafc67.png";
+    return (
+      anh?.[0] ||
+      "https://th.bing.com/th/id/OIP.Vx-xhHQvVoW6ImOmInz-4gHaIa?w=140&h=180&c=7&o=5&pid=1.7"
+    );
   };
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Detail", { news })}>
@@ -47,7 +50,7 @@ export default function StoryItem({ navigation, newspost, danhmuc, item }) {
           <Avatar.Image
             size={40}
             source={{
-              uri: "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
+              uri: "https://source.unsplash.com/assets/grid-likes-17d8c9c95aa04afeb7128e2f52893dc46f7e3dc087fa9e2ff37fc8f5a8bafc67.png",
             }}
           />
         </View>
