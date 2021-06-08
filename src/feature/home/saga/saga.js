@@ -23,8 +23,7 @@ export function* fetchLogin(payload) {
   const response = yield call(news.login, payload);
   yield delay(200);
 
-    setTimeout(() => {
-      Alert.alert("Login error", messages);
-    }, 100);
-  }
+  setTimeout(() => {
+    Alert.alert("Login error", messages);
+  }, 100);
 }
