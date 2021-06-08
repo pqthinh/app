@@ -17,10 +17,10 @@ const DEVICE_WIDTH = Dimensions.get("window").width;
 
 export default function CategoryComponent(props) {
   const { navigation } = props;
-  const [categorys, setCategorys] = useState([]);
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     let newsList = require("../assets/category/category.json");
-    setCategorys(newsList);
+    setCategories(newsList);
   }, []);
 
   return (
@@ -28,9 +28,14 @@ export default function CategoryComponent(props) {
       <Text style={styles.categoryTitle}>Danh mục sản phẩm</Text>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.viewCategory}>
-          {categorys?.map((x, index) => (
+          {categories?.map((x, index) => (
             <TouchableOpacity
-              // onPress={() => navigation.navigate('Search')}
+              onPress={() =>
+                navigation.navigate("News", {
+                  screen: "Search",
+                  category: x?.name || "Tất cả danh mục",
+                })
+              }
               key={index}
             >
               <View style={styles.category}>
