@@ -155,6 +155,45 @@ const TinDangBan = ({ navigation, user }) => {
   const [loading, setLoading] = useState(false);
   const currentUser = user || null;
   // fetch data tin da lưu
+
+  const _loading = useCallback(() => {
+    return <LoadingScreen loading={loading} />;
+  }, [loading]);
+
+  const cleanImage = useCallback((anh) => {
+    if (!anh) return ["https://picsum.photos/700"];
+    return anh.split(",");
+  }, []);
+
+  const handleCleanData = useCallback((news) => {
+    if (withNumber("length", news) <= 0) return [];
+
+    const data = news.map((item, index) => {
+      const user = {
+        name: withEmpty("name", item),
+        avatar_url: withEmpty("avatar", item),
+        phone: withEmpty("mobile", item),
+        star: "4",
+        place: withEmpty("diadiem", item),
+        follower: withEmpty("follower", item),
+        following: withEmpty("following", item),
+        email: withEmpty("email", item),
+      };
+
+      const anh = cleanImage(withEmpty("anh", item));
+      return {
+        anh: anh,
+        giaban: withNumber("giaban", item),
+        ten: withEmpty("ten", item),
+        diadiem: withEmpty("diadiem", item),
+        ngaydangtin: withEmpty("ngaydangtin", item),
+        mieuta: withEmpty("describe", item),
+        user: user,
+      };
+    });
+    setListNews(data);
+  }, []);
+
   useEffect(() => {
     if (!newsposted) setNewsposted([]);
     if (typeof newsposted.length === "undefined" || !newsposted.length) {
@@ -164,12 +203,16 @@ const TinDangBan = ({ navigation, user }) => {
 
   const loadPost = useCallback(async () => {
     setLoading(true);
-    const news = await axios.get(
-      `${BASE_URL.BASE_URL}/search?owner=${
-        currentUser ? currentUser.id : 5
-      }&state=2`
-    );
-    setNewsposted(news.data);
+    try {
+      const news = await axios.get(
+        `${BASE_URL.BASE_URL}/search?owner=${
+          currentUser ? 2147483647 : 5
+        }&state=1`
+      );
+      await handleCleanData(news.data);
+    } catch (e) {
+      Alert.alert("Lỗi lấy dữ liệu");
+    }
     setLoading(false);
   }, []);
 
@@ -188,13 +231,8 @@ const TinDangBan = ({ navigation, user }) => {
             typeof newsposted.length === "undefined" ? (
               <Text>Danh mục trống</Text>
             ) : (
-              newsposted?.map((x) => (
-                <TouchableOpacity
-                  key={x.id}
-                  onPress={() => navigation.navigate("Details", { news: x })}
-                >
-                  <ItemFlex news={x} />
-                </TouchableOpacity>
+              newsposted?.map((x, index) => (
+                <ItemFlex news={x} navigation={navigation} key={index} />
               ))
             )}
           </View>

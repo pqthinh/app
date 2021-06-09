@@ -83,8 +83,8 @@ export default function ItemFlex({ navigation, newsPost }) {
           <MaterialIcons name="place" size={14} color="black" />
           {"  "}
           {news.diadiem.length > 18
-            ? news.diadiem.slice(0, 18) + "..."
-            : news.diadiem}
+            ? news?.diadiem.slice(0, 18) + "..."
+            : news?.diadiem}
         </Text>
         <Text style={{ fontSize: 14 }}>
           <Fontisto name="date" size={14} color="black" />
