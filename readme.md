@@ -2,7 +2,11 @@
 
 Sản phẩm demo: 
 - app : https://expo.io/accounts/pqthinh_/projects/app/builds/b4baa171-4d8c-4bc1-a803-8bc6e6b1ec5d
-- api : https://chotot-server.herokuapp.com/
+- ![image](https://user-images.githubusercontent.com/50290559/121291516-974e0880-c912-11eb-8f97-a78bb766387c.png)
+
+
+- api : https://int3115.herokuapp.com
+- ![image](https://user-images.githubusercontent.com/50290559/121291565-adf45f80-c912-11eb-98db-983d3da05d02.png)
 
 
 Đây là sản phẩm của 3 tháng code môn Thiết kế giao diện người dùng (int3115).
