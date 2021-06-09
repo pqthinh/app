@@ -6,7 +6,7 @@ import styles from "./style";
 import StoryItem from "./story";
 
 // dummy data
-const data = [...Array(20)].map((_, index) => ({
+const data = [...Array(5)].map((_, index) => ({
   id: `item-${index}`,
   user: {
     name: "thinh",
@@ -14,8 +14,8 @@ const data = [...Array(20)].map((_, index) => ({
       "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
   },
   news: {
-    img: "https://image.shutterstock.com/image-vector/merchandise-line-icons-signs-set-600w-1371727865.jpg",
-    name: "bans buon",
+    img: "https://cf.shopee.vn/file/729d7a0b46b01433e6c5b964ac01aea9",
+    name: "ban buon",
   },
 }));
 
@@ -55,7 +55,7 @@ const StickyItemView = ({
   );
 };
 
-const Stories = ({ navigation }) => {
+const Stories = ({ navigation, newspost }) => {
   const handleStickyItemPress = () => {
     Alert.alert("Tạo tin đăng", "Đi đến trang đăng tin", [
       {
@@ -76,13 +76,19 @@ const Stories = ({ navigation }) => {
   // render
   const renderItem = ({ item, index }) => (
     <View
-      key={`item-${index}`}
+      key={`item-story-${index}`}
       style={{
         backgroundColor: "#CFFBBB",
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
       }}
-      children={<StoryItem item={item} navigation={navigation} />}
+      children={
+        <StoryItem
+          newspost={item}
+          key={`item-${index}`}
+          navigation={navigation}
+        />
+      }
     />
   );
   return (
@@ -97,7 +103,7 @@ const Stories = ({ navigation }) => {
         stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
         stickyItemContent={StickyItemView}
         onStickyItemPress={handleStickyItemPress}
-        data={data}
+        data={newspost || data}
         renderItem={renderItem}
       />
     </View>

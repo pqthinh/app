@@ -8,6 +8,11 @@ import {
 } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { Feather } from "react-native-vector-icons";
+import * as firebase from "firebase";
+import axios from "axios";
+import BASE_URL from "../../../config/url";
+import { Alert } from "react-native";
+import LoadingScreen from "../../../component/modalLoading";
 
 const fakeNews = {
   anh: [
@@ -41,7 +46,98 @@ const PreviewScreen = ({ navigation, route }) => {
   const product = route.params?.news || fakeNews;
 
   const [news, setNews] = useState(product);
-  const _handleUploadNews = useCallback(() => {}, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [img, setImg] = useState([]);
+
+  const uploadImage = async (uri, imageName) => {
+    setIsLoading(true);
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const ref = firebase
+      .storage()
+      .ref()
+      .child("images/" + imageName);
+
+    setIsLoading(false);
+    return ref.put(blob);
+  };
+
+  const storageFireBase = async (images) => {
+    setIsLoading(true);
+    images &&
+      images?.map((image) => {
+        if (Platform.OS == "android") {
+          try {
+            let name = image?.uri.split("/").pop();
+            uploadImage(image.uri, name)
+              .then(() => {
+                getURL(name);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } catch (e) {
+            console.log(e, "77 / preview");
+          }
+        }
+      });
+    setIsLoading(false);
+  };
+
+  const getURL = (name) => {
+    firebase
+      .storage()
+      .ref()
+      .child("images/" + name)
+      .getDownloadURL()
+      .then((url) => {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = (event) => {
+          var blob = xhr.response;
+        };
+        xhr.open("GET", url);
+        xhr.send();
+        setImg([...img, url]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const uploadNews = async () => {
+    setIsLoading(true);
+    try {
+      if (img?.length <= 0) await storageFireBase(product.anh);
+
+      if (img?.length > 0) {
+        console.log(img);
+        news.anh = img;
+        const res = await axios.post(`${BASE_URL.BASE_URL}/tindang`, news);
+        Alert.alert(JSON.stringify(res));
+        navigation.goBack();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
+  const _handleUploadNews = useCallback(
+    (news) => {
+      if (!news.anh || !news.ten || !news.giaban || !news.diadiem) {
+        Alert.alert("Bạn phải nhập đủ thông tin !");
+        return;
+      }
+      uploadNews();
+    },
+    [news, img]
+  );
+
+  const _loading = useCallback(() => {
+    return <LoadingScreen loading={isLoading} />;
+  }, [isLoading]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -95,6 +191,7 @@ const PreviewScreen = ({ navigation, route }) => {
   }, []);
   return (
     <ScrollView style={styles.container}>
+      {_loading()}
       <View style={styles.block}>
         <Text style={styles.title}> Ảnh tin đăng: </Text>
         <View style={styles.content}>
@@ -119,35 +216,30 @@ const PreviewScreen = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-
       <View style={styles.block}>
         <Text style={styles.title}> Tiêu đề tin: </Text>
         <View style={styles.content}>
           <Text style={styles.textContent}>{news.ten}</Text>
         </View>
       </View>
-
       <View style={styles.block}>
         <Text style={styles.title}> Định giá tin: </Text>
         <View style={styles.content}>
           <Text style={styles.textContent}>{news.giaban}</Text>
         </View>
       </View>
-
       <View style={styles.block}>
         <Text style={styles.title}> Địa chỉ giao dịch: </Text>
         <View style={styles.content}>
           <Text style={styles.textContent}>{news.diadiem}</Text>
         </View>
       </View>
-
       <View style={styles.block}>
         <Text style={styles.title}> Miêu tả: </Text>
         <View style={styles.content}>
           <Text style={styles.textContent}>{news.mieuta}</Text>
         </View>
       </View>
-
       <View style={styles.block}>
         <TouchableOpacity
           onPress={() => _handleUploadNews(news)}
@@ -156,7 +248,6 @@ const PreviewScreen = ({ navigation, route }) => {
           <Text>Đăng tin</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.block}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -165,7 +256,6 @@ const PreviewScreen = ({ navigation, route }) => {
           <Text>Hủy</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.space}></View>
     </ScrollView>
   );

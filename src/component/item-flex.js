@@ -89,7 +89,7 @@ export default function ItemFlex({ navigation, newsPost }) {
         <Text style={{ fontSize: 14 }}>
           <Fontisto name="date" size={14} color="black" />
           {"  "}
-          <TimeAgo time={news.ngaycapnhat} />
+          <TimeAgo time={news.ngaydangtin} />
         </Text>
       </View>
     </TouchableOpacity>

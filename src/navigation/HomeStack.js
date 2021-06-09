@@ -33,7 +33,7 @@ export default function HomeStack(props) {
                 onPress={() => {
                   navigation.navigate("News", {
                     screen: "Search",
-                    search: search,
+                    params: { search: search },
                   });
                   setSearch("");
                 }}
