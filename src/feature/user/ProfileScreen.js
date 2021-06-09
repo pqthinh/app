@@ -20,7 +20,7 @@ import { Feather } from "react-native-vector-icons";
 import { connect } from "react-redux";
 import EmptyScreen from "../../component/EmptyScreen";
 import ItemFlex from "../../component/item-flex";
-import { BASE_URL } from "../../config/url";
+import BASE_URL from "../../config/url";
 
 const ProfileScreen = ({ navigation, user }) => {
   const [currentUser, setCurrentUser] = useState(user);
@@ -164,12 +164,12 @@ const TinDangBan = ({ navigation, user }) => {
 
   const loadPost = useCallback(async () => {
     setLoading(true);
-
     const news = await axios.get(
-      `${BASE_URL}/search?owner=${currentUser ? currentUser.id : 5}&state=2`
+      `${BASE_URL.BASE_URL}/search?owner=${
+        currentUser ? currentUser.id : 5
+      }&state=2`
     );
     setNewsposted(news.data);
-    console.log("Tin đang bán: " + news.data.length);
     setLoading(false);
   }, []);
 
