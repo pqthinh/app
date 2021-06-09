@@ -21,7 +21,7 @@ import LoadingScreen from "../../../component/modalLoading";
 import PickerCity from "../../../component/PickerCity";
 import SearchComponent from "../../../component/SearchComponent";
 import BASE_URL from "../../../config/url";
-import useDebounce from "../../../hooks/useDebounce";
+import useDebounce from "../../../hooks/useDebounce/index";
 import Helpers from "../../../utils/Constants/index";
 
 var currencyFormatter = require("currency-formatter");

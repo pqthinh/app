@@ -100,7 +100,7 @@ const DetailsNewsScreen = ({ navigation, route }) => {
               })}
           </Text>
           <Text style={styles.time}>
-            Ngày đăng tin: {" " + withEmpty("ngaydangtin", news).slice(0, 10)}
+            Ngày đăng tin: {" " + withEmpty("ngaydangtin.slice(0, 10)", news)}
           </Text>
           <Text> Địa chỉ: {" " + withEmpty("diadiem", news)}</Text>
           <View style={styles.function}>
