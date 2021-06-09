@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Feather } from "react-native-vector-icons";
 import { connect } from "react-redux";
+import { getProduct, getStory } from "../redux/action";
 import Banner from "../../../component/banner";
 import CategoryComponent from "../../../component/category";
 import Item from "../../../component/item";
@@ -156,8 +157,9 @@ export default connect(
   (state) => ({
     user: state.userReducer.user,
     isLoggedIn: !state.userReducer.userLoading,
+    news: state.newsReducer.news,
   }),
-  {}
+  { getProduct, getStory }
 )(HomeScreen);
 
 const stylesCustomize = StyleSheet.create({
