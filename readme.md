@@ -28,3 +28,13 @@ Công nghệ sử dụng:
 - web: (https://github.com/duckhoi-UET/admin.git)
 + sử dụng PHP laravel
 
+### info db
+Username: rxCNxkbErT
+
+Database name: rxCNxkbErT
+
+Password: SbydOBVOeE
+
+Server: remotemysql.com
+
+Port: 3306
