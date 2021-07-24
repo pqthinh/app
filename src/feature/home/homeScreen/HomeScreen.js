@@ -156,8 +156,6 @@ const HomeScreen = ({ user, navigation }) => {
 export default connect(
   (state) => ({
     user: state.userReducer.user,
-    isLoggedIn: !state.userReducer.userLoading,
-    news: state.newsReducer.news,
   }),
   { getProduct, getStory }
 )(HomeScreen);
